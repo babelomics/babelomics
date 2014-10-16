@@ -7,11 +7,32 @@
     <parent>
         <groupId>org.babelomics.babelomics</groupId>
         <artifactId>babelomics</artifactId>
-        <version>0.1.0</version>
+        <version>5.0.0</version>
         <relativePath>..</relativePath>
     </parent>
 
     <artifactId>babelomics-core</artifactId>
-    <version>0.1.0</version>
+    <packaging>jar</packaging>
+    <version>${babelomics.version}</version>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
 </project>
