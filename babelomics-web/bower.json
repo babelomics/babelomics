@@ -1,0 +1,27 @@
+{
+    "name": "babelomics",
+    "version": "5.0.0",
+    "homepage": "https://github.com/babelomics/babelomics",
+    "authors": [
+        "frasator <frasator@gmail.com>",
+        "roalva1  <roalva1@gmail.com>",
+        "igmeacas  <igmecas@gmail.com>"
+    ],
+    "license": "GPLv2",
+    "private": true,
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "polymer": "Polymer/polymer#~0.4.2",
+        "cookies-js": "~0.4.0",
+        "crypto-js-evanvosberg": "~3.1.2",
+        "highcharts-release": "~4.0.4",
+        "polymer-fontawesome": "~1.0.0-beta.2",
+        "fontawesome": "~4.2.0"
+    }
+}
