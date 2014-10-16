@@ -8,11 +8,99 @@
     <artifactId>babelomics</artifactId>
 
     <packaging>pom</packaging>
-    <version>0.1.0</version>
+    <version>5.0.0</version>
 
     <modules>
         <module>babelomics-core</module>
     </modules>
 
+    <mailingLists>
+        <mailingList>
+            <name>Babelomics Mailing List</name>
+            <archive>https://groups.google.com/forum/#!forum/babelomics</archive>
+            <post>babelomics@googlegroups.com</post>
+        </mailingList>
+    </mailingLists>
+
+    <developers>
+        <developer>
+            <id>roalva1</id>
+            <name>Roberto</name>
+            <email>roalva1@gmail.com</email>
+        </developer>
+        <developer>
+            <id>frasator</id>
+            <name>Francisco</name>
+            <email>frasator@gmail.com</email>
+        </developer>
+        <developer>
+            <id>aaleman</id>
+            <name>Alejandro</name>
+            <email>alejandro.aleman.ramos@gmail.com</email>
+        </developer>
+        <developer>
+            <id>imedina</id>
+            <name>Nacho</name>
+            <email>igmecas@gmail.com</email>
+        </developer>
+    </developers>
+
+    <scm>
+        <url>https://github.com/babelomics/babelomics</url>
+    </scm>
+
+    <properties>
+        <babelomics.version>5.0.0</babelomics.version>
+        <java.version>1.7</java.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Intra-module dependencies -->
+            <!--<dependency>-->
+                <!--<groupId>org.babelomics.babelomics</groupId>-->
+                <!--<artifactId>babelomics-lib</artifactId>-->
+                <!--<version>${babelomics.version}</version>-->
+            <!--</dependency>-->
+
+            <!-- General dependencies -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>16.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>1.7.6</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>1.7.6</version>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.11</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <testSourceDirectory>src/test/java</testSourceDirectory>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
