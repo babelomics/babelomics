@@ -43,7 +43,8 @@
             }
 
         </style>
-        <jso-header selectedOption="{{selectedOption}}" userData="{{userData}}" title="Babelomics 5" options="{{options}}">
+        <jso-header selectedOption="{{selectedOption}}" userData="{{userData}}" title="Babelomics 5"
+                    options="{{options}}">
         </jso-header>
 
         <bierapp-home hide="{{selectedOption != 'home' }}"></bierapp-home>
@@ -56,16 +57,127 @@
             created: function () {
                 this.selectedOption = 'home';
                 this.userData;
+                this.options = this.getOptions();
 
-                this.options = [
-
-                ]
             },
             ready: function () {
 
             },
             handleAppMenu: function (e) {
                 this.$.sidePanel.classList.toggle('side-panel-shown');
+            },
+
+
+            getOptions: function () {
+                return  [
+                    {
+                        option: 'upload',
+                        text: 'Upload'
+                    },
+                    {
+                        option: 'expression',
+                        text: 'Expression',
+                        sub: [
+                            {
+                                text: 'Array',
+                                option: 'none'
+                            },
+                            {
+                                option: 'expression-array-preprocessing',
+                                text: 'Preprocessing'
+                            },
+                            {
+                                option: 'expression-array-differential-expression',
+                                text: 'Differential expression'
+                            },
+                            {
+                                option: 'expression-array-clustering',
+                                text: 'Clustering'
+                            },
+                            {
+                                option: 'expression-array-predictors',
+                                text: 'Predictors'
+                            },
+                            {
+                                text: 'RNA-Seq',
+                                option: 'none'
+                            },
+                            {
+                                option: 'expression-rnaseq-preprocessing',
+                                text: 'Preprocessing'
+                            },
+                            {
+                                option: 'expression-rnaseq-differential-expression',
+                                text: 'Differential expression'
+                            },
+                            {
+                                option: 'expression-rnaseq-clustering',
+                                text: 'Clustering'
+                            },
+                            {
+                                option: 'expression-rnaseq-predictors',
+                                text: 'Predictors'
+                            }
+                        ]
+                    },
+                    {
+                        option: 'genomics',
+                        text: 'Genomics',
+                        sub: [
+                            {
+                                option: 'none',
+                                text: 'Array'
+                            },
+                            {
+                                option: 'genomics-array-normalize',
+                                text: 'Normalize'
+                            },
+                            {
+                                option: 'genomics-array-associative',
+                                text: 'Associative analysis'
+                            },
+                            {
+                                option: 'genomics-array-statification',
+                                text: 'Statification'
+                            },
+                            {
+                                option: 'none',
+                                text: 'Variation'
+                            },
+                            {
+                                option: 'genomics-variation-btest',
+                                text: 'B-test'
+                            }
+                        ]
+                    },
+                    {
+                        option: 'functional',
+                        text: 'Functional',
+                        sub: [
+                            {
+                                option: 'fatigo',
+                                text: 'FatiGO'
+                            },
+                            {
+                                option: 'fatiscan',
+                                text: 'FatiScan'
+                            },
+                            {
+                                option: 'snow',
+                                text: 'SNOW'
+                            },
+                            {
+                                option: 'networkminer',
+                                text: 'NetworkMiner'
+                            }
+                        ]
+                    },
+                    {
+                        option: 'integration',
+                        text: 'Integration'
+                    }
+
+                ]
             }
         });
     </script>
