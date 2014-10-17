@@ -1,12 +1,12 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/polymer-fontawesome/polymer-fontawesome.html">
-<link rel="import" href="../submodules/jsorolla/src/lib/components/jso-header.html">
-<link rel="import" href="../submodules/jsorolla/src/lib/components/opencga/jso-project-browser.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-header.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-project-browser.html">
 <link rel="import" href="babelomics-home.html">
 
 <polymer-element name="babelomics-element">
     <template>
-        <link rel="stylesheet" href="../submodules/jsorolla/styles/css/style.css">
+        <link rel="stylesheet" href="../lib/jsorolla/styles/css/style.css">
         <link rel="stylesheet" href="../bower_components/fontawesome/css/font-awesome.min.css">
         <style>
             :host {
@@ -43,8 +43,7 @@
             }
 
         </style>
-        <jso-header selectedOption="{{selectedOption}}" userData="{{userData}}">
-            <span>Babelomics 5</span>
+        <jso-header selectedOption="{{selectedOption}}" userData="{{userData}}" title="Babelomics 5" options="{{options}}">
         </jso-header>
 
         <bierapp-home hide="{{selectedOption != 'home' }}"></bierapp-home>
@@ -57,6 +56,10 @@
             created: function () {
                 this.selectedOption = 'home';
                 this.userData;
+
+                this.options = [
+
+                ]
             },
             ready: function () {
 
