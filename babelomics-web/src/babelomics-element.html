@@ -2,6 +2,7 @@
 <link rel="import" href="../bower_components/polymer-fontawesome/polymer-fontawesome.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-header.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-project-browser.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-network-miner.html">
 <link rel="import" href="babelomics-home.html">
 
 <polymer-element name="babelomics-element">
@@ -30,9 +31,9 @@
                 display: none !important;
             }
 
-            [hide=false] {
-                display: initial !important;
-            }
+            /*[hide=false] {*/
+                /*display: initial !important;*/
+            /*}*/
 
             jso-project-browser {
                 position: absolute;
@@ -50,6 +51,7 @@
         <babelomics-home hide="{{selectedOption != 'home' }}"></babelomics-home>
 
         <jso-project-browser userData="{{userData}}" hide="{{selectedOption != 'projects' }}"></jso-project-browser>
+        <jso-network-miner userData="{{userData}}" hide="{{selectedOption != 'networkminer' }}"></jso-network-miner>
 
     </template>
     <script>
