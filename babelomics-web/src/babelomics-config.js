@@ -16,5 +16,5 @@ if (
     CELLBASE_VERSION = "v3";
     OPENCGA_HOST = "http://test.babelomics.org/opencga/rest";
     OPENCGA_VERSION = "v1";
-    OPENCGA_HOST = "http://localhost:8080/opencga/rest";
+//    OPENCGA_HOST = "http://localhost:8080/opencga/rest";
 }

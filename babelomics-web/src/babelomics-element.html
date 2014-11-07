@@ -1,7 +1,11 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/polymer-fontawesome/polymer-fontawesome.html">
+<link rel="import" href="../bower_components/core-field/core-field.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-header.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-project-browser.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-file-browser.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-analysis-panel.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-job-view.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-network-miner.html">
 <link rel="import" href="babelomics-home.html">
 
@@ -32,7 +36,7 @@
             }
 
             /*[hide=false] {*/
-                /*display: initial !important;*/
+            /*display: initial !important;*/
             /*}*/
 
             jso-project-browser {
@@ -42,22 +46,47 @@
                 left: 0;
                 right: 0;
             }
+            div.side-panel {
+                box-sizing: border-box;
+                visibility: hidden;
+                opacity: 0;
+                position: absolute;
+                z-index: 50000;
+                top: 60px;
+                right: 0px;
+                width: 350px;
+                margin: 0;
+                padding: 0;
+                background: white;
+                /*border: 1px solid #c6d0da;*/
+                /*border-right-width: 0px;*/
+                transition: all 0.2s;
+            }
 
+            div.side-panel-shown {
+                visibility: visible !important;
+                opacity: 1 !important;
+            }
         </style>
         <jso-header selectedOption="{{selectedOption}}" userData="{{userData}}" title="Babelomics 5"
+                    showJobs="{{showJobs}}"
                     options="{{options}}">
         </jso-header>
 
         <babelomics-home hide="{{selectedOption != 'home' }}"></babelomics-home>
-
+        <jso-job-view jobItem="{{jobItem}}" hide="{{selectedOption != 'jobView' }}"></jso-job-view>
         <jso-project-browser userData="{{userData}}" hide="{{selectedOption != 'projects' }}"></jso-project-browser>
         <jso-network-miner userData="{{userData}}" hide="{{selectedOption != 'networkminer' }}"></jso-network-miner>
+        <div id="sidePanel" class="side-panel side-panel-shown">
+            <jso-analysis-panel jobItem="{{jobItem}}" selectedOption="{{selectedOption}}" userData="{{userData}}" hide="{{!showJobs}}" showJobs="{{showJobs}}"></jso-analysis-panel>
+        </div>
 
     </template>
     <script>
         Polymer({
             created: function () {
                 this.selectedOption = 'home';
+                this.showJobs = false;
                 this.userData;
                 this.options = this.getOptions();
 
