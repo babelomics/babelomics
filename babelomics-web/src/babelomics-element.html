@@ -2,6 +2,7 @@
 <link rel="import" href="../bower_components/polymer-fontawesome/polymer-fontawesome.html">
 <link rel="import" href="../bower_components/core-field/core-field.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-header.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-opencga-select-analysis.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-project-browser.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-file-browser.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-analysis-panel.html">
@@ -89,6 +90,7 @@
                 this.showJobs = false;
                 this.userData;
                 this.options = this.getOptions();
+                this.hideJobView = true;
 
             },
             ready: function () {
