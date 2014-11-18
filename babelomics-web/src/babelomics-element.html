@@ -1,217 +1,312 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/polymer-fontawesome/polymer-fontawesome.html">
 <link rel="import" href="../bower_components/core-field/core-field.html">
+<link rel="import" href="../bower_components/sortable-table/sortable-table.html">
+
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-header.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-opencga-select-analysis.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-opencga-select-folder.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-project-browser.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-file-browser.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-analysis-panel.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-job-list.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-job-view.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-job-launched.html">
+<link rel="import" href="../lib/jsorolla/src/network-viewer/jso-network-viewer.html">
+
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-network-miner.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-snow.html">
+
+<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-snow-result.html">
+
+
+
+<script src="../lib/jsorolla/src/lib/data-adapter/network/sif-network-data-adapter.js"></script>
+<script src="../lib/jsorolla/src/lib/data-adapter/network/attribute-network-data-adapter.js"></script>
+<script src="../lib/jsorolla/src/lib/data-source/data-source.js"></script>
+<script src="../lib/jsorolla/src/lib/data-source/string-data-source.js"></script>
+
+
 <link rel="import" href="babelomics-home.html">
 
 <polymer-element name="babelomics-element">
-    <template>
-        <link rel="stylesheet" href="../lib/jsorolla/styles/css/style.css">
-        <link rel="stylesheet" href="../bower_components/fontawesome/css/font-awesome.min.css">
-        <style>
-            :host {
-                display: block;
-                position: relative;
-                height: 100vh;
-                background-color: #314559;
+<template>
+    <link rel="stylesheet" href="../lib/jsorolla/styles/css/style.css">
+    <link rel="stylesheet" href="../bower_components/fontawesome/css/font-awesome.min.css">
+    <style>
+        :host {
+            display: block;
+            position: relative;
+            height: 100vh;
+            background-color: #314559;
 
-                -webkit-touch-callout: none;
-                -webkit-user-select: none;
-                -khtml-user-select: none;
-                -moz-user-select: none;
-                -ms-user-select: none;
-                user-select: none;
-                cursor: default;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            cursor: default;
 
-                font-size: 13px;
+            font-size: 13px;
+        }
+
+        [hide=true] {
+            display: none !important;
+        }
+
+        /*[hide=false] {*/
+        /*display: initial !important;*/
+        /*}*/
+
+        jso-project-browser {
+            position: absolute;
+            top: 60px; /* header height */
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+        div.side-panel {
+            box-sizing: border-box;
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            z-index: 50000;
+            top: 60px;
+            right: 0px;
+            width: 350px;
+            margin: 0;
+            padding: 0;
+            background: white;
+            /*border: 1px solid #c6d0da;*/
+            /*border-right-width: 0px;*/
+            transition: all 0.2s;
+        }
+
+        div.side-panel-shown {
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+    </style>
+    <jso-header selectedOption="{{selectedOption}}" userData="{{userData}}" title="Babelomics 5"
+                showJobs="{{showJobs}}"
+                options="{{options}}">
+    </jso-header>
+
+    <babelomics-home hide="{{selectedOption != 'home' }}"></babelomics-home>
+    <jso-job-view jobItem="{{jobItem}}" hide="{{selectedOption != 'jobView' }}"></jso-job-view>
+    <jso-project-browser userData="{{userData}}" hide="{{selectedOption != 'projects' }}"
+                         selectedStudy="{{selectedStudy}}" selectedProject="{{selectedProject}}"></jso-project-browser>
+
+    <jso-network-miner
+            hide="{{selectedOption != 'networkminer' }}"
+            selectedOption="{{selectedOption}}"
+            userData="{{userData}}"
+            selectedStudy="{{selectedStudy}}"
+            ></jso-network-miner>
+
+    <jso-snow
+            hide="{{selectedOption != 'snow' }}"
+            selectedOption="{{selectedOption}}"
+            userData="{{userData}}"
+            selectedStudy="{{selectedStudy}}"
+            ></jso-snow>
+
+    <jso-job-launched hide="{{selectedOption != 'jobLaunched' }}"></jso-job-launched>
+    <div id="sidePanel" class="side-panel side-panel-shown">
+        <jso-job-list jobItem="{{jobItem}}" selectedOption="{{selectedOption}}" userData="{{userData}}"
+                      hide="{{!showJobs}}" showJobs="{{showJobs}}" selectedStudy="{{selectedStudy}}"></jso-job-list>
+    </div>
+
+</template>
+<script>
+    Polymer({
+        created: function () {
+            this.selectedOption = 'home';
+            this.showJobs = false;
+            this.userData = {};
+            this.options = this.getOptions();
+            this.hideJobView = true;
+
+        },
+        handleAppMenu: function (e) {
+            this.$.sidePanel.classList.toggle('side-panel-shown');
+        },
+        userDataChanged: function (oldValue, newValue) {
+            
+            var me = this
+            /** These two if initialize selected project and study **/
+//            if (!this.selectedProject)
+            this.selectedProject = this.userData.projects[0]
+
+            if (!this.selectedStudy) {
+                var selectedStudyIdx = 0;
+                this.selectedStudy = this.selectedProject.studies[selectedStudyIdx];
             }
-
-            [hide=true] {
-                display: none !important;
-            }
-
-            /*[hide=false] {*/
-            /*display: initial !important;*/
-            /*}*/
-
-            jso-project-browser {
-                position: absolute;
-                top: 60px; /* header height */
-                bottom: 0;
-                left: 0;
-                right: 0;
-            }
-            div.side-panel {
-                box-sizing: border-box;
-                visibility: hidden;
-                opacity: 0;
-                position: absolute;
-                z-index: 50000;
-                top: 60px;
-                right: 0px;
-                width: 350px;
-                margin: 0;
-                padding: 0;
-                background: white;
-                /*border: 1px solid #c6d0da;*/
-                /*border-right-width: 0px;*/
-                transition: all 0.2s;
-            }
-
-            div.side-panel-shown {
-                visibility: visible !important;
-                opacity: 1 !important;
-            }
-        </style>
-        <jso-header selectedOption="{{selectedOption}}" userData="{{userData}}" title="Babelomics 5"
-                    showJobs="{{showJobs}}"
-                    options="{{options}}">
-        </jso-header>
-
-        <babelomics-home hide="{{selectedOption != 'home' }}"></babelomics-home>
-        <jso-job-view jobItem="{{jobItem}}" hide="{{selectedOption != 'jobView' }}"></jso-job-view>
-        <jso-project-browser userData="{{userData}}" hide="{{selectedOption != 'projects' }}"></jso-project-browser>
-        <jso-network-miner userData="{{userData}}" hide="{{selectedOption != 'networkminer' }}"></jso-network-miner>
-        <div id="sidePanel" class="side-panel side-panel-shown">
-            <jso-analysis-panel jobItem="{{jobItem}}" selectedOption="{{selectedOption}}" userData="{{userData}}" hide="{{!showJobs}}" showJobs="{{showJobs}}"></jso-analysis-panel>
-        </div>
-
-    </template>
-    <script>
-        Polymer({
-            created: function () {
-                this.selectedOption = 'home';
-                this.showJobs = false;
-                this.userData;
-                this.options = this.getOptions();
-                this.hideJobView = true;
-
-            },
-            ready: function () {
-
-            },
-            handleAppMenu: function (e) {
-                this.$.sidePanel.classList.toggle('side-panel-shown');
-            },
-
-
-            getOptions: function () {
-                return  [
-                    {
-                        option: 'upload',
-                        text: 'Upload'
+            /** llamada analysis **/
+            OpencgaManager.studies.analysis({
+                id: this.selectedStudy.id,
+                query: {
+                    sid: Cookies('bioinfo_sid')
+                },
+                request: {
+                    success: function (response) {
+                        if (response.response[0].errorMsg === '' || response.response[0].errorMsg == null) {
+                            var selectedAnalysis = response.response[0].result[0]
+                            me.selectedStudy.analysis = selectedAnalysis
+                        } else {
+                            me.message = response.response[0].errorMsg;
+                        }
                     },
-                    {
-                        option: 'expression',
-                        text: 'Expression',
-                        sub: [
-                            {
-                                text: 'Array',
-                                option: 'none'
-                            },
-                            {
-                                option: 'expression-array-preprocessing',
-                                text: 'Preprocessing'
-                            },
-                            {
-                                option: 'expression-array-differential-expression',
-                                text: 'Differential expression'
-                            },
-                            {
-                                option: 'expression-array-clustering',
-                                text: 'Clustering'
-                            },
-                            {
-                                option: 'expression-array-predictors',
-                                text: 'Predictors'
-                            },
-                            {
-                                text: 'RNA-Seq',
-                                option: 'none'
-                            },
-                            {
-                                option: 'expression-rnaseq-preprocessing',
-                                text: 'Preprocessing'
-                            },
-                            {
-                                option: 'expression-rnaseq-differential-expression',
-                                text: 'Differential expression'
-                            },
-                            {
-                                option: 'expression-rnaseq-clustering',
-                                text: 'Clustering'
-                            },
-                            {
-                                option: 'expression-rnaseq-predictors',
-                                text: 'Predictors'
-                            }
-                        ]
-                    },
-                    {
-                        option: 'genomics',
-                        text: 'Genomics',
-                        sub: [
-                            {
-                                option: 'none',
-                                text: 'Array'
-                            },
-                            {
-                                option: 'genomics-array-normalize',
-                                text: 'Normalize'
-                            },
-                            {
-                                option: 'genomics-array-associative',
-                                text: 'Associative analysis'
-                            },
-                            {
-                                option: 'genomics-array-statification',
-                                text: 'Statification'
-                            },
-                            {
-                                option: 'none',
-                                text: 'Variation'
-                            },
-                            {
-                                option: 'genomics-variation-btest',
-                                text: 'B-test'
-                            }
-                        ]
-                    },
-                    {
-                        option: 'functional',
-                        text: 'Functional',
-                        sub: [
-                            {
-                                option: 'fatigo',
-                                text: 'FatiGO'
-                            },
-                            {
-                                option: 'fatiscan',
-                                text: 'FatiScan'
-                            },
-                            {
-                                option: 'snow',
-                                text: 'SNOW'
-                            },
-                            {
-                                option: 'networkminer',
-                                text: 'NetworkMiner'
-                            }
-                        ]
-                    },
-                    {
-                        option: 'integration',
-                        text: 'Integration'
+                    error: function () {
+                        alert('Server error, try again later.');
                     }
+                }
+            });
 
-                ]
-            }
-        });
-    </script>
+            /** llamada ficheros **/
+            OpencgaManager.files.search({
+                query: {
+                    sid: Cookies("bioinfo_sid"),
+                    studyId: me.selectedStudy.id
+//                        type: "file"
+                },
+                request: {
+                    //method: 'POST',
+                    success: function (response) {
+                        if (response.response[0].errorMsg === '' || response.response[0].errorMsg == null) {
+                            var files = response.response[0].result
+                            var filesAux = new Array();
+                            for(var i=0; i<files.length; i++){
+                                if(files[i].path.indexOf("J_")>=0){
+                                    continue;
+                                }
+                                filesAux.push(files[i])
+                            }
+                            me.selectedStudy.files = filesAux
+                        } else {
+                            me.message = response.response[0].errorMsg;
+                        }
+                    },
+                    error: function () {
+                        me.message = 'Server error, try again later.';
+                    }
+                }
+            })
+//            }
+
+        },
+
+        getOptions: function () {
+            return  [
+                {
+                    option: 'upload',
+                    text: 'Upload'
+                },
+                {
+//                        option: 'expression',
+                    text: 'Expression',
+                    sub: [
+                        {
+                            text: 'Array',
+                            option: 'none'
+                        },
+                        {
+                            option: 'expression-array-preprocessing',
+                            text: 'Preprocessing'
+                        },
+                        {
+                            option: 'expression-array-differential-expression',
+                            text: 'Differential expression'
+                        },
+                        {
+                            option: 'expression-array-clustering',
+                            text: 'Clustering'
+                        },
+                        {
+                            option: 'expression-array-predictors',
+                            text: 'Predictors'
+                        },
+                        {
+                            text: 'RNA-Seq',
+                            option: 'none'
+                        },
+                        {
+                            option: 'expression-rnaseq-preprocessing',
+                            text: 'Preprocessing'
+                        },
+                        {
+                            option: 'expression-rnaseq-differential-expression',
+                            text: 'Differential expression'
+                        },
+                        {
+                            option: 'expression-rnaseq-clustering',
+                            text: 'Clustering'
+                        },
+                        {
+                            option: 'expression-rnaseq-predictors',
+                            text: 'Predictors'
+                        }
+                    ]
+                },
+                {
+//                        option: 'genomics',
+                    text: 'Genomics',
+                    sub: [
+                        {
+                            option: 'none',
+                            text: 'Array'
+                        },
+                        {
+                            option: 'genomics-array-normalize',
+                            text: 'Normalize'
+                        },
+                        {
+                            option: 'genomics-array-associative',
+                            text: 'Associative analysis'
+                        },
+                        {
+                            option: 'genomics-array-statification',
+                            text: 'Statification'
+                        },
+                        {
+                            option: 'none',
+                            text: 'Variation'
+                        },
+                        {
+                            option: 'genomics-variation-btest',
+                            text: 'B-test'
+                        }
+                    ]
+                },
+                {
+//                        option: 'functional',
+                    text: 'Functional',
+                    sub: [
+                        {
+                            option: 'fatigo',
+                            text: 'FatiGO'
+                        },
+                        {
+                            option: 'fatiscan',
+                            text: 'FatiScan'
+                        },
+                        {
+                            option: 'snow',
+                            text: 'SNOW'
+                        },
+                        {
+                            option: 'networkminer',
+                            text: 'NetworkMiner'
+                        }
+                    ]
+                },
+                {
+                    option: 'integration',
+                    text: 'Integration'
+                }
+
+            ]
+        }
+    });
+</script>
 </polymer-element>
