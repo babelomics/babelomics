@@ -8,15 +8,23 @@
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-project-browser.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-file-browser.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-job-list.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-job-view.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-job-launched.html">
 <link rel="import" href="../lib/jsorolla/src/network-viewer/jso-network-viewer.html">
 
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-network-miner.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-snow.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-fatigo.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-affy.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-one-channel-agilent.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-one-channel-genepix.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-two-channel-agilent.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-two-channel-genepix.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-clustering.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-prediction.html">
 
+<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-job-view.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-snow-result.html">
-
+<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-fatigo-result.html">
 
 
 <script src="../lib/jsorolla/src/lib/data-adapter/network/sif-network-data-adapter.js"></script>
@@ -38,12 +46,12 @@
             height: 100vh;
             background-color: #314559;
 
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -khtml-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
+            /*-webkit-touch-callout: none;*/
+            /*-webkit-user-select: none;*/
+            /*-khtml-user-select: none;*/
+            /*-moz-user-select: none;*/
+            /*-ms-user-select: none;*/
+            /*user-select: none;*/
             cursor: default;
 
             font-size: 13px;
@@ -109,7 +117,81 @@
             selectedOption="{{selectedOption}}"
             userData="{{userData}}"
             selectedStudy="{{selectedStudy}}"
-            ></jso-snow>
+            >
+
+    </jso-snow>
+
+    <jso-fatigo
+            hide="{{selectedOption != 'fatigo' }}"
+            selectedOption="{{selectedOption}}"
+            userData="{{userData}}"
+            selectedStudy="{{selectedStudy}}"
+            >
+
+    </jso-fatigo>
+    <jso-affy
+            hide="{{selectedOption != 'affymetrix' }}"
+            selectedOption="{{selectedOption}}"
+            userData="{{userData}}"
+            selectedStudy="{{selectedStudy}}"
+            >
+
+    </jso-affy>
+
+    <jso-one-channel-agilent
+            hide="{{selectedOption != 'one-channel-agilent' }}"
+            selectedOption="{{selectedOption}}"
+            userData="{{userData}}"
+            selectedStudy="{{selectedStudy}}"
+            >
+
+    </jso-one-channel-agilent>
+
+    <jso-one-channel-genepix
+            hide="{{selectedOption != 'one-channel-genepix' }}"
+            selectedOption="{{selectedOption}}"
+            userData="{{userData}}"
+            selectedStudy="{{selectedStudy}}"
+            >
+
+    </jso-one-channel-genepix>
+
+    <jso-two-channel-agilent
+            hide="{{selectedOption != 'two-channel-agilent' }}"
+            selectedOption="{{selectedOption}}"
+            userData="{{userData}}"
+            selectedStudy="{{selectedStudy}}"
+            >
+
+    </jso-two-channel-agilent>
+
+    <jso-two-channel-genepix
+            hide="{{selectedOption != 'two-channel-genepix' }}"
+            selectedOption="{{selectedOption}}"
+            userData="{{userData}}"
+            selectedStudy="{{selectedStudy}}"
+            >
+
+    </jso-two-channel-genepix>
+
+    <jso-clustering
+            hide="{{selectedOption != 'clustering' }}"
+            selectedOption="{{selectedOption}}"
+            userData="{{userData}}"
+            selectedStudy="{{selectedStudy}}"
+            >
+
+    </jso-clustering>
+
+    <jso-prediction
+            hide="{{selectedOption != 'prediction' }}"
+            selectedOption="{{selectedOption}}"
+            userData="{{userData}}"
+            selectedStudy="{{selectedStudy}}"
+            >
+
+    </jso-prediction>
+
 
     <jso-job-launched hide="{{selectedOption != 'jobLaunched' }}"></jso-job-launched>
     <div id="sidePanel" class="side-panel side-panel-shown">
@@ -132,7 +214,7 @@
             this.$.sidePanel.classList.toggle('side-panel-shown');
         },
         userDataChanged: function (oldValue, newValue) {
-            
+
             var me = this
             /** These two if initialize selected project and study **/
 //            if (!this.selectedProject)
@@ -176,8 +258,8 @@
                         if (response.response[0].errorMsg === '' || response.response[0].errorMsg == null) {
                             var files = response.response[0].result
                             var filesAux = new Array();
-                            for(var i=0; i<files.length; i++){
-                                if(files[i].path.indexOf("J_")>=0){
+                            for (var i = 0; i < files.length; i++) {
+                                if (files[i].path.indexOf("J_") >= 0) {
                                     continue;
                                 }
                                 filesAux.push(files[i])
@@ -203,6 +285,41 @@
                     text: 'Upload'
                 },
                 {
+                    text: 'Processing',
+                    sub: [
+                        {
+                            text: 'Microarray - One channel',
+                            option: 'none'
+                        },
+                        {
+                            text: 'Affymetrix',
+                            option:'affymetrix'
+                        },
+                        {
+                            text: 'Agilent',
+                            option:'one-channel-agilent'
+                        },
+                        {
+                            text: 'Genepix',
+                            option:'one-channel-genepix'
+                        },
+                        {
+                            text: 'Microarray - Two channel',
+                            option: 'none'
+                        },
+                        {
+                            text: 'Agilent',
+                            option:'two-channel-agilent'
+                        },
+                        {
+                            text: 'Genepix',
+                            option:'two-channel-genepix'
+                        }
+
+                    ]
+                }
+                ,
+                {
 //                        option: 'expression',
                     text: 'Expression',
                     sub: [
@@ -219,11 +336,11 @@
                             text: 'Differential expression'
                         },
                         {
-                            option: 'expression-array-clustering',
+                            option: 'clustering',
                             text: 'Clustering'
                         },
                         {
-                            option: 'expression-array-predictors',
+                            option: 'prediction',
                             text: 'Predictors'
                         },
                         {
