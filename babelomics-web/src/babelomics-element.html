@@ -22,9 +22,9 @@
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-clustering.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-prediction.html">
 
-<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-job-view.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-nm-result.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-snow-result.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-fatigo-result.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-job-result.html">
 
 
 <script src="../lib/jsorolla/src/lib/data-adapter/network/sif-network-data-adapter.js"></script>
@@ -101,7 +101,7 @@
     </jso-header>
 
     <babelomics-home hide="{{selectedOption != 'home' }}"></babelomics-home>
-    <jso-job-view jobItem="{{jobItem}}" hide="{{selectedOption != 'jobView' }}"></jso-job-view>
+    <jso-job-result jobItem="{{jobItem}}" hide="{{selectedOption != 'jobView' }}"></jso-job-result>
     <jso-project-browser userData="{{userData}}" hide="{{selectedOption != 'projects' }}"
                          selectedStudy="{{selectedStudy}}" selectedProject="{{selectedProject}}"></jso-project-browser>
 
