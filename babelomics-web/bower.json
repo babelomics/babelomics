@@ -27,6 +27,7 @@
     "sortable-table": "~0.10.1",
     "underscore": "~1.7.0",
     "backbone": "~1.1.2",
-    "d3": "~3.4.13"
+    "d3": "~3.4.13",
+    "core-list": "polymer/core-list#~0.5.1"
   }
 }

@@ -1,4 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/core-list/core-list.html">
+
 <link rel="import" href="../bower_components/polymer-fontawesome/polymer-fontawesome.html">
 <link rel="import" href="../bower_components/core-field/core-field.html">
 <link rel="import" href="../bower_components/sortable-table/sortable-table.html">
@@ -9,6 +11,10 @@
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-file-browser.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-job-list.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-job-launched.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-job-no-ready.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-class-edit.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-class-viewer.html">
+
 <link rel="import" href="../lib/jsorolla/src/network-viewer/jso-network-viewer.html">
 
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-network-miner.html">
@@ -21,6 +27,12 @@
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-two-channel-genepix.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-clustering.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-prediction.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-class-comparison.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-correlation.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-survival.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-preprocessing-matrix.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-edit.html">
+
 
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-nm-result.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-snow-result.html">
@@ -31,6 +43,7 @@
 <script src="../lib/jsorolla/src/lib/data-adapter/network/attribute-network-data-adapter.js"></script>
 <script src="../lib/jsorolla/src/lib/data-source/data-source.js"></script>
 <script src="../lib/jsorolla/src/lib/data-source/string-data-source.js"></script>
+<script src="js/ParseMatrix.js"></script>
 
 
 <link rel="import" href="babelomics-home.html">
@@ -43,7 +56,8 @@
         :host {
             display: block;
             position: relative;
-            height: 100vh;
+            /*height: 100vh;*/
+            height: 100%;
             background-color: #314559;
 
             /*-webkit-touch-callout: none;*/
@@ -101,96 +115,145 @@
     </jso-header>
 
     <babelomics-home hide="{{selectedOption != 'home' }}"></babelomics-home>
-    <jso-job-result jobItem="{{jobItem}}" hide="{{selectedOption != 'jobView' }}"></jso-job-result>
-    <jso-project-browser userData="{{userData}}" hide="{{selectedOption != 'projects' }}"
-                         selectedStudy="{{selectedStudy}}" selectedProject="{{selectedProject}}"></jso-project-browser>
+    <jso-job-result jobItem="{{jobItem}}" hide="{{selectedOption != 'jobReady' }}"></jso-job-result>
+    <jso-job-no-ready hide="{{selectedOption != 'jobNoReady' }}" jobItem="{{jobItem}}"></jso-job-no-ready>
+    <template if="{{selectedOption == 'projects'}}">
+        <jso-project-browser userData="{{userData}}" selectedStudy="{{selectedStudy}}"
+                             selectedProject="{{selectedProject}}"></jso-project-browser>
+    </template>
+    <template if="{{selectedOption == 'networkminer'}}">
+        <jso-network-miner
+                selectedOption="{{selectedOption}}"
+                userData="{{userData}}"
+                selectedStudy="{{selectedStudy}}"
+                ></jso-network-miner>
+    </template>
 
-    <jso-network-miner
-            hide="{{selectedOption != 'networkminer' }}"
-            selectedOption="{{selectedOption}}"
-            userData="{{userData}}"
-            selectedStudy="{{selectedStudy}}"
-            ></jso-network-miner>
+    <template if="{{selectedOption == 'snow'}}">
+        <jso-snow
+                selectedOption="{{selectedOption}}"
+                userData="{{userData}}"
+                selectedStudy="{{selectedStudy}}"
+                >
+        </jso-snow>
+    </template>
+    <template if="{{selectedOption == 'fatigo'}}">
+        <jso-fatigo
+                selectedOption="{{selectedOption}}"
+                userData="{{userData}}"
+                selectedStudy="{{selectedStudy}}"
+                >
 
-    <jso-snow
-            hide="{{selectedOption != 'snow' }}"
-            selectedOption="{{selectedOption}}"
-            userData="{{userData}}"
-            selectedStudy="{{selectedStudy}}"
-            >
+        </jso-fatigo>
+    </template>
+    <template if="{{selectedOption == 'affymetrix'}}">
+        <jso-affy
+                selectedOption="{{selectedOption}}"
+                userData="{{userData}}"
+                selectedStudy="{{selectedStudy}}"
+                >
 
-    </jso-snow>
+        </jso-affy>
+    </template>
+    <template if="{{selectedOption == 'one-channel-agilent'}}">
+        <jso-one-channel-agilent
+                selectedOption="{{selectedOption}}"
+                userData="{{userData}}"
+                selectedStudy="{{selectedStudy}}"
+                >
 
-    <jso-fatigo
-            hide="{{selectedOption != 'fatigo' }}"
-            selectedOption="{{selectedOption}}"
-            userData="{{userData}}"
-            selectedStudy="{{selectedStudy}}"
-            >
+        </jso-one-channel-agilent>
+    </template>
+    <template if="{{selectedOption == 'one-channel-genepix'}}">
+        <jso-one-channel-genepix
+                selectedOption="{{selectedOption}}"
+                userData="{{userData}}"
+                selectedStudy="{{selectedStudy}}"
+                >
 
-    </jso-fatigo>
-    <jso-affy
-            hide="{{selectedOption != 'affymetrix' }}"
-            selectedOption="{{selectedOption}}"
-            userData="{{userData}}"
-            selectedStudy="{{selectedStudy}}"
-            >
+        </jso-one-channel-genepix>
+    </template>
+    <template if="{{selectedOption == 'two-channel-agilent'}}">
+        <jso-two-channel-agilent
+                selectedOption="{{selectedOption}}"
+                userData="{{userData}}"
+                selectedStudy="{{selectedStudy}}"
+                >
 
-    </jso-affy>
+        </jso-two-channel-agilent>
+    </template>
+    <template if="{{selectedOption == 'two-channel-genepix'}}">
+        <jso-two-channel-genepix
+                selectedOption="{{selectedOption}}"
+                userData="{{userData}}"
+                selectedStudy="{{selectedStudy}}"
+                >
 
-    <jso-one-channel-agilent
-            hide="{{selectedOption != 'one-channel-agilent' }}"
-            selectedOption="{{selectedOption}}"
-            userData="{{userData}}"
-            selectedStudy="{{selectedStudy}}"
-            >
+        </jso-two-channel-genepix>
+    </template>
+    <template if="{{selectedOption == 'clustering'}}">
+        <jso-clustering
+                selectedOption="{{selectedOption}}"
+                userData="{{userData}}"
+                selectedStudy="{{selectedStudy}}"
+                >
 
-    </jso-one-channel-agilent>
+        </jso-clustering>
+    </template>
+    <template if="{{selectedOption == 'prediction'}}">
+        <jso-prediction
+                selectedOption="{{selectedOption}}"
+                userData="{{userData}}"
+                selectedStudy="{{selectedStudy}}"
+                >
 
-    <jso-one-channel-genepix
-            hide="{{selectedOption != 'one-channel-genepix' }}"
-            selectedOption="{{selectedOption}}"
-            userData="{{userData}}"
-            selectedStudy="{{selectedStudy}}"
-            >
+        </jso-prediction>
+    </template>
+    <template if="{{selectedOption == 'class-comparison'}}">
+        <jso-class-comparison
+                selectedOption="{{selectedOption}}"
+                userData="{{userData}}"
+                selectedStudy="{{selectedStudy}}"
+                >
 
-    </jso-one-channel-genepix>
+        </jso-class-comparison>
+    </template>
 
-    <jso-two-channel-agilent
-            hide="{{selectedOption != 'two-channel-agilent' }}"
-            selectedOption="{{selectedOption}}"
-            userData="{{userData}}"
-            selectedStudy="{{selectedStudy}}"
-            >
+    <template if="{{selectedOption == 'correlation'}}">
+        <jso-correlation
+                selectedOption="{{selectedOption}}"
+                userData="{{userData}}"
+                selectedStudy="{{selectedStudy}}"
+                >
 
-    </jso-two-channel-agilent>
+        </jso-correlation>
+    </template>
 
-    <jso-two-channel-genepix
-            hide="{{selectedOption != 'two-channel-genepix' }}"
-            selectedOption="{{selectedOption}}"
-            userData="{{userData}}"
-            selectedStudy="{{selectedStudy}}"
-            >
+    <template if="{{selectedOption == 'survival'}}">
+        <jso-survival
+                selectedOption="{{selectedOption}}"
+                userData="{{userData}}"
+                selectedStudy="{{selectedStudy}}"
+                >
+        </jso-survival>
+    </template>
 
-    </jso-two-channel-genepix>
-
-    <jso-clustering
-            hide="{{selectedOption != 'clustering' }}"
-            selectedOption="{{selectedOption}}"
-            userData="{{userData}}"
-            selectedStudy="{{selectedStudy}}"
-            >
-
-    </jso-clustering>
-
-    <jso-prediction
-            hide="{{selectedOption != 'prediction' }}"
-            selectedOption="{{selectedOption}}"
-            userData="{{userData}}"
-            selectedStudy="{{selectedStudy}}"
-            >
-
-    </jso-prediction>
+    <template if="{{selectedOption == 'preprocessing-matrix'}}">
+        <jso-preprocessing-matrix
+                selectedOption="{{selectedOption}}"
+                userData="{{userData}}"
+                selectedStudy="{{selectedStudy}}"
+                >
+        </jso-preprocessing-matrix>
+    </template>
+    <template if="{{selectedOption == 'edit'}}">
+        <jso-edit
+                selectedOption="{{selectedOption}}"
+                userData="{{userData}}"
+                selectedStudy="{{selectedStudy}}"
+                >
+        </jso-edit>
+    </template>
 
 
     <jso-job-launched hide="{{selectedOption != 'jobLaunched' }}"></jso-job-launched>
@@ -201,229 +264,258 @@
 
 </template>
 <script>
-    Polymer({
-        created: function () {
-            this.selectedOption = 'home';
-            this.showJobs = false;
-            this.userData = {};
-            this.options = this.getOptions();
-            this.hideJobView = true;
+Polymer({
+    created: function () {
+        this.selectedOption = 'home';
+        this.showJobs = false;
+        this.userData = {};
+        this.options = this.getOptions();
+        this.hideJobView = true;
 
-        },
-        handleAppMenu: function (e) {
-            this.$.sidePanel.classList.toggle('side-panel-shown');
-        },
-        userDataChanged: function (oldValue, newValue) {
+    },
+    handleAppMenu: function (e) {
+        this.$.sidePanel.classList.toggle('side-panel-shown');
+    },
+    userDataChanged: function (oldValue, newValue) {
 
-            var me = this
-            /** These two if initialize selected project and study **/
+        var me = this
+        /** These two if initialize selected project and study **/
 //            if (!this.selectedProject)
-            this.selectedProject = this.userData.projects[0]
+        this.selectedProject = this.userData.projects[0]
 
-            if (!this.selectedStudy) {
-                var selectedStudyIdx = 0;
-                this.selectedStudy = this.selectedProject.studies[selectedStudyIdx];
+        if (!this.selectedStudy) {
+            var selectedStudyIdx = 0;
+            this.selectedStudy = this.selectedProject.studies[selectedStudyIdx];
+        }
+        /** llamada analysis **/
+        OpencgaManager.studies.analysis({
+            id: this.selectedStudy.id,
+            query: {
+                sid: Cookies('bioinfo_sid')
+            },
+            request: {
+                success: function (response) {
+                    if (response.response[0].errorMsg === '' || response.response[0].errorMsg == null) {
+                        var selectedAnalysis = response.response[0].result[0]
+                        me.selectedStudy.analysis = selectedAnalysis
+                    } else {
+                        me.message = response.response[0].errorMsg;
+                    }
+                },
+                error: function () {
+                    alert('Server error, try again later.');
+                }
             }
-            /** llamada analysis **/
-            OpencgaManager.studies.analysis({
-                id: this.selectedStudy.id,
-                query: {
-                    sid: Cookies('bioinfo_sid')
-                },
-                request: {
-                    success: function (response) {
-                        if (response.response[0].errorMsg === '' || response.response[0].errorMsg == null) {
-                            var selectedAnalysis = response.response[0].result[0]
-                            me.selectedStudy.analysis = selectedAnalysis
-                        } else {
-                            me.message = response.response[0].errorMsg;
-                        }
-                    },
-                    error: function () {
-                        alert('Server error, try again later.');
-                    }
-                }
-            });
+        });
 
-            /** llamada ficheros **/
-            OpencgaManager.files.search({
-                query: {
-                    sid: Cookies("bioinfo_sid"),
-                    studyId: me.selectedStudy.id
+        /** llamada ficheros **/
+        OpencgaManager.files.search({
+            query: {
+                sid: Cookies("bioinfo_sid"),
+                studyId: me.selectedStudy.id
 //                        type: "file"
-                },
-                request: {
-                    //method: 'POST',
-                    success: function (response) {
-                        if (response.response[0].errorMsg === '' || response.response[0].errorMsg == null) {
-                            var files = response.response[0].result
-                            var filesAux = new Array();
-                            for (var i = 0; i < files.length; i++) {
-                                if (files[i].path.indexOf("J_") >= 0) {
-                                    continue;
-                                }
-                                filesAux.push(files[i])
+            },
+            request: {
+                //method: 'POST',
+                success: function (response) {
+                    if (response.response[0].errorMsg === '' || response.response[0].errorMsg == null) {
+                        var files = response.response[0].result
+                        var filesAux = new Array();
+                        for (var i = 0; i < files.length; i++) {
+                            if (files[i].path.indexOf("J_") >= 0) {
+                                continue;
                             }
-                            me.selectedStudy.files = filesAux
-                        } else {
-                            me.message = response.response[0].errorMsg;
+                            filesAux.push(files[i])
                         }
-                    },
-                    error: function () {
-                        me.message = 'Server error, try again later.';
+                        me.selectedStudy.files = filesAux
+                    } else {
+                        me.message = response.response[0].errorMsg;
                     }
+                },
+                error: function () {
+                    me.message = 'Server error, try again later.';
                 }
-            })
+            }
+        })
 //            }
 
-        },
+    },
 
-        getOptions: function () {
-            return  [
-                {
-                    option: 'upload',
-                    text: 'Upload'
-                },
-                {
-                    text: 'Processing',
-                    sub: [
-                        {
-                            text: 'Microarray - One channel',
-                            option: 'none'
-                        },
-                        {
-                            text: 'Affymetrix',
-                            option:'affymetrix'
-                        },
-                        {
-                            text: 'Agilent',
-                            option:'one-channel-agilent'
-                        },
-                        {
-                            text: 'Genepix',
-                            option:'one-channel-genepix'
-                        },
-                        {
-                            text: 'Microarray - Two channel',
-                            option: 'none'
-                        },
-                        {
-                            text: 'Agilent',
-                            option:'two-channel-agilent'
-                        },
-                        {
-                            text: 'Genepix',
-                            option:'two-channel-genepix'
-                        }
+    getOptions: function () {
+        return  [
+            {
+                option: 'upload',
+                text: 'Upload'
+            },
+            {
+                text: 'Processing',
+                sub: [
+                    {
+                        text: 'Edit',
+                        option: 'none'
+                    },
+                    {
+                        text: 'Edit your uploaded data',
+                        option: 'edit'
+                    },
+                    {
+                        text: 'Microarray - One channel',
+                        option: 'none'
+                    },
+                    {
+                        text: 'Affymetrix',
+                        option: 'affymetrix'
+                    },
+                    {
+                        text: 'Agilent',
+                        option: 'one-channel-agilent'
+                    },
+                    {
+                        text: 'Genepix',
+                        option: 'one-channel-genepix'
+                    },
+                    {
+                        text: 'Microarray - Two channel',
+                        option: 'none'
+                    },
+                    {
+                        text: 'Agilent',
+                        option: 'two-channel-agilent'
+                    },
+                    {
+                        text: 'Genepix',
+                        option: 'two-channel-genepix'
+                    },
+                    {
+                        text: 'Data Matrix',
+                        option: 'none'
+                    },
+                    {
+                        text: 'Pre-processing',
+                        option: 'preprocessing-matrix'
+                    }
 
-                    ]
-                }
-                ,
-                {
+                ]
+            }
+            ,
+            {
 //                        option: 'expression',
-                    text: 'Expression',
-                    sub: [
-                        {
-                            text: 'Array',
-                            option: 'none'
-                        },
-                        {
-                            option: 'expression-array-preprocessing',
-                            text: 'Preprocessing'
-                        },
-                        {
-                            option: 'expression-array-differential-expression',
-                            text: 'Differential expression'
-                        },
-                        {
-                            option: 'clustering',
-                            text: 'Clustering'
-                        },
-                        {
-                            option: 'prediction',
-                            text: 'Predictors'
-                        },
-                        {
-                            text: 'RNA-Seq',
-                            option: 'none'
-                        },
-                        {
-                            option: 'expression-rnaseq-preprocessing',
-                            text: 'Preprocessing'
-                        },
-                        {
-                            option: 'expression-rnaseq-differential-expression',
-                            text: 'Differential expression'
-                        },
-                        {
-                            option: 'expression-rnaseq-clustering',
-                            text: 'Clustering'
-                        },
-                        {
-                            option: 'expression-rnaseq-predictors',
-                            text: 'Predictors'
-                        }
-                    ]
-                },
-                {
+                text: 'Expression',
+                sub: [
+                    {
+                        text: 'Array',
+                        option: 'none'
+                    },
+                    {
+                        option: 'expression-array-preprocessing',
+                        text: 'Preprocessing'
+                    },
+                    {
+                        text: 'Differential expression',
+                        sub: [
+                            {
+                                text: "Class comparison",
+                                option: "class-comparison"
+                            },
+                            {
+                                text: "Correlation",
+                                option: "correlation"
+                            },
+                            {
+                                text: "Survival",
+                                option: "survival"
+                            }
+                        ]
+                    },
+                    {
+                        option: 'clustering',
+                        text: 'Clustering'
+                    },
+                    {
+                        option: 'prediction',
+                        text: 'Predictors'
+                    },
+                    {
+                        text: 'RNA-Seq',
+                        option: 'none'
+                    },
+                    {
+                        option: 'expression-rnaseq-preprocessing',
+                        text: 'Preprocessing'
+                    },
+                    {
+                        option: 'expression-rnaseq-differential-expression',
+                        text: 'Differential expression'
+                    },
+                    {
+                        option: 'expression-rnaseq-clustering',
+                        text: 'Clustering'
+                    },
+                    {
+                        option: 'expression-rnaseq-predictors',
+                        text: 'Predictors'
+                    }
+                ]
+            },
+            {
 //                        option: 'genomics',
-                    text: 'Genomics',
-                    sub: [
-                        {
-                            option: 'none',
-                            text: 'Array'
-                        },
-                        {
-                            option: 'genomics-array-normalize',
-                            text: 'Normalize'
-                        },
-                        {
-                            option: 'genomics-array-associative',
-                            text: 'Associative analysis'
-                        },
-                        {
-                            option: 'genomics-array-statification',
-                            text: 'Statification'
-                        },
-                        {
-                            option: 'none',
-                            text: 'Variation'
-                        },
-                        {
-                            option: 'genomics-variation-btest',
-                            text: 'B-test'
-                        }
-                    ]
-                },
-                {
+                text: 'Genomics',
+                sub: [
+                    {
+                        option: 'none',
+                        text: 'Array'
+                    },
+                    {
+                        option: 'genomics-array-normalize',
+                        text: 'Normalize'
+                    },
+                    {
+                        option: 'genomics-array-associative',
+                        text: 'Associative analysis'
+                    },
+                    {
+                        option: 'genomics-array-statification',
+                        text: 'Statification'
+                    },
+                    {
+                        option: 'none',
+                        text: 'Variation'
+                    },
+                    {
+                        option: 'genomics-variation-btest',
+                        text: 'B-test'
+                    }
+                ]
+            },
+            {
 //                        option: 'functional',
-                    text: 'Functional',
-                    sub: [
-                        {
-                            option: 'fatigo',
-                            text: 'FatiGO'
-                        },
-                        {
-                            option: 'fatiscan',
-                            text: 'FatiScan'
-                        },
-                        {
-                            option: 'snow',
-                            text: 'SNOW'
-                        },
-                        {
-                            option: 'networkminer',
-                            text: 'NetworkMiner'
-                        }
-                    ]
-                },
-                {
-                    option: 'integration',
-                    text: 'Integration'
-                }
+                text: 'Functional',
+                sub: [
+                    {
+                        option: 'fatigo',
+                        text: 'FatiGO'
+                    },
+                    {
+                        option: 'fatiscan',
+                        text: 'FatiScan'
+                    },
+                    {
+                        option: 'snow',
+                        text: 'SNOW'
+                    },
+                    {
+                        option: 'networkminer',
+                        text: 'NetworkMiner'
+                    }
+                ]
+            },
+            {
+                option: 'integration',
+                text: 'Integration'
+            }
 
-            ]
-        }
-    });
+        ]
+    }
+});
 </script>
 </polymer-element>
