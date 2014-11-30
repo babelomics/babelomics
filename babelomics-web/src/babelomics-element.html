@@ -32,6 +32,8 @@
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-survival.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-preprocessing-matrix.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-edit.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-association.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-stratification.html">
 
 
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-nm-result.html">
@@ -255,6 +257,23 @@
         </jso-edit>
     </template>
 
+    <template if="{{selectedOption == 'association'}}">
+        <jso-association
+                selectedOption="{{selectedOption}}"
+                userData="{{userData}}"
+                selectedStudy="{{selectedStudy}}"
+                >
+        </jso-association>
+    </template>
+
+    <template if="{{selectedOption == 'stratification'}}">
+        <jso-stratification
+                selectedOption="{{selectedOption}}"
+                userData="{{userData}}"
+                selectedStudy="{{selectedStudy}}"
+                >
+        </jso-stratification>
+    </template>
 
     <jso-job-launched hide="{{selectedOption != 'jobLaunched' }}"></jso-job-launched>
     <div id="sidePanel" class="side-panel side-panel-shown">
@@ -470,12 +489,12 @@ Polymer({
                         text: 'Normalize'
                     },
                     {
-                        option: 'genomics-array-associative',
-                        text: 'Associative analysis'
+                        option: 'association',
+                        text: 'Association analysis'
                     },
                     {
-                        option: 'genomics-array-statification',
-                        text: 'Statification'
+                        option: 'stratification',
+                        text: 'Stratification'
                     },
                     {
                         option: 'none',
