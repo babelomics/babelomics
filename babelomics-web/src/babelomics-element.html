@@ -20,6 +20,7 @@
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-network-miner.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-snow.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-fatigo.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-fatiscan.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-affy.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-one-channel-agilent.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-one-channel-genepix.html">
@@ -147,6 +148,15 @@
                 >
 
         </jso-fatigo>
+    </template>
+    <template if="{{selectedOption == 'fatiscan'}}">
+        <jso-fatiscan
+                selectedOption="{{selectedOption}}"
+                userData="{{userData}}"
+                selectedStudy="{{selectedStudy}}"
+                >
+
+        </jso-fatiscan>
     </template>
     <template if="{{selectedOption == 'affymetrix'}}">
         <jso-affy
