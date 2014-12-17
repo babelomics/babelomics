@@ -53,243 +53,245 @@
 
 <polymer-element name="babelomics-element">
 <template>
-    <link rel="stylesheet" href="../lib/jsorolla/styles/css/style.css">
-    <link rel="stylesheet" href="../bower_components/fontawesome/css/font-awesome.min.css">
-    <style>
-        :host {
-            display: block;
-            position: relative;
-            /*height: 100vh;*/
-            height: 100%;
-            background-color: #314559;
+<link rel="stylesheet" href="../lib/jsorolla/styles/css/style.css">
+<link rel="stylesheet" href="../bower_components/fontawesome/css/font-awesome.min.css">
+<style>
+    :host {
+        display: block;
+        position: relative;
+        cursor: default;
+        font-size: 13px;
+    }
 
-            /*-webkit-touch-callout: none;*/
-            /*-webkit-user-select: none;*/
-            /*-khtml-user-select: none;*/
-            /*-moz-user-select: none;*/
-            /*-ms-user-select: none;*/
-            /*user-select: none;*/
-            cursor: default;
+    [hide=true] {
+        display: none !important;
+    }
 
-            font-size: 13px;
-        }
+    jso-project-browser {
+        height: calc(100vh - 60px);
+    }
 
-        [hide=true] {
-            display: none !important;
-        }
+    jso-job-list {
+        height: calc(100vh - 60px);
+        width: 250px;
+        top: 60px;
+        right: 0px;
+    }
 
-        /*[hide=false] {*/
-        /*display: initial !important;*/
-        /*}*/
+    div.side-panel {
+        box-sizing: border-box;
+        visibility: hidden;
+        opacity: 0;
+        position: absolute;
+        z-index: 50000;
+        top: 60px;
+        right: 0px;
+        width: 350px;
+        margin: 0;
+        padding: 0;
+        background: white;
+        /*border: 1px solid #c6d0da;*/
+        /*border-right-width: 0px;*/
+        transition: all 0.2s;
+    }
 
-        jso-project-browser {
-            position: absolute;
-            top: 60px; /* header height */
-            bottom: 0;
-            left: 0;
-            right: 0;
-        }
+    div.side-panel-shown {
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+</style>
+<jso-header selectedOption="{{selectedOption}}" userData="{{userData}}"
+            showJobs="{{showJobs}}"
+            options="{{options}}">
+    <span class="title">Babelomics 5</span>
+    <!--<span class="description">5</span>-->
+</jso-header>
 
-        div.side-panel {
-            box-sizing: border-box;
-            visibility: hidden;
-            opacity: 0;
-            position: absolute;
-            z-index: 50000;
-            top: 60px;
-            right: 0px;
-            width: 350px;
-            margin: 0;
-            padding: 0;
-            background: white;
-            /*border: 1px solid #c6d0da;*/
-            /*border-right-width: 0px;*/
-            transition: all 0.2s;
-        }
 
-        div.side-panel-shown {
-            visibility: visible !important;
-            opacity: 1 !important;
-        }
-    </style>
-    <jso-header selectedOption="{{selectedOption}}" userData="{{userData}}" title="Babelomics 5"
-                showJobs="{{showJobs}}"
-                options="{{options}}">
-    </jso-header>
+<babelomics-home hide="{{selectedOption != 'home' }}"></babelomics-home>
+<jso-job-result jobItem="{{jobItem}}" hide="{{selectedOption != 'jobReady' }}"></jso-job-result>
+<jso-job-no-ready hide="{{selectedOption != 'jobNoReady' }}" jobItem="{{jobItem}}"></jso-job-no-ready>
+<template if="{{selectedOption == 'projects'}}">
+    <jso-project-browser userData="{{userData}}" selectedStudy="{{selectedStudy}}" studies="{{studies}}"
+                         selectedProject="{{selectedProject}}"></jso-project-browser>
+</template>
+<template if="{{selectedOption == 'networkminer'}}">
+    <jso-network-miner
+            selectedOption="{{selectedOption}}"
+            userData="{{userData}}"
+            selectedStudy="{{selectedStudy}}"
+            ></jso-network-miner>
+</template>
 
-    <babelomics-home hide="{{selectedOption != 'home' }}"></babelomics-home>
-    <jso-job-result jobItem="{{jobItem}}" hide="{{selectedOption != 'jobReady' }}"></jso-job-result>
-    <jso-job-no-ready hide="{{selectedOption != 'jobNoReady' }}" jobItem="{{jobItem}}"></jso-job-no-ready>
-    <template if="{{selectedOption == 'projects'}}">
-        <jso-project-browser userData="{{userData}}" selectedStudy="{{selectedStudy}}"
-                             selectedProject="{{selectedProject}}"></jso-project-browser>
-    </template>
-    <template if="{{selectedOption == 'networkminer'}}">
-        <jso-network-miner
-                selectedOption="{{selectedOption}}"
-                userData="{{userData}}"
-                selectedStudy="{{selectedStudy}}"
-                ></jso-network-miner>
-    </template>
+<template if="{{selectedOption == 'snow'}}">
+    <jso-snow
+            selectedOption="{{selectedOption}}"
+            userData="{{userData}}"
+            selectedStudy="{{selectedStudy}}"
+            studies="{{studies}}"
+            >
+    </jso-snow>
+</template>
+<template if="{{selectedOption == 'fatigo'}}">
+    <jso-fatigo
+            selectedOption="{{selectedOption}}"
+            userData="{{userData}}"
+            selectedStudy="{{selectedStudy}}"
+            >
 
-    <template if="{{selectedOption == 'snow'}}">
-        <jso-snow
-                selectedOption="{{selectedOption}}"
-                userData="{{userData}}"
-                selectedStudy="{{selectedStudy}}"
-                >
-        </jso-snow>
-    </template>
-    <template if="{{selectedOption == 'fatigo'}}">
-        <jso-fatigo
-                selectedOption="{{selectedOption}}"
-                userData="{{userData}}"
-                selectedStudy="{{selectedStudy}}"
-                >
+    </jso-fatigo>
+</template>
+<template if="{{selectedOption == 'fatiscan'}}">
+    <jso-fatiscan
+            selectedOption="{{selectedOption}}"
+            userData="{{userData}}"
+            selectedStudy="{{selectedStudy}}"
+            >
 
-        </jso-fatigo>
-    </template>
-    <template if="{{selectedOption == 'fatiscan'}}">
-        <jso-fatiscan
-                selectedOption="{{selectedOption}}"
-                userData="{{userData}}"
-                selectedStudy="{{selectedStudy}}"
-                >
+    </jso-fatiscan>
+</template>
+<template if="{{selectedOption == 'affymetrix'}}">
+    <jso-affy
+            selectedOption="{{selectedOption}}"
+            userData="{{userData}}"
+            selectedStudy="{{selectedStudy}}"
+            >
 
-        </jso-fatiscan>
-    </template>
-    <template if="{{selectedOption == 'affymetrix'}}">
-        <jso-affy
-                selectedOption="{{selectedOption}}"
-                userData="{{userData}}"
-                selectedStudy="{{selectedStudy}}"
-                >
+    </jso-affy>
+</template>
+<template if="{{selectedOption == 'one-channel-agilent'}}">
+    <jso-one-channel-agilent
+            selectedOption="{{selectedOption}}"
+            userData="{{userData}}"
+            selectedStudy="{{selectedStudy}}"
+            >
 
-        </jso-affy>
-    </template>
-    <template if="{{selectedOption == 'one-channel-agilent'}}">
-        <jso-one-channel-agilent
-                selectedOption="{{selectedOption}}"
-                userData="{{userData}}"
-                selectedStudy="{{selectedStudy}}"
-                >
+    </jso-one-channel-agilent>
+</template>
+<template if="{{selectedOption == 'one-channel-genepix'}}">
+    <jso-one-channel-genepix
+            selectedOption="{{selectedOption}}"
+            userData="{{userData}}"
+            selectedStudy="{{selectedStudy}}"
+            >
 
-        </jso-one-channel-agilent>
-    </template>
-    <template if="{{selectedOption == 'one-channel-genepix'}}">
-        <jso-one-channel-genepix
-                selectedOption="{{selectedOption}}"
-                userData="{{userData}}"
-                selectedStudy="{{selectedStudy}}"
-                >
+    </jso-one-channel-genepix>
+</template>
+<template if="{{selectedOption == 'two-channel-agilent'}}">
+    <jso-two-channel-agilent
+            selectedOption="{{selectedOption}}"
+            userData="{{userData}}"
+            selectedStudy="{{selectedStudy}}"
+            >
 
-        </jso-one-channel-genepix>
-    </template>
-    <template if="{{selectedOption == 'two-channel-agilent'}}">
-        <jso-two-channel-agilent
-                selectedOption="{{selectedOption}}"
-                userData="{{userData}}"
-                selectedStudy="{{selectedStudy}}"
-                >
+    </jso-two-channel-agilent>
+</template>
+<template if="{{selectedOption == 'two-channel-genepix'}}">
+    <jso-two-channel-genepix
+            selectedOption="{{selectedOption}}"
+            userData="{{userData}}"
+            selectedStudy="{{selectedStudy}}"
+            >
 
-        </jso-two-channel-agilent>
-    </template>
-    <template if="{{selectedOption == 'two-channel-genepix'}}">
-        <jso-two-channel-genepix
-                selectedOption="{{selectedOption}}"
-                userData="{{userData}}"
-                selectedStudy="{{selectedStudy}}"
-                >
+    </jso-two-channel-genepix>
+</template>
+<template if="{{selectedOption == 'clustering'}}">
+    <jso-clustering
+            selectedOption="{{selectedOption}}"
+            userData="{{userData}}"
+            selectedStudy="{{selectedStudy}}"
+            >
 
-        </jso-two-channel-genepix>
-    </template>
-    <template if="{{selectedOption == 'clustering'}}">
-        <jso-clustering
-                selectedOption="{{selectedOption}}"
-                userData="{{userData}}"
-                selectedStudy="{{selectedStudy}}"
-                >
+    </jso-clustering>
+</template>
+<template if="{{selectedOption == 'prediction'}}">
+    <jso-prediction
+            selectedOption="{{selectedOption}}"
+            userData="{{userData}}"
+            selectedStudy="{{selectedStudy}}"
+            >
 
-        </jso-clustering>
-    </template>
-    <template if="{{selectedOption == 'prediction'}}">
-        <jso-prediction
-                selectedOption="{{selectedOption}}"
-                userData="{{userData}}"
-                selectedStudy="{{selectedStudy}}"
-                >
+    </jso-prediction>
+</template>
+<template if="{{selectedOption == 'class-comparison'}}">
+    <jso-class-comparison
+            selectedOption="{{selectedOption}}"
+            userData="{{userData}}"
+            selectedStudy="{{selectedStudy}}"
+            >
 
-        </jso-prediction>
-    </template>
-    <template if="{{selectedOption == 'class-comparison'}}">
-        <jso-class-comparison
-                selectedOption="{{selectedOption}}"
-                userData="{{userData}}"
-                selectedStudy="{{selectedStudy}}"
-                >
+    </jso-class-comparison>
+</template>
 
-        </jso-class-comparison>
-    </template>
+<template if="{{selectedOption == 'correlation'}}">
+    <jso-correlation
+            selectedOption="{{selectedOption}}"
+            userData="{{userData}}"
+            selectedStudy="{{selectedStudy}}"
+            >
 
-    <template if="{{selectedOption == 'correlation'}}">
-        <jso-correlation
-                selectedOption="{{selectedOption}}"
-                userData="{{userData}}"
-                selectedStudy="{{selectedStudy}}"
-                >
+    </jso-correlation>
+</template>
 
-        </jso-correlation>
-    </template>
+<template if="{{selectedOption == 'survival'}}">
+    <jso-survival
+            selectedOption="{{selectedOption}}"
+            userData="{{userData}}"
+            selectedStudy="{{selectedStudy}}"
+            >
+    </jso-survival>
+</template>
 
-    <template if="{{selectedOption == 'survival'}}">
-        <jso-survival
-                selectedOption="{{selectedOption}}"
-                userData="{{userData}}"
-                selectedStudy="{{selectedStudy}}"
-                >
-        </jso-survival>
-    </template>
+<template if="{{selectedOption == 'preprocessing-matrix'}}">
+    <jso-preprocessing-matrix
+            selectedOption="{{selectedOption}}"
+            userData="{{userData}}"
+            selectedStudy="{{selectedStudy}}"
+            >
+    </jso-preprocessing-matrix>
+</template>
+<template if="{{selectedOption == 'edit'}}">
+    <jso-edit
+            selectedOption="{{selectedOption}}"
+            userData="{{userData}}"
+            selectedStudy="{{selectedStudy}}"
+            >
+    </jso-edit>
+</template>
 
-    <template if="{{selectedOption == 'preprocessing-matrix'}}">
-        <jso-preprocessing-matrix
-                selectedOption="{{selectedOption}}"
-                userData="{{userData}}"
-                selectedStudy="{{selectedStudy}}"
-                >
-        </jso-preprocessing-matrix>
-    </template>
-    <template if="{{selectedOption == 'edit'}}">
-        <jso-edit
-                selectedOption="{{selectedOption}}"
-                userData="{{userData}}"
-                selectedStudy="{{selectedStudy}}"
-                >
-        </jso-edit>
-    </template>
+<template if="{{selectedOption == 'association'}}">
+    <jso-association
+            selectedOption="{{selectedOption}}"
+            userData="{{userData}}"
+            selectedStudy="{{selectedStudy}}"
+            >
+    </jso-association>
+</template>
 
-    <template if="{{selectedOption == 'association'}}">
-        <jso-association
-                selectedOption="{{selectedOption}}"
-                userData="{{userData}}"
-                selectedStudy="{{selectedStudy}}"
-                >
-        </jso-association>
-    </template>
+<template if="{{selectedOption == 'stratification'}}">
+    <jso-stratification
+            selectedOption="{{selectedOption}}"
+            userData="{{userData}}"
+            selectedStudy="{{selectedStudy}}"
+            >
+    </jso-stratification>
+</template>
 
-    <template if="{{selectedOption == 'stratification'}}">
-        <jso-stratification
-                selectedOption="{{selectedOption}}"
-                userData="{{userData}}"
-                selectedStudy="{{selectedStudy}}"
-                >
-        </jso-stratification>
-    </template>
-
-    <jso-job-launched hide="{{selectedOption != 'jobLaunched' }}"></jso-job-launched>
-    <div id="sidePanel" class="side-panel side-panel-shown">
-        <jso-job-list jobItem="{{jobItem}}" selectedOption="{{selectedOption}}" userData="{{userData}}"
-                      hide="{{!showJobs}}" showJobs="{{showJobs}}" selectedStudy="{{selectedStudy}}"></jso-job-list>
-    </div>
+<jso-job-launched hide="{{selectedOption != 'jobLaunched' }}"></jso-job-launched>
+<!--<div id="sidePanel" class="side-panel side-panel-shown">-->
+<!--&lt;!&ndash;<jso-job-list jobItem="{{jobItem}}" selectedOption="{{selectedOption}}" userData="{{userData}}"&ndash;&gt;-->
+<!--&lt;!&ndash;hide="{{!showJobs}}" showJobs="{{showJobs}}" selectedStudy="{{selectedStudy}}" ></jso-job-list>&ndash;&gt;-->
+<!--</div>-->
+<template if="{{ showJobs }}">
+    <jso-job-list
+            on-job-item-click="{{handleJobItemClick}}"
+            userData="{{userData}}"
+            selectedOption="{{selectedOption}}"
+            selectedStudy="{{selectedStudy}}"
+            allowedTools="{{allowedTools}}"
+            showJobs="{{showJobs}}">
+    </jso-job-list>
+</template>
 
 </template>
 <script>
@@ -301,75 +303,109 @@ Polymer({
         this.options = this.getOptions();
         this.hideJobView = true;
 
+        this.selectedProject;
+        this.selectedStudy;
+        this.studies;
+
     },
     handleAppMenu: function (e) {
         this.$.sidePanel.classList.toggle('side-panel-shown');
     },
+    handleJobItemClick: function (e) {
+        this.jobItem = e.detail.jobItem;
+    },
+
     userDataChanged: function (oldValue, newValue) {
+        var me = this;
+        this.selectedProject = this.userData.projects[0];
 
-        var me = this
-        /** These two if initialize selected project and study **/
-//            if (!this.selectedProject)
-        this.selectedProject = this.userData.projects[0]
-
-        if (!this.selectedStudy) {
-            var selectedStudyIdx = 0;
-            this.selectedStudy = this.selectedProject.studies[selectedStudyIdx];
-        }
-        /** llamada analysis **/
-        OpencgaManager.studies.analysis({
-            id: this.selectedStudy.id,
+        OpencgaManager.projects.studies({
+            id: this.selectedProject.id,
             query: {
-                sid: Cookies('bioinfo_sid')
+                sid: Cookies("bioinfo_sid")
             },
             request: {
                 success: function (response) {
                     if (response.response[0].errorMsg === '' || response.response[0].errorMsg == null) {
-                        var selectedAnalysis = response.response[0].result[0]
-                        me.selectedStudy.analysis = selectedAnalysis
+                        me.studies = response.response[0].result;
+                        me.selectedStudy = me.studies[0];
                     } else {
-                        me.message = response.response[0].errorMsg;
+                        console.log(response.error);
+                        console.log(response.response[0].errorMsg);
                     }
                 },
                 error: function () {
-                    alert('Server error, try again later.');
-                }
-            }
-        });
-
-        /** llamada ficheros **/
-        OpencgaManager.files.search({
-            query: {
-                sid: Cookies("bioinfo_sid"),
-                studyId: me.selectedStudy.id
-//                        type: "file"
-            },
-            request: {
-                //method: 'POST',
-                success: function (response) {
-                    if (response.response[0].errorMsg === '' || response.response[0].errorMsg == null) {
-                        var files = response.response[0].result
-                        var filesAux = new Array();
-                        for (var i = 0; i < files.length; i++) {
-                            if (files[i].path.indexOf("J_") >= 0) {
-                                continue;
-                            }
-                            filesAux.push(files[i])
-                        }
-                        me.selectedStudy.files = filesAux
-                    } else {
-                        me.message = response.response[0].errorMsg;
-                    }
-                },
-                error: function () {
-                    me.message = 'Server error, try again later.';
+                    console.log('Server error, try again later.');
                 }
             }
         })
-//            }
+
 
     },
-
+//    userDataChanged: function (oldValue, newValue) {
+//
+//        var me = this
+//        /** These two if initialize selected project and study **/
+////            if (!this.selectedProject)
+//        this.selectedProject = this.userData.projects[0]
+//
+//        if (!this.selectedStudy) {
+//            var selectedStudyIdx = 0;
+//            this.selectedStudy = this.selectedProject.studies[selectedStudyIdx];
+//        }
+//        /** llamada analysis **/
+//        OpencgaManager.studies.analysis({
+//            id: this.selectedStudy.id,
+//            query: {
+//                sid: Cookies('bioinfo_sid')
+//            },
+//            request: {
+//                success: function (response) {
+//                    if (response.response[0].errorMsg === '' || response.response[0].errorMsg == null) {
+//                        var selectedAnalysis = response.response[0].result[0]
+//                        me.selectedStudy.analysis = selectedAnalysis
+//                    } else {
+//                        me.message = response.response[0].errorMsg;
+//                    }
+//                },
+//                error: function () {
+//                    alert('Server error, try again later.');
+//                }
+//            }
+//        });
+//
+//        /** llamada ficheros **/
+//        OpencgaManager.files.search({
+//            query: {
+//                sid: Cookies("bioinfo_sid"),
+//                studyId: me.selectedStudy.id
+////                        type: "file"
+//            },
+//            request: {
+//                //method: 'POST',
+//                success: function (response) {
+//                    if (response.response[0].errorMsg === '' || response.response[0].errorMsg == null) {
+//                        var files = response.response[0].result
+//                        var filesAux = new Array();
+//                        for (var i = 0; i < files.length; i++) {
+//                            if (files[i].path.indexOf("J_") >= 0) {
+//                                continue;
+//                            }
+//                            filesAux.push(files[i])
+//                        }
+//                        me.selectedStudy.files = filesAux
+//                    } else {
+//                        me.message = response.response[0].errorMsg;
+//                    }
+//                },
+//                error: function () {
+//                    me.message = 'Server error, try again later.';
+//                }
+//            }
+//        })
+////            }
+//
+//    },
     getOptions: function () {
         return  [
             {
