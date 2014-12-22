@@ -2,7 +2,7 @@
 <html>
 <head>
     <!--Web Components-->
-    <script src="../bower_components/platform/platform.js"></script>
+    <script src="../bower_components/webcomponentsjs/webcomponents.min.js"></script>
     <link rel="import" href="babelomics-element.html">
 
 
@@ -20,6 +20,11 @@
     <script src="../bower_components/highcharts-release/adapters/standalone-framework.js"></script>
     <script src="../bower_components/highcharts-release/highcharts.js"></script>
 
+    <script src="../bower_components/underscore/underscore-min.js"></script>
+    <script src="../bower_components/backbone/backbone.js"></script>
+    <script src="../bower_components/d3/d3.min.js"></script>
+
+
     <!--Internal-->
     <link rel="stylesheet" href="../lib/jsorolla/styles/fonts/fonts.css">
 
@@ -28,19 +33,26 @@
 
 
     <style>
-        html, body {
-            font-family: 'Lato', 'Roboto', 'Helvetica Neue', Helvetica, Arial, 'sans-serif', serif !important;
-            height: 100vh;
-            margin: 0px;
+
+        html {
+            /*overflow-x:hidden;*/
+            /*overflow-y:scroll;*/
+            background-color: #314559;
         }
+
+        html, body {
+            position: relative;
+            margin: 0px;
+            font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, 'sans-serif' !important;
+        }
+
     </style>
     <script>
-         WORKERS_PATH = '../lib/jsorolla/src/lib/';
+        WORKERS_PATH = '../lib/jsorolla/src/lib/';
     </script>
 </head>
 
 <body>
-
 <babelomics-element></babelomics-element>
 
 <script>
