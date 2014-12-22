@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Babelomics</title>
+    <!--Fonts-->
+    <link href='src/fonts/fonts.css' rel='stylesheet' type='text/css'>
+
+    <!--Web Components-->
+    <script src="bower_components/webcomponentsjs/webcomponents.min.js"></script>
+    <link rel="import" href="bower_components/polymer/polymer.html">
+    <link rel="import" href="src/babelomics-element.html">
+
+
+    <!--Libraries-->
+
+    <!--Config-->
+    <script src="src/babelomics-config.js"></script>
+
+    <!--External-->
+    <link rel="stylesheet" href="bower_components/fontawesome/css/font-awesome.min.css">
+
+    <script src="bower_components/cookies-js/dist/cookies.min.js"></script>
+    <script src="bower_components/crypto-js-evanvosberg/build/components/core-min.js"></script>
+    <script src="bower_components/crypto-js-evanvosberg/build/components/sha1-min.js"></script>
+    <script src="bower_components/highcharts-release/adapters/standalone-framework.js"></script>
+    <script src="bower_components/highcharts-release/highcharts.js"></script>
+
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/underscore/underscore-min.js"></script>
+    <script src="bower_components/backbone/backbone.js"></script>
+
+
+    <!--Internal-->
+    <link rel="stylesheet" href="lib/jsorolla/styles/fonts/fonts.css">
+
+    <script src="lib/jsorolla/src/lib/utils.js"></script>
+    <script src="lib/jsorolla/src/lib/opencga-manager.js"></script>
+
+
+    <style>
+
+        html {
+            background-color: #435f7a;
+        }
+
+        html, body {
+            position: relative;
+            margin: 0px;
+            font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, 'sans-serif' !important;
+        }
+
+    </style>
+    <script>
+        WORKERS_PATH = '../lib/jsorolla/src/lib/';
+    </script>
+</head>
+
+<body>
+<babelomics-element></babelomics-element>
+
+<script>
+    window.addEventListener('polymer-ready', function (debuggere) {
+        console.log('polymer-ready');
+    });
+</script>
+</body>
+</html>
