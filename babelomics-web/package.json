@@ -2,7 +2,7 @@
     "name": "Babelomics",
     "version": "5.0.0",
     "scripts": {
-        "build": "build.sh"
+        "build": "./build.sh"
     },
     "devDependencies": {
         "vulcanize": "^0.7.1"
