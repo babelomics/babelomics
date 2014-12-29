@@ -64,30 +64,39 @@
             }
 
             .content {
+                background-color: #435f7a;
                 position: relative;
+                /*min-height: calc(100vh - 160px);*/
+            }
+
+            .content > * {
                 min-height: calc(100vh - 160px);
             }
 
             jso-project-browser {
                 height: calc(100vh - 160px);
             }
-
-            jso-job-list {
-                height: calc(100vh - 60px);
-                width: 250px;
-                top: 0px;
-                right: 0px;
-            }
         </style>
-        <jso-header selectedOption="{{selectedOption}}" userData="{{userData}}"
+        <jso-header id="jsoHeader"
+                    on-session-change="{{handleSessionChange}}"
+                    selectedOption="{{selectedOption}}"
+                    userData="{{userData}}"
                     showJobs="{{showJobs}}"
-                    options="{{options}}">
+                    options="{{options}}"
+                    studies="{{studies}}"
+                    selectedStudy="{{selectedStudy}}"
+                    allowedTools="{{allowedTools}}"
+                    jobItem="{{jobItem}}"
+                    helpLink="https://github.com/babelomics/babelomics/wiki"
+                    tutorialLink="https://github.com/babelomics/babelomics/wiki/Tutorial"
+                    hideHomeLink="true">
             <span class="title">Babelomics 5</span>
             <!--<span class="description">5</span>-->
         </jso-header>
         <div class="content">
-
-            <babelomics-home hidden?="{{selectedOption != 'home' }}"></babelomics-home>
+            <template if="{{ selectedOption == 'home' }}">
+                <babelomics-home></babelomics-home>
+            </template>
             <jso-job-result jobItem="{{jobItem}}" hidden?="{{selectedOption != 'jobReady' }}"></jso-job-result>
             <jso-job-no-ready hidden?="{{selectedOption != 'jobNoReady' }}" jobItem="{{jobItem}}"></jso-job-no-ready>
             <template if="{{selectedOption == 'projects'}}">
@@ -273,21 +282,21 @@
                 </jso-stratification>
             </template>
 
-            <jso-job-launched hidden?="{{selectedOption != 'jobLaunched' }}"></jso-job-launched>
-            <!--<div id="sidePanel" class="side-panel side-panel-shown">-->
-            <!--&lt;!&ndash;<jso-job-list jobItem="{{jobItem}}" selectedOption="{{selectedOption}}" userData="{{userData}}"&ndash;&gt;-->
-            <!--&lt;!&ndash;hide="{{!showJobs}}" showJobs="{{showJobs}}" selectedStudy="{{selectedStudy}}" ></jso-job-list>&ndash;&gt;-->
-            <!--</div>-->
-            <template if="{{ showJobs }}">
-                <jso-job-list
-                        on-job-item-click="{{handleJobItemClick}}"
-                        userData="{{userData}}"
-                        selectedOption="{{selectedOption}}"
-                        selectedStudy="{{selectedStudy}}"
-                        allowedTools="{{allowedTools}}"
-                        showJobs="{{showJobs}}">
-                </jso-job-list>
-            </template>
+            <!--<jso-job-launched hidden?="{{selectedOption != 'jobLaunched' }}"></jso-job-launched>-->
+            <!--&lt;!&ndash;<div id="sidePanel" class="side-panel side-panel-shown">&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<jso-job-list jobItem="{{jobItem}}" selectedOption="{{selectedOption}}" userData="{{userData}}"&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;hide="{{!showJobs}}" showJobs="{{showJobs}}" selectedStudy="{{selectedStudy}}" ></jso-job-list>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--<template if="{{ showJobs }}">-->
+                <!--<jso-job-list-->
+                        <!--on-job-item-click="{{handleJobItemClick}}"-->
+                        <!--userData="{{userData}}"-->
+                        <!--selectedOption="{{selectedOption}}"-->
+                        <!--selectedStudy="{{selectedStudy}}"-->
+                        <!--allowedTools="{{allowedTools}}"-->
+                        <!--showJobs="{{showJobs}}">-->
+                <!--</jso-job-list>-->
+            <!--</template>-->
 
 
         </div>
@@ -318,9 +327,9 @@
             handleAppMenu: function (e) {
                 this.$.sidePanel.classList.toggle('side-panel-shown');
             },
-            handleJobItemClick: function (e) {
-                this.jobItem = e.detail.jobItem;
-            },
+//            handleJobItemClick: function (e) {
+//                this.jobItem = e.detail.jobItem;
+//            },
 
             userDataChanged: function (oldValue, newValue) {
                 var me = this;

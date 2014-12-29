@@ -3,47 +3,62 @@
         <style>
             :host {
                 display: block;
-                position: absolute;
+                position: relative;
                 box-sizing: border-box;
                 z-index: 50000;
 
-                left: 0;
-                right: 0;
-                margin-left: auto;
-                margin-right: auto;
+                margin: 0px auto 0px auto;
 
                 width: 70%;
-                max-width: 820px;
-            }
-
-            .info {
+                max-width: 780px;
+                color: #FFF;
                 font-size: 22px;
                 line-height: 25px;
                 font-weight: 300;
-                color: #FFF;
             }
 
-            .info > .paragraph {
+            .paragraph {
                 text-align: justify;
+                padding: 10px 0;
+            }
+            .paragraph2 {
+                font-size: 16px;
+                padding: 0 0 10px 0;
             }
 
             .title {
                 font-size: 40px;
+                padding-top: 30px;
+                padding-bottom: 10px;
                 color: white;
             }
 
             .title2 {
                 color: white;
+                padding-top: 20px;
+                padding-bottom: 10px;
+            }
+
+            .b {
+                font-weight: 400;
+            }
+
+            a, a:visited {
+                text-decoration: none;
+                color: #ffad76;
             }
         </style>
 
+        <div class="title">Overview</div>
 
-        <div class="info">
-            <p class="title">Overview</p>
+        <div class="paragraph">
+            Welcome to Babelomics 5.
+        </div>
 
-            <p class="title2">BABELOMICS</p>
-
-            <p class="paragraph">Welcome to Babelomics 5.</p>
+        <div class="title2">Note</div>
+        <div class="paragraph2">
+            This web application makes an intensive use of new web technologies and standards like HTML5,
+            so only the browser Chrome 39 is fully supported. we are working hard to make it compatible with other browsers.
         </div>
     </template>
 </polymer-element>
