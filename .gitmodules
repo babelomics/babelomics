@@ -1,3 +1,3 @@
 [submodule "babelomics-web/lib/jsorolla"]
 	path = babelomics-web/lib/jsorolla
-	url = git@github.com:opencb/jsorolla.git
+	url = https://github.com/opencb/jsorolla.git
