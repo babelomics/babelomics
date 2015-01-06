@@ -42,6 +42,7 @@
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-nm-result.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-snow-result.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-job-result.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-predictors-selection-table.html">
 
 
 <script src="../lib/jsorolla/src/lib/data-adapter/network/sif-network-data-adapter.js"></script>
@@ -97,7 +98,7 @@
             <template if="{{ selectedOption == 'home' }}">
                 <babelomics-home></babelomics-home>
             </template>
-            <jso-job-result jobItem="{{jobItem}}" hidden?="{{selectedOption != 'jobReady' }}"></jso-job-result>
+            <jso-job-result jobItem="{{jobItem}}" hidden?="{{selectedOption != 'jobReady' }}" selectedOption="{{selectedOption}}"></jso-job-result>
             <jso-job-no-ready hidden?="{{selectedOption != 'jobNoReady' }}" jobItem="{{jobItem}}"></jso-job-no-ready>
             <template if="{{selectedOption == 'projects'}}">
                 <jso-project-browser userData="{{userData}}" selectedStudy="{{selectedStudy}}" studies="{{studies}}"
