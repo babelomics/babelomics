@@ -101,7 +101,7 @@
             <!--<span class="description">5</span>-->
         </jso-header>
         <div class="content">
-            <template if="{{ selectedOption == 'home' }}">
+            <template if="{{ selectedOption == 'home' || selectedOption == 'none' || selectedOption == ''}}">
                 <babelomics-home></babelomics-home>
             </template>
             <jso-job-result jobItem="{{jobItem}}" hidden?="{{selectedOption != 'jobReady' }}" selectedOption="{{selectedOption}}"></jso-job-result>

@@ -64,7 +64,9 @@
 <babelomics-element></babelomics-element>
 
 <script>
+    var babelomics;
     window.addEventListener('polymer-ready', function (debuggere) {
+        babelomics = document.querySelector('babelomics-element');
         console.log('polymer-ready');
     });
 </script>
