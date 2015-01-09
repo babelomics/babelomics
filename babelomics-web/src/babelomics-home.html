@@ -1,5 +1,6 @@
-<polymer-element name="babelomics-home" noscript>
+<polymer-element name="babelomics-home">
     <template>
+        <link rel="stylesheet" href="../jso-style.css">
         <style>
             :host {
                 display: block;
@@ -21,6 +22,7 @@
                 text-align: justify;
                 padding: 10px 0;
             }
+
             .paragraph2 {
                 font-size: 16px;
                 padding: 0 0 10px 0;
@@ -53,6 +55,8 @@
 
         <div class="paragraph">
             Welcome to Babelomics 5.
+            <br>
+            <button on-click="{{annonymousLogin}}">Try it now!!</button>
         </div>
 
         <div class="title2">Note</div>
@@ -60,5 +64,17 @@
             This web application makes an intensive use of new web technologies and standards like HTML5,
             so only the browser Chrome 39 is fully supported. we are working hard to make it compatible with other browsers.
         </div>
+
+        <!--<div class="button action" on-click="{{annonymousLogin}}">Try it now!!</div>-->
     </template>
+    <script>
+        Polymer({
+            created:function(){
+            },
+            annonymousLogin: function () {
+                this.fire('annonymous');
+
+            }
+        })
+    </script>
 </polymer-element>

@@ -17,6 +17,7 @@
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-class-edit.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-class-viewer.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-popup.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-biotype.html">
 
 <link rel="import" href="../lib/jsorolla/src/network-viewer/jso-network-viewer.html">
 
@@ -102,7 +103,7 @@
         </jso-header>
         <div class="content">
             <template if="{{ selectedOption == 'home' || selectedOption == 'none' || selectedOption == ''}}">
-                <babelomics-home></babelomics-home>
+                <babelomics-home on-annonymous="{{annonymousLogin}}"></babelomics-home>
             </template>
             <jso-job-result jobItem="{{jobItem}}" hidden?="{{selectedOption != 'jobReady' }}" selectedOption="{{selectedOption}}"></jso-job-result>
             <jso-job-no-ready hidden?="{{selectedOption != 'jobNoReady' }}" jobItem="{{jobItem}}"></jso-job-no-ready>
@@ -328,7 +329,6 @@
 
         </div>
 
-
         <jso-footer>
             BABELOMICS: created by Computational Genomics Department
             <br>
@@ -384,6 +384,9 @@
                 })
 
 
+            },
+            annonymousLogin: function(){
+                this.$.jsoHeader.anonymousSign();
             },
 //    userDataChanged: function (oldValue, newValue) {
 //
@@ -463,7 +466,7 @@
                                 option: 'edit'
                             },
                             {
-                                text: 'Microarray - One channel',
+                                text: 'Microarray - One channel normalization',
                                 option: 'none'
                             },
                             {
@@ -479,7 +482,7 @@
                                 option: 'one-channel-genepix'
                             },
                             {
-                                text: 'Microarray - Two channel',
+                                text: 'Microarray - Two channels normalization',
                                 option: 'none'
                             },
                             {
@@ -576,11 +579,11 @@
                             {
                                 option: 'none',
                                 text: 'Variation'
-                            },
-                            {
-                                option: 'burden-test',
-                                text: 'Burden test'
                             }
+//                            {
+//                                option: 'burden-test',
+//                                text: 'Burden test'
+//                            }
                         ]
                     },
                     {
@@ -589,11 +592,11 @@
                         sub: [
                             {
                                 option: 'fatigo',
-                                text: 'GO enrichment'
+                                text: 'Single enrichment'
                             },
                             {
                                 option: 'fatiscan',
-                                text: 'Gene set GO enrichment'
+                                text: 'Gene set enrichment'
                             },
                             {
                                 option: 'snow',
