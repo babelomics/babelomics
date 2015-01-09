@@ -16,6 +16,7 @@
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-job-no-ready.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-class-edit.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-class-viewer.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-popup.html">
 
 <link rel="import" href="../lib/jsorolla/src/network-viewer/jso-network-viewer.html">
 
@@ -37,12 +38,17 @@
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-edit.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-association.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-stratification.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-rnaseq-diffexpr.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-rnaseq-norm.html">
 
 
-<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-nm-result.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-snow-result.html">
+<!--<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-nm-result.html">-->
+<!--<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-snow-result.html">-->
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-job-result.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-rnaseq-norm-result.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-rnaseq-diffexpr-result.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-predictors-selection-table.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-fatigo-table.html">
 
 
 <script src="../lib/jsorolla/src/lib/data-adapter/network/sif-network-data-adapter.js"></script>
@@ -242,6 +248,26 @@
                         studies="{{studies}}"
                         >
                 </jso-survival>
+            </template>
+            <template if="{{selectedOption == 'rnaseq-diffexpr'}}">
+                <jso-rnaseq-diffexpr
+                        selectedOption="{{selectedOption}}"
+                        userData="{{userData}}"
+                        selectedStudy="{{selectedStudy}}"
+                        studies="{{studies}}"
+                        >
+
+                </jso-rnaseq-diffexpr>
+            </template>
+            <template if="{{selectedOption == 'rnaseq-norm'}}">
+                <jso-rnaseq-norm
+                        selectedOption="{{selectedOption}}"
+                        userData="{{userData}}"
+                        selectedStudy="{{selectedStudy}}"
+                        studies="{{studies}}"
+                        >
+
+                </jso-rnaseq-norm>
             </template>
 
             <template if="{{selectedOption == 'preprocessing-matrix'}}">
@@ -464,6 +490,14 @@
                                 option: 'two-channel-genepix'
                             },
                             {
+                                text: 'RNA-Seq',
+                                option: 'none'
+                            },
+                            {
+                                option: 'rnaseq-norm',
+                                text: 'Normalization'
+                            },
+                            {
                                 text: 'Data Matrix',
                                 option: 'none'
                             },
@@ -501,33 +535,25 @@
                                 ]
                             },
                             {
-                                option: 'clustering',
-                                text: 'Clustering'
-                            },
-                            {
-                                option: 'prediction',
-                                text: 'Predictors'
-                            },
-                            {
                                 text: 'RNA-Seq',
                                 option: 'none'
                             },
                             {
-                                option: 'expression-rnaseq-preprocessing',
-                                text: 'Preprocessing'
-                            },
-                            {
-                                option: 'expression-rnaseq-differential-expression',
+                                option: 'rnaseq-diffexpr',
                                 text: 'Differential expression'
                             },
                             {
-                                option: 'expression-rnaseq-clustering',
+                                text: 'Others',
+                                option: 'none'
+                            },
+                            {
+                                option: 'clustering',
                                 text: 'Clustering'
                             },
                             {
-                                option: 'expression-rnaseq-predictors',
-                                text: 'Predictors'
-                            }
+                                text: 'Class prediction',
+                                option: 'prediction'
+                            },
                         ]
                     },
                     {
