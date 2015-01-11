@@ -28,8 +28,8 @@
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-affy.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-one-channel-agilent.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-one-channel-genepix.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-two-channel-agilent.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-two-channel-genepix.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-two-channels-agilent.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-two-channels-genepix.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-clustering.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-prediction.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-class-comparison.html">
@@ -50,6 +50,9 @@
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-rnaseq-diffexpr-result.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-predictors-selection-table.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-fatigo-table.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-logistic-table.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-diffexpr-table.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-survival-table.html">
 
 
 <script src="../lib/jsorolla/src/lib/data-adapter/network/sif-network-data-adapter.js"></script>
@@ -57,12 +60,14 @@
 <script src="../lib/jsorolla/src/lib/data-source/data-source.js"></script>
 <script src="../lib/jsorolla/src/lib/data-source/string-data-source.js"></script>
 <script src="js/ParseMatrix.js"></script>
+<script src="js/FormUtils.js"></script>
 
 
 <link rel="import" href="babelomics-home.html">
 
 <polymer-element name="babelomics-element">
     <template>
+        <!--<link rel="stylesheet" href="../lib/jsorolla/src/lib/components/jso-style.css">-->
         <style>
             :host {
                 display: block;
@@ -179,25 +184,25 @@
 
                 </jso-one-channel-genepix>
             </template>
-            <template if="{{selectedOption == 'two-channel-agilent'}}">
-                <jso-two-channel-agilent
+            <template if="{{selectedOption == 'two-channels-agilent'}}">
+                <jso-two-channels-agilent
                         selectedOption="{{selectedOption}}"
                         userData="{{userData}}"
                         selectedStudy="{{selectedStudy}}"
                         studies="{{studies}}"
                         >
 
-                </jso-two-channel-agilent>
+                </jso-two-channels-agilent>
             </template>
-            <template if="{{selectedOption == 'two-channel-genepix'}}">
-                <jso-two-channel-genepix
+            <template if="{{selectedOption == 'two-channels-genepix'}}">
+                <jso-two-channels-genepix
                         selectedOption="{{selectedOption}}"
                         userData="{{userData}}"
                         selectedStudy="{{selectedStudy}}"
                         studies="{{studies}}"
                         >
 
-                </jso-two-channel-genepix>
+                </jso-two-channels-genepix>
             </template>
             <template if="{{selectedOption == 'clustering'}}">
                 <jso-clustering
@@ -486,11 +491,11 @@
                             },
                             {
                                 text: 'Agilent',
-                                option: 'two-channel-agilent'
+                                option: 'two-channels-agilent'
                             },
                             {
                                 text: 'Genepix',
-                                option: 'two-channel-genepix'
+                                option: 'two-channels-genepix'
                             },
                             {
                                 text: 'RNA-Seq',
