@@ -49,6 +49,25 @@
                 text-decoration: none;
                 color: #ffad76;
             }
+
+            .megabutton {
+                font-weight: 400;
+                margin: 20px;
+                padding: 20px 30px;
+                font-size: 26px;
+                border: 1px solid white;
+                border-radius: 5px;
+                width: 200px;
+                text-align: center;
+            }
+
+            .megabutton:hover {
+                background-color: white;
+                color: #435f7a;
+                cursor: pointer;
+            }
+
+
         </style>
 
         <div class="title">Overview</div>
@@ -56,7 +75,12 @@
         <div class="paragraph">
             Welcome to Babelomics 5.
             <br>
-            <button on-click="{{annonymousLogin}}">Try it now!!</button>
+
+        </div>
+        <div class="megabutton" on-click="{{annonymousLogin}}">
+            <!--<font-awesome icon="hand-o-left"></font-awesome>-->
+            <font-awesome icon="sign-in"></font-awesome>
+            &nbsp;&nbsp;&nbsp; Try it now
         </div>
 
         <div class="title2">Note</div>
@@ -69,7 +93,7 @@
     </template>
     <script>
         Polymer({
-            created:function(){
+            created: function () {
             },
             annonymousLogin: function () {
                 this.fire('annonymous');
