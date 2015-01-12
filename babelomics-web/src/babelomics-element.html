@@ -41,6 +41,7 @@
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-stratification.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-rnaseq-diffexpr.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-rnaseq-norm.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-oncodrivefm.html">
 
 
 <!--<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-nm-result.html">-->
@@ -312,6 +313,15 @@
                         studies="{{studies}}"
                         >
                 </jso-stratification>
+            </template>
+            <template if="{{selectedOption == 'oncodrivefm'}}">
+                <jso-oncodrivefm
+                        selectedOption="{{selectedOption}}"
+                        userData="{{userData}}"
+                        selectedStudy="{{selectedStudy}}"
+                        studies="{{studies}}"
+                        >
+                </jso-oncodrivefm>
             </template>
 
             <!--<jso-job-launched hidden?="{{selectedOption != 'jobLaunched' }}"></jso-job-launched>-->
@@ -609,6 +619,16 @@
                             {
                                 option: 'networkminer',
                                 text: 'Gene set Network Enrichment'
+                            }
+                        ]
+                    },
+                    {
+//                        option: 'functional',
+                        text: 'Cancer',
+                        sub: [
+                            {
+                                option: 'oncodrivefm',
+                                text: 'oncodrive'
                             }
                         ]
                     }
