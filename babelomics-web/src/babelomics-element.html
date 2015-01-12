@@ -42,6 +42,7 @@
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-rnaseq-diffexpr.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-rnaseq-norm.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-oncodrivefm.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-oncodriveclust.html">
 
 
 <!--<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-nm-result.html">-->
@@ -323,7 +324,15 @@
                         >
                 </jso-oncodrivefm>
             </template>
-
+            <template if="{{selectedOption == 'oncodriveclust'}}">
+                <jso-oncodriveclust
+                        selectedOption="{{selectedOption}}"
+                        userData="{{userData}}"
+                        selectedStudy="{{selectedStudy}}"
+                        studies="{{studies}}"
+                        >
+                </jso-oncodriveclust>
+            </template>
             <!--<jso-job-launched hidden?="{{selectedOption != 'jobLaunched' }}"></jso-job-launched>-->
             <!--&lt;!&ndash;<div id="sidePanel" class="side-panel side-panel-shown">&ndash;&gt;-->
             <!--&lt;!&ndash;&lt;!&ndash;<jso-job-list jobItem="{{jobItem}}" selectedOption="{{selectedOption}}" userData="{{userData}}"&ndash;&gt;&ndash;&gt;-->
@@ -628,7 +637,11 @@
                         sub: [
                             {
                                 option: 'oncodrivefm',
-                                text: 'oncodrive'
+                                text: 'OncodriveFM'
+                            },
+                            {
+                                option: 'oncodriveclust',
+                                text: 'OncodriveClust'
                             }
                         ]
                     }
