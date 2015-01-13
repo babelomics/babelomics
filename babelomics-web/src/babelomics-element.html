@@ -55,6 +55,8 @@
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-logistic-table.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-diffexpr-table.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-survival-table.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-interactors-table.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-interactome-viewer.html">
 
 
 <script src="../lib/jsorolla/src/lib/data-adapter/network/sif-network-data-adapter.js"></script>
@@ -112,7 +114,13 @@
             <template if="{{ selectedOption == 'home' || selectedOption == 'none' || selectedOption == ''}}">
                 <babelomics-home on-annonymous="{{annonymousLogin}}"></babelomics-home>
             </template>
-            <jso-job-result jobItem="{{jobItem}}" hidden?="{{selectedOption != 'jobReady' }}" selectedOption="{{selectedOption}}"></jso-job-result>
+            <jso-job-result
+                    jobItem="{{jobItem}}"
+                    hidden?="{{selectedOption != 'jobReady' }}"
+                    selectedOption="{{selectedOption}}"
+                    on-redirection="{{handleRedirection}}"
+
+                    ></jso-job-result>
             <jso-job-no-ready hidden?="{{selectedOption != 'jobNoReady' }}" jobItem="{{jobItem}}"></jso-job-no-ready>
             <template if="{{selectedOption == 'projects'}}">
                 <jso-project-browser userData="{{userData}}" selectedStudy="{{selectedStudy}}" studies="{{studies}}"
@@ -133,6 +141,7 @@
                         userData="{{userData}}"
                         selectedStudy="{{selectedStudy}}"
                         studies="{{studies}}"
+                        args={{args}}
                         >
                 </jso-snow>
             </template>
@@ -142,6 +151,7 @@
                         userData="{{userData}}"
                         selectedStudy="{{selectedStudy}}"
                         studies="{{studies}}"
+                        args={{args}}
                         >
 
                 </jso-fatigo>
@@ -339,14 +349,14 @@
             <!--&lt;!&ndash;&lt;!&ndash;hide="{{!showJobs}}" showJobs="{{showJobs}}" selectedStudy="{{selectedStudy}}" ></jso-job-list>&ndash;&gt;&ndash;&gt;-->
             <!--&lt;!&ndash;</div>&ndash;&gt;-->
             <!--<template if="{{ showJobs }}">-->
-                <!--<jso-job-list-->
-                        <!--on-job-item-click="{{handleJobItemClick}}"-->
-                        <!--userData="{{userData}}"-->
-                        <!--selectedOption="{{selectedOption}}"-->
-                        <!--selectedStudy="{{selectedStudy}}"-->
-                        <!--allowedTools="{{allowedTools}}"-->
-                        <!--showJobs="{{showJobs}}">-->
-                <!--</jso-job-list>-->
+            <!--<jso-job-list-->
+            <!--on-job-item-click="{{handleJobItemClick}}"-->
+            <!--userData="{{userData}}"-->
+            <!--selectedOption="{{selectedOption}}"-->
+            <!--selectedStudy="{{selectedStudy}}"-->
+            <!--allowedTools="{{allowedTools}}"-->
+            <!--showJobs="{{showJobs}}">-->
+            <!--</jso-job-list>-->
             <!--</template>-->
 
 
@@ -408,8 +418,13 @@
 
 
             },
-            annonymousLogin: function(){
+            annonymousLogin: function () {
                 this.$.jsoHeader.anonymousSign();
+            },
+            handleRedirection:function(e){
+                   this.selectedOption = e.detail.tool;
+                    this.args = e.detail.args;
+
             },
 //    userDataChanged: function (oldValue, newValue) {
 //
@@ -611,6 +626,20 @@
                     },
                     {
 //                        option: 'functional',
+                        text: 'Cancer',
+                        sub: [
+                            {
+                                option: 'oncodrivefm',
+                                text: 'OncodriveFM'
+                            },
+                            {
+                                option: 'oncodriveclust',
+                                text: 'OncodriveClust'
+                            }
+                        ]
+                    },
+                    {
+//                        option: 'functional',
                         text: 'Functional',
                         sub: [
                             {
@@ -628,20 +657,6 @@
                             {
                                 option: 'networkminer',
                                 text: 'Gene set Network Enrichment'
-                            }
-                        ]
-                    },
-                    {
-//                        option: 'functional',
-                        text: 'Cancer',
-                        sub: [
-                            {
-                                option: 'oncodrivefm',
-                                text: 'OncodriveFM'
-                            },
-                            {
-                                option: 'oncodriveclust',
-                                text: 'OncodriveClust'
                             }
                         ]
                     }
