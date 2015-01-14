@@ -52,6 +52,8 @@
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-rnaseq-diffexpr-result.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-predictors-selection-table.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-fatigo-table.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-oncodrive-genes-table.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-oncodrive-pathways-table.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-logistic-table.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-diffexpr-table.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-survival-table.html">
@@ -421,9 +423,9 @@
             annonymousLogin: function () {
                 this.$.jsoHeader.anonymousSign();
             },
-            handleRedirection:function(e){
-                   this.selectedOption = e.detail.tool;
-                    this.args = e.detail.args;
+            handleRedirection: function (e) {
+                this.selectedOption = e.detail.tool;
+                this.args = e.detail.args;
 
             },
 //    userDataChanged: function (oldValue, newValue) {
