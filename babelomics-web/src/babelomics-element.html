@@ -292,12 +292,13 @@
                 </jso-rnaseq-norm>
             </template>
 
-            <template if="{{selectedOption == 'preprocessing-matrix'}}">
+            <template if="{{selectedOption == 'preprocessing'}}">
                 <jso-preprocessing-matrix
                         selectedOption="{{selectedOption}}"
                         userData="{{userData}}"
                         selectedStudy="{{selectedStudy}}"
                         studies="{{studies}}"
+                        args="{{args}}"
                         >
                 </jso-preprocessing-matrix>
             </template>
@@ -549,7 +550,7 @@
                             },
                             {
                                 text: 'Pre-processing',
-                                option: 'preprocessing-matrix'
+                                option: 'preprocessing'
                             }
 
                         ]
