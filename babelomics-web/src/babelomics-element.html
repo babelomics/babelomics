@@ -18,6 +18,7 @@
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-class-viewer.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-popup.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-biotype.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-file-info.html">
 
 <link rel="import" href="../lib/jsorolla/src/network-viewer/jso-network-viewer.html">
 
@@ -41,6 +42,8 @@
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-stratification.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-rnaseq-diffexpr.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-rnaseq-norm.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-oncodrivefm.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-oncodriveclust.html">
 
 
 <!--<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-nm-result.html">-->
@@ -50,9 +53,14 @@
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-rnaseq-diffexpr-result.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-predictors-selection-table.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-fatigo-table.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-oncodrive-genes-table.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-oncodrive-pathways-table.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-logistic-table.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-diffexpr-table.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-survival-table.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-interactors-table.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-interactome-viewer.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-go-viewer.html">
 
 
 <script src="../lib/jsorolla/src/lib/data-adapter/network/sif-network-data-adapter.js"></script>
@@ -116,9 +124,15 @@
         </jso-header>
         <div class="content">
             <template if="{{ selectedOption == 'home' || selectedOption == 'none' || selectedOption == ''}}">
-                <babelomics-home on-annonymous="{{annonymousLogin}}"></babelomics-home>
+                <babelomics-home id="babelomicsHome" on-annonymous="{{annonymousLogin}}"></babelomics-home>
             </template>
-            <jso-job-result jobItem="{{jobItem}}" hidden?="{{selectedOption != 'jobReady' }}" selectedOption="{{selectedOption}}"></jso-job-result>
+            <jso-job-result
+                    jobItem="{{jobItem}}"
+                    hidden?="{{selectedOption != 'jobReady' }}"
+                    selectedOption="{{selectedOption}}"
+                    on-redirection="{{handleRedirection}}"
+
+                    ></jso-job-result>
             <jso-job-no-ready hidden?="{{selectedOption != 'jobNoReady' }}" jobItem="{{jobItem}}"></jso-job-no-ready>
             <template if="{{selectedOption == 'projects'}}">
                 <jso-project-browser userData="{{userData}}" selectedStudy="{{selectedStudy}}" studies="{{studies}}"
@@ -139,6 +153,7 @@
                         userData="{{userData}}"
                         selectedStudy="{{selectedStudy}}"
                         studies="{{studies}}"
+                        args={{args}}
                         >
                 </jso-snow>
             </template>
@@ -148,6 +163,7 @@
                         userData="{{userData}}"
                         selectedStudy="{{selectedStudy}}"
                         studies="{{studies}}"
+                        args={{args}}
                         >
 
                 </jso-fatigo>
@@ -158,6 +174,7 @@
                         userData="{{userData}}"
                         selectedStudy="{{selectedStudy}}"
                         studies="{{studies}}"
+                        args="{{args}}"
                         >
 
                 </jso-fatiscan>
@@ -284,12 +301,13 @@
                 </jso-rnaseq-norm>
             </template>
 
-            <template if="{{selectedOption == 'preprocessing-matrix'}}">
+            <template if="{{selectedOption == 'preprocessing'}}">
                 <jso-preprocessing-matrix
                         selectedOption="{{selectedOption}}"
                         userData="{{userData}}"
                         selectedStudy="{{selectedStudy}}"
                         studies="{{studies}}"
+                        args="{{args}}"
                         >
                 </jso-preprocessing-matrix>
             </template>
@@ -321,7 +339,24 @@
                         >
                 </jso-stratification>
             </template>
-
+            <template if="{{selectedOption == 'oncodrivefm'}}">
+                <jso-oncodrivefm
+                        selectedOption="{{selectedOption}}"
+                        userData="{{userData}}"
+                        selectedStudy="{{selectedStudy}}"
+                        studies="{{studies}}"
+                        >
+                </jso-oncodrivefm>
+            </template>
+            <template if="{{selectedOption == 'oncodriveclust'}}">
+                <jso-oncodriveclust
+                        selectedOption="{{selectedOption}}"
+                        userData="{{userData}}"
+                        selectedStudy="{{selectedStudy}}"
+                        studies="{{studies}}"
+                        >
+                </jso-oncodriveclust>
+            </template>
             <!--<jso-job-launched hidden?="{{selectedOption != 'jobLaunched' }}"></jso-job-launched>-->
             <!--&lt;!&ndash;<div id="sidePanel" class="side-panel side-panel-shown">&ndash;&gt;-->
             <!--&lt;!&ndash;&lt;!&ndash;<jso-job-list jobItem="{{jobItem}}" selectedOption="{{selectedOption}}" userData="{{userData}}"&ndash;&gt;&ndash;&gt;-->
@@ -399,6 +434,11 @@
             },
             annonymousLogin: function () {
                 this.$.jsoHeader.anonymousSign();
+            },
+            handleRedirection: function (e) {
+                this.selectedOption = e.detail.tool;
+                this.args = e.detail.args;
+
             },
 //    userDataChanged: function (oldValue, newValue) {
 //
@@ -519,7 +559,7 @@
                             },
                             {
                                 text: 'Pre-processing',
-                                option: 'preprocessing-matrix'
+                                option: 'preprocessing'
                             }
 
                         ]
@@ -530,11 +570,20 @@
                         text: 'Expression',
                         sub: [
                             {
-                                text: 'Array',
+                                option: 'clustering',
+                                text: 'Clustering'
+                            },
+                            {
+                                text: 'Class prediction',
+                                option: 'prediction'
+                            },
+
+                            {
+                                text: 'Differential expression',
                                 option: 'none'
                             },
                             {
-                                text: 'Differential expression',
+                                text: 'Array',
                                 sub: [
                                     {
                                         text: "Class comparison",
@@ -551,24 +600,8 @@
                                 ]
                             },
                             {
-                                text: 'RNA-Seq',
-                                option: 'none'
-                            },
-                            {
-                                option: 'rnaseq-diffexpr',
-                                text: 'Differential expression'
-                            },
-                            {
-                                text: 'Others',
-                                option: 'none'
-                            },
-                            {
-                                option: 'clustering',
-                                text: 'Clustering'
-                            },
-                            {
-                                text: 'Class prediction',
-                                option: 'prediction'
+                                text: 'RNA-seq',
+                                option: 'rnaseq-diffexpr'
                             },
                         ]
                     },
@@ -584,20 +617,33 @@
                                 option: 'association',
                                 text: 'Association analysis'
                             },
-                            {
-                                option: 'stratification',
-                                text: 'Stratification'
-                            },
-                            {
-                                option: 'none',
-                                text: 'Variation'
-                            }
+//
+//                            {
+//                                option: 'none',
+//                                text: 'Variation'
+//                            }
 //                            {
 //                                option: 'burden-test',
 //                                text: 'Burden test'
 //                            }
                         ]
-                    },
+                    }
+                    ,
+                    {
+//                        option: 'functional',
+                        text: 'Cancer',
+                        sub: [
+                            {
+                                option: 'oncodrivefm',
+                                text: 'OncodriveFM'
+                            },
+                            {
+                                option: 'oncodriveclust',
+                                text: 'OncodriveClust'
+                            }
+                        ]
+                    }
+                    ,
                     {
 //                        option: 'functional',
                         text: 'Functional',
@@ -622,6 +668,7 @@
                     }
                 ]
             }
-        });
+        })
+        ;
     </script>
 </polymer-element>
