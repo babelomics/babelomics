@@ -103,8 +103,16 @@
                     helpLink="https://github.com/babelomics/babelomics/wiki"
                     tutorialLink="https://github.com/babelomics/babelomics/wiki/Tutorial"
                     hideHomeLink="true">
-            <span class="title">Babelomics 5</span>
-            <!--<span class="description">5</span>-->
+            <span class="title">
+                <div horizontal layout>
+                    <img src="logoBabelomics_positive.svg" style="height: 65px;margin: 0px 15px 0 0;">
+
+                    <div>Babelomics 5</div>
+                </div>
+            </span>
+            <span class="description">
+
+            </span>
         </jso-header>
         <div class="content">
             <template if="{{ selectedOption == 'home' || selectedOption == 'none' || selectedOption == ''}}">
@@ -320,14 +328,14 @@
             <!--&lt;!&ndash;&lt;!&ndash;hide="{{!showJobs}}" showJobs="{{showJobs}}" selectedStudy="{{selectedStudy}}" ></jso-job-list>&ndash;&gt;&ndash;&gt;-->
             <!--&lt;!&ndash;</div>&ndash;&gt;-->
             <!--<template if="{{ showJobs }}">-->
-                <!--<jso-job-list-->
-                        <!--on-job-item-click="{{handleJobItemClick}}"-->
-                        <!--userData="{{userData}}"-->
-                        <!--selectedOption="{{selectedOption}}"-->
-                        <!--selectedStudy="{{selectedStudy}}"-->
-                        <!--allowedTools="{{allowedTools}}"-->
-                        <!--showJobs="{{showJobs}}">-->
-                <!--</jso-job-list>-->
+            <!--<jso-job-list-->
+            <!--on-job-item-click="{{handleJobItemClick}}"-->
+            <!--userData="{{userData}}"-->
+            <!--selectedOption="{{selectedOption}}"-->
+            <!--selectedStudy="{{selectedStudy}}"-->
+            <!--allowedTools="{{allowedTools}}"-->
+            <!--showJobs="{{showJobs}}">-->
+            <!--</jso-job-list>-->
             <!--</template>-->
 
 
@@ -348,7 +356,7 @@
                 this.showJobs = false;
                 this.userData = {};
                 this.options = this.getOptions();
-                this.hideJobView = true;
+//                this.hideJobView = true;
 
                 this.selectedProject;
                 this.selectedStudy;
@@ -389,7 +397,7 @@
 
 
             },
-            annonymousLogin: function(){
+            annonymousLogin: function () {
                 this.$.jsoHeader.anonymousSign();
             },
 //    userDataChanged: function (oldValue, newValue) {

@@ -67,26 +67,55 @@
                 cursor: pointer;
             }
 
+            .megatitle{
+                font-size: 80px;
+                padding-top: 30px;
+                padding-bottom: 10px;
+                color: white;
+                text-shadow: 3px 3px 5px #314559;
+            }
+            .megadescription{
+                font-size: 30px;
+                padding-top: 30px;
+                padding-bottom: 10px;
+                color: white;
+                text-transform: uppercase;
+            }
 
         </style>
 
-        <div class="title">Overview</div>
+        <!--<div class="title">Overview</div>-->
 
-        <div class="paragraph">
-            Welcome to Babelomics 5.
-            <br>
+        <!--<div class="paragraph">-->
+            <!--Welcome to Babelomics 5.-->
+            <!--<br>-->
 
-        </div>
-        <div class="megabutton" on-click="{{annonymousLogin}}">
-            <!--<font-awesome icon="hand-o-left"></font-awesome>-->
-            <font-awesome icon="sign-in"></font-awesome>
-            &nbsp;&nbsp;&nbsp; Try it now
+        <!--</div>-->
+        <br>
+        <br>
+        <br>
+        <br>
+        <div horizontal layout>
+            <div flex>
+                <img src="logoBabelomics_positive.svg" style="height: 250px;">
+            </div>
+            <div vertical layout center style="width:500px;">
+                <div class="megatitle">Babelomics 5</div>
+                <div class="megadescription">Genomic analysis suite</div>
+                <br>
+                <div class="megabutton" on-click="{{annonymousLogin}}">
+                    <!--<font-awesome icon="hand-o-left"></font-awesome>-->
+                    <font-awesome icon="sign-in"></font-awesome>
+                    &nbsp;&nbsp;&nbsp; Try it now
+                </div>
+
+            </div>
         </div>
 
         <div class="title2">Note</div>
         <div class="paragraph2">
             This web application makes an intensive use of new web technologies and standards like HTML5,
-            so only the browser Chrome 39 is fully supported. we are working hard to make it compatible with other browsers.
+            so only the browser Chrome 39 is fully supported. We are working hard to make it compatible with other browsers.
         </div>
 
         <!--<div class="button action" on-click="{{annonymousLogin}}">Try it now!!</div>-->
