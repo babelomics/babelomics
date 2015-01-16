@@ -116,7 +116,7 @@
         </jso-header>
         <div class="content">
             <template if="{{ selectedOption == 'home' || selectedOption == 'none' || selectedOption == ''}}">
-                <babelomics-home on-annonymous="{{annonymousLogin}}"></babelomics-home>
+                <babelomics-home id="babelomicsHome" on-annonymous="{{annonymousLogin}}"></babelomics-home>
             </template>
             <jso-job-result
                     jobItem="{{jobItem}}"
@@ -562,11 +562,20 @@
                         text: 'Expression',
                         sub: [
                             {
-                                text: 'Array',
+                                option: 'clustering',
+                                text: 'Clustering'
+                            },
+                            {
+                                text: 'Class prediction',
+                                option: 'prediction'
+                            },
+
+                            {
+                                text: 'Differential expression',
                                 option: 'none'
                             },
                             {
-                                text: 'Differential expression',
+                                text: 'Array',
                                 sub: [
                                     {
                                         text: "Class comparison",
@@ -583,24 +592,8 @@
                                 ]
                             },
                             {
-                                text: 'RNA-Seq',
-                                option: 'none'
-                            },
-                            {
-                                option: 'rnaseq-diffexpr',
-                                text: 'Differential expression'
-                            },
-                            {
-                                text: 'Others',
-                                option: 'none'
-                            },
-                            {
-                                option: 'clustering',
-                                text: 'Clustering'
-                            },
-                            {
-                                text: 'Class prediction',
-                                option: 'prediction'
+                                text: 'RNA-seq',
+                                option: 'rnaseq-diffexpr'
                             },
                         ]
                     },
@@ -616,20 +609,18 @@
                                 option: 'association',
                                 text: 'Association analysis'
                             },
-                            {
-                                option: 'stratification',
-                                text: 'Stratification'
-                            },
-                            {
-                                option: 'none',
-                                text: 'Variation'
-                            }
+//
+//                            {
+//                                option: 'none',
+//                                text: 'Variation'
+//                            }
 //                            {
 //                                option: 'burden-test',
 //                                text: 'Burden test'
 //                            }
                         ]
-                    },
+                    }
+                    ,
                     {
 //                        option: 'functional',
                         text: 'Cancer',
@@ -643,7 +634,8 @@
                                 text: 'OncodriveClust'
                             }
                         ]
-                    },
+                    }
+                    ,
                     {
 //                        option: 'functional',
                         text: 'Functional',
@@ -668,6 +660,7 @@
                     }
                 ]
             }
-        });
+        })
+        ;
     </script>
 </polymer-element>
