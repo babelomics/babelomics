@@ -1,0 +1,177 @@
+<polymer-element name="babelomics-menu" attributes="selectedOption">
+    <template>
+        <style>
+            :host {
+                display: block;
+                position: relative;
+                box-sizing: border-box;
+            }
+
+            .l1 {
+                margin-left: 10px;
+            }
+
+            .l2 {
+                margin-left: 20px;
+            }
+
+            .l3 {
+                margin-left: 30px;
+            }
+
+            div.dropdown {
+                position: relative;
+                color: #CCCCCC;
+                margin: 0 10px;
+            }
+
+            div.dropdown > div {
+
+            }
+
+            div.dropdown > div:first-of-type {
+                outline: 0;
+                height: 100%;
+                cursor: pointer;
+            }
+
+            div.dropdown > div:first-of-type + div {
+                position: absolute;
+                z-index: 1;
+                visibility: hidden;
+                opacity: 0;
+                transition: all 0.25s;
+
+                margin: 0;
+                padding: 20px 20px 20px 20px;
+                background-color: #314559;
+                text-transform: none;
+                line-height: 25px;
+                box-shadow: 0px 0px 3px 2px rgba(0, 0, 0, 0.3);
+                width: 250px;
+            }
+
+            div.dropdown > div:first-of-type:focus + div {
+                visibility: visible;
+                opacity: 1;
+            }
+
+            .title {
+                /*text-transform: uppercase;*/
+                color: #ffad76;
+                /*margin-top: 10px;*/
+                font-size: 15px;
+            }
+
+            .option:hover {
+                color: #ffffff;
+                cursor: pointer;
+            }
+
+            .option:before {
+                font-family: 'FontAwesome';
+                content: '\f0da';
+                margin-right: 5px;
+            }
+        </style>
+        <div horizontal layout id="main">
+            <div class="dropdown">
+                <div tabindex="-1">
+                    Processing &nbsp;
+                    <font-awesome icon="caret-down"></font-awesome>
+                </div>
+                <div horizontal layout style="width:460px;">
+                    <div>
+                        <div class="title">Edit</div>
+                        <div class="option" option="edit" on-click="{{handleMenu}}">Edit your uploaded data</div>
+                        <div class="title">RNA-Seq</div>
+                        <div class="option" option="rnaseq-norm" on-click="{{handleMenu}}">Normalization</div>
+                        <div class="title">Data Matrix</div>
+                        <div class="option" option="preprocessing" on-click="{{handleMenu}}">Pre-processing</div>
+                    </div>
+                    <div style="margin-left: 30px;">
+                        <div class="title">Microarray <br> One channel normalization</div>
+                        <div class="option" option="affymetrix" on-click="{{handleMenu}}">Affymetrix</div>
+                        <div class="option" option="one-channel-agilent" on-click="{{handleMenu}}">Agilent</div>
+                        <div class="option" option="one-channel-genepix" on-click="{{handleMenu}}">Genepix</div>
+                        <div class="title">Microarray <br> Two channels normalization</div>
+                        <div class="option" option="two-channels-agilent" on-click="{{handleMenu}}">Agilent</div>
+                        <div class="option" option="two-channels-genepix" on-click="{{handleMenu}}">Genepix</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <div tabindex="-1">
+                    Expression &nbsp;
+                    <font-awesome icon="caret-down"></font-awesome>
+                </div>
+                <div horizontal layout>
+                    <div>
+                        <div class="option" option="clustering" on-click="{{handleMenu}}">Clustering</div>
+                        <div class="option" option="prediction" on-click="{{handleMenu}}">Class prediction</div>
+                        <div class="title">Differential expression</div>
+                        <div class="option l1" option="rnaseq-diffexpr" on-click="{{handleMenu}}">RNA-seq</div>
+                        <div class="title l1">Array</div>
+                        <div class="option l2" option="class-comparison" on-click="{{handleMenu}}">Class comparison</div>
+                        <div class="option l2" option="correlation" on-click="{{handleMenu}}">Correlation</div>
+                        <div class="option l2" option="survival" on-click="{{handleMenu}}">Survival</div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <div tabindex="-1">
+                    Genomics &nbsp;
+                    <font-awesome icon="caret-down"></font-awesome>
+                </div>
+                <div horizontal layout>
+                    <div>
+                        <div class="option" option="association" on-click="{{handleMenu}}">Association analysis</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dropdown">
+                <div tabindex="-1">
+                    Cancer &nbsp;
+                    <font-awesome icon="caret-down"></font-awesome>
+                </div>
+                <div horizontal layout>
+                    <div>
+                        <div class="option" option="oncodrivefm" on-click="{{handleMenu}}">OncodriveFM</div>
+                        <div class="option" option="oncodriveclust" on-click="{{handleMenu}}">OncodriveClust</div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="dropdown">
+                <div tabindex="-1">
+                    Functional &nbsp;
+                    <font-awesome icon="caret-down"></font-awesome>
+                </div>
+                <div horizontal layout>
+                    <div>
+                        <div class="option" option="fatigo" on-click="{{handleMenu}}">Single enrichment</div>
+                        <div class="option" option="fatiscan" on-click="{{handleMenu}}">Gene set enrichment</div>
+                        <div class="option" option="snow" on-click="{{handleMenu}}">Network enrichment</div>
+                        <div class="option" option="networkminer" on-click="{{handleMenu}}">Gene set Network Enrichment</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+    </template>
+    <script>
+        Polymer({
+            created: function () {
+            },
+            handleMenu: function (e) {
+                this.selectedOption = e.target.getAttribute("option");
+            }
+        })
+    </script>
+</polymer-element>
