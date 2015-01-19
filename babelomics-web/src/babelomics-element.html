@@ -7,6 +7,7 @@
 
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-header.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-footer.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-help-menu.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-opencga-select-folder.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-project-browser.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-project-browser-window.html">
@@ -76,10 +77,10 @@
 
 
 <link rel="import" href="babelomics-home.html">
+<link rel="import" href="babelomics-menu.html">
 
 <polymer-element name="babelomics-element">
     <template>
-        <!--<link rel="stylesheet" href="../lib/jsorolla/src/lib/components/jso-style.css">-->
         <style>
             :host {
                 display: block;
@@ -97,6 +98,22 @@
             .content > * {
                 min-height: calc(100vh - 160px);
             }
+
+            .a {
+                text-decoration: none;
+                color: #CCCCCC;
+                cursor: pointer;
+            }
+
+            .a:visited {
+                color: #CCCCCC;
+            }
+
+            .a:hover {
+                color: white;
+                /*text-decoration: underline;*/
+            }
+
 
             jso-project-browser {
                 height: calc(100vh - 160px);
@@ -117,7 +134,7 @@
                     hideHomeLink="true">
             <span class="title">
                 <div horizontal layout>
-                    <img src="logoBabelomics_positive.svg" style="height: 65px;margin: 0px 15px 0 0;">
+                    <img src="images/logoBabelomics_positive_trans.svg" style="height: 54px;margin: 1px 15px 0 0;">
 
                     <div>Babelomics 5</div>
                 </div>
@@ -125,6 +142,23 @@
             <span class="description">
 
             </span>
+            <babelomics-menu class="menu" selectedOption="{{selectedOption}}">
+            </babelomics-menu>
+
+            <jso-help-menu class="helpmenu" selectedOption="{{selectedOption}}">
+                <div class="link">
+                    <font-awesome icon="home"></font-awesome>
+                    <a class="a" href="https://github.com/babelomics/babelomics/wiki" target="_blank"> &nbsp; Home</a>
+                </div>
+                <div class="link">
+                    <font-awesome icon="home"></font-awesome>
+                    <span class="a" on-click="{{handleContact}}"> &nbsp; Contact</span>
+                </div>
+                <div class="link">
+                    <font-awesome icon="home"></font-awesome>
+                    <span class="a" on-click="{{handleHowToCite}}"> &nbsp; How to cite</span>
+                </div>
+            </jso-help-menu>
         </jso-header>
         <div class="content">
             <template if="{{ selectedOption == 'home' || selectedOption == 'none' || selectedOption == ''}}">
@@ -395,7 +429,6 @@
                 this.selectedOption = 'home';
                 this.showJobs = false;
                 this.userData = {};
-                this.options = this.getOptions();
 //                this.hideJobView = true;
 
                 this.selectedProject;
@@ -444,6 +477,14 @@
                 this.selectedOption = e.detail.tool;
                 this.args = e.detail.args;
 
+            },
+            handleHowToCite: function (e) {
+                this.selectedOption = "cite";
+                this.selectedOption = "";
+            },
+            handleContact: function (e) {
+                this.selectedOption = "contact";
+                this.selectedOption = "";
             },
 //    userDataChanged: function (oldValue, newValue) {
 //
@@ -509,171 +550,6 @@
 ////            }
 //
 //    },
-            getOptions: function () {
-                return [
-                    {
-                        text: 'Processing',
-                        sub: [
-                            {
-                                text: 'Edit',
-                                option: 'none'
-                            },
-                            {
-                                text: 'Edit your uploaded data',
-                                option: 'edit'
-                            },
-                            {
-                                text: 'Microarray - One channel normalization',
-                                option: 'none'
-                            },
-                            {
-                                text: 'Affymetrix',
-                                option: 'affymetrix'
-                            },
-                            {
-                                text: 'Agilent',
-                                option: 'one-channel-agilent'
-                            },
-                            {
-                                text: 'Genepix',
-                                option: 'one-channel-genepix'
-                            },
-                            {
-                                text: 'Microarray - Two channels normalization',
-                                option: 'none'
-                            },
-                            {
-                                text: 'Agilent',
-                                option: 'two-channels-agilent'
-                            },
-                            {
-                                text: 'Genepix',
-                                option: 'two-channels-genepix'
-                            },
-                            {
-                                text: 'RNA-Seq',
-                                option: 'none'
-                            },
-                            {
-                                option: 'rnaseq-norm',
-                                text: 'Normalization'
-                            },
-                            {
-                                text: 'Data Matrix',
-                                option: 'none'
-                            },
-                            {
-                                text: 'Pre-processing',
-                                option: 'preprocessing'
-                            }
-
-                        ]
-                    }
-                    ,
-                    {
-//                        option: 'expression',
-                        text: 'Expression',
-                        sub: [
-                            {
-                                option: 'clustering',
-                                text: 'Clustering'
-                            },
-                            {
-                                text: 'Class prediction',
-                                option: 'prediction'
-                            },
-
-                            {
-                                text: 'Differential expression',
-                                option: 'none'
-                            },
-                            {
-                                text: 'Array',
-                                sub: [
-                                    {
-                                        text: "Class comparison",
-                                        option: "class-comparison"
-                                    },
-                                    {
-                                        text: "Correlation",
-                                        option: "correlation"
-                                    },
-                                    {
-                                        text: "Survival",
-                                        option: "survival"
-                                    }
-                                ]
-                            },
-                            {
-                                text: 'RNA-seq',
-                                option: 'rnaseq-diffexpr'
-                            },
-                        ]
-                    },
-                    {
-//                        option: 'genomics',
-                        text: 'Genomics',
-                        sub: [
-                            {
-                                option: 'none',
-                                text: 'Array'
-                            },
-                            {
-                                option: 'association',
-                                text: 'Association analysis'
-                            },
-//
-//                            {
-//                                option: 'none',
-//                                text: 'Variation'
-//                            }
-//                            {
-//                                option: 'burden-test',
-//                                text: 'Burden test'
-//                            }
-                        ]
-                    }
-                    ,
-                    {
-//                        option: 'functional',
-                        text: 'Cancer',
-                        sub: [
-                            {
-                                option: 'oncodrivefm',
-                                text: 'OncodriveFM'
-                            },
-                            {
-                                option: 'oncodriveclust',
-                                text: 'OncodriveClust'
-                            }
-                        ]
-                    }
-                    ,
-                    {
-//                        option: 'functional',
-                        text: 'Functional',
-                        sub: [
-                            {
-                                option: 'fatigo',
-                                text: 'Single enrichment'
-                            },
-                            {
-                                option: 'fatiscan',
-                                text: 'Gene set enrichment'
-                            },
-                            {
-                                option: 'snow',
-                                text: 'Network enrichment'
-                            },
-                            {
-                                option: 'networkminer',
-                                text: 'Gene set Network Enrichment'
-                            }
-                        ]
-                    }
-                ]
-            }
-        })
-        ;
+        });
     </script>
 </polymer-element>
