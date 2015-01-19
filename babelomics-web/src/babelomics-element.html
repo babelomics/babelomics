@@ -50,18 +50,21 @@
 <!--<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-nm-result.html">-->
 <!--<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-snow-result.html">-->
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-job-result.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-generic-table.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-rnaseq-norm-result.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-rnaseq-diffexpr-result.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-predictors-selection-table.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-fatigo-table.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-oncodrive-genes-table.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-oncodrive-pathways-table.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-oncodriveclust-genes-table.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-logistic-table.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-diffexpr-table.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-survival-table.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-interactors-table.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-interactome-viewer.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-go-viewer.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-job-info-widget.html">
 
 
 <script src="../lib/jsorolla/src/lib/data-adapter/network/sif-network-data-adapter.js"></script>
@@ -269,6 +272,7 @@
                         userData="{{userData}}"
                         selectedStudy="{{selectedStudy}}"
                         studies="{{studies}}"
+                        args="{{args}}"
                         >
 
                 </jso-clustering>
