@@ -122,6 +122,7 @@
             }
         </style>
         <jso-header id="jsoHeader"
+                    isLogged="{{isLogged}}"
                     on-session-change="{{handleSessionChange}}"
                     selectedOption="{{selectedOption}}"
                     userData="{{userData}}"
@@ -163,7 +164,11 @@
         </jso-header>
         <div class="content">
             <template if="{{ selectedOption == 'home' || selectedOption == 'none' || selectedOption == ''}}">
-                <babelomics-home id="babelomicsHome" on-annonymous="{{annonymousLogin}}"></babelomics-home>
+                <babelomics-home
+                        id="babelomicsHome"
+                        on-annonymous="{{annonymousLogin}}"
+                        isLogged="{{isLogged}}"
+                        ></babelomics-home>
             </template>
             <jso-job-result
                     jobItem="{{jobItem}}"
@@ -440,6 +445,8 @@
                 this.showJobs = false;
                 this.userData = {};
 //                this.hideJobView = true;
+
+                this.isLogged
 
                 this.selectedProject;
                 this.selectedStudy;
