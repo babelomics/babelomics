@@ -18,8 +18,9 @@
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-class-edit.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-class-viewer.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-popup.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-biotype.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-bioformat.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-file-info.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-redirection.html">
 
 <link rel="import" href="../lib/jsorolla/src/network-viewer/jso-network-viewer.html">
 
@@ -45,6 +46,7 @@
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-rnaseq-norm.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-oncodrivefm.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-oncodriveclust.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-burden.html">
 
 
 <!--<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-nm-result.html">-->
@@ -394,6 +396,15 @@
                         studies="{{studies}}"
                         >
                 </jso-oncodriveclust>
+            </template>
+            <template if="{{selectedOption == 'burden'}}">
+                <jso-burden
+                        selectedOption="{{selectedOption}}"
+                        userData="{{userData}}"
+                        selectedStudy="{{selectedStudy}}"
+                        studies="{{studies}}"
+                        >
+                </jso-burden>
             </template>
             <!--<jso-job-launched hidden?="{{selectedOption != 'jobLaunched' }}"></jso-job-launched>-->
             <!--&lt;!&ndash;<div id="sidePanel" class="side-panel side-panel-shown">&ndash;&gt;-->
