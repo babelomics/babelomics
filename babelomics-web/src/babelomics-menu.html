@@ -22,7 +22,7 @@
             div.dropdown {
                 position: relative;
                 color: #CCCCCC;
-                margin: 0 10px;
+                margin: 0 0.5vw;
             }
 
             div.dropdown > div {
@@ -35,6 +35,16 @@
                 cursor: pointer;
             }
 
+            div.dropdown > div:first-of-type:hover {
+                color: white;
+            }
+
+            div.dropdown > div:first-of-type:after {
+                font-family: 'FontAwesome';
+                margin-left: 2px;
+                content: '\f0d7';
+            }
+
             div.dropdown > div:first-of-type + div {
                 position: absolute;
                 z-index: 1;
@@ -43,7 +53,7 @@
                 transition: all 0.25s;
 
                 margin: 0;
-                padding: 20px 20px 20px 20px;
+                padding: 10px 10px 10px 10px;
                 background-color: #314559;
                 text-transform: none;
                 line-height: 25px;
@@ -60,7 +70,7 @@
                 /*text-transform: uppercase;*/
                 color: #ffad76;
                 /*margin-top: 10px;*/
-                font-size: 15px;
+                font-size: 14px;
             }
 
             .option:hover {
@@ -77,8 +87,7 @@
         <div horizontal layout id="main">
             <div class="dropdown">
                 <div tabindex="-1">
-                    Processing &nbsp;
-                    <font-awesome icon="caret-down"></font-awesome>
+                    Processing
                 </div>
                 <div horizontal layout style="width:460px;">
                     <div>
@@ -103,8 +112,7 @@
 
             <div class="dropdown">
                 <div tabindex="-1">
-                    Expression &nbsp;
-                    <font-awesome icon="caret-down"></font-awesome>
+                    Expression
                 </div>
                 <div horizontal layout>
                     <div>
@@ -123,8 +131,7 @@
 
             <div class="dropdown">
                 <div tabindex="-1">
-                    Genomics &nbsp;
-                    <font-awesome icon="caret-down"></font-awesome>
+                    Genomics
                 </div>
                 <div horizontal layout>
                     <div>
@@ -136,8 +143,7 @@
 
             <div class="dropdown">
                 <div tabindex="-1">
-                    Cancer &nbsp;
-                    <font-awesome icon="caret-down"></font-awesome>
+                    Cancer
                 </div>
                 <div horizontal layout>
                     <div>
@@ -150,15 +156,14 @@
 
             <div class="dropdown">
                 <div tabindex="-1">
-                    Functional &nbsp;
-                    <font-awesome icon="caret-down"></font-awesome>
+                    Functional
                 </div>
                 <div horizontal layout>
                     <div>
                         <div class="option" option="fatigo" on-click="{{handleMenu}}">Single enrichment</div>
                         <div class="option" option="fatiscan" on-click="{{handleMenu}}">Gene set enrichment</div>
                         <div class="option" option="snow" on-click="{{handleMenu}}">Network enrichment</div>
-                        <div class="option" option="networkminer" on-click="{{handleMenu}}">Gene set Network Enrichment</div>
+                        <div class="option" option="networkminer" on-click="{{handleMenu}}">Gene set network Enrichment</div>
                     </div>
                 </div>
             </div>

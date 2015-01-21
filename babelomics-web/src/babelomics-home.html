@@ -1,4 +1,4 @@
-<polymer-element name="babelomics-home">
+<polymer-element name="babelomics-home" attributes="isLogged">
     <template>
         <style>
             :host {
@@ -100,7 +100,7 @@
 
         <div horizontal layout>
             <div flex>
-                <img src="images/logoBabelomics_positive_trans.svg" style="height: 250px;">
+                <img src="images/logoBabelomics_positive_trans.svg" style="width:220px;">
             </div>
             <div vertical layout center style="width:500px;">
                 <div class="megatitle">Babelomics 5</div>
@@ -110,11 +110,13 @@
                 </div>
                 <br>
 
-                <div class="megabutton" on-click="{{annonymousLogin}}">
-                    <!--<font-awesome icon="hand-o-left"></font-awesome>-->
-                    <font-awesome icon="sign-in"></font-awesome>
-                    &nbsp;&nbsp;&nbsp; Try it now
-                </div>
+                <template if="{{!isLogged}}">
+                    <div class="megabutton" on-click="{{annonymousLogin}}">
+                        <!--<font-awesome icon="hand-o-left"></font-awesome>-->
+                        <font-awesome icon="sign-in"></font-awesome>
+                        &nbsp;&nbsp;&nbsp; Try it now
+                    </div>
+                </template>
 
             </div>
         </div>
@@ -130,12 +132,9 @@
     <script>
         Polymer({
             created: function () {
-                this.logged = Cookies("bioinfo_sid") === undefined ? false : true;
             },
             annonymousLogin: function () {
                 this.fire('annonymous');
-                this.logged = true;
-
             }
         })
     </script>
