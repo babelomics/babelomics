@@ -362,12 +362,14 @@
 
                 </jso-clustering>
             </template>
-            <template if="{{selectedOption == 'prediction'}}">
+            <template if="{{selectedOption == 'class-prediction'}}">
                 <jso-prediction
                         selectedOption="{{selectedOption}}"
                         userData="{{userData}}"
                         selectedStudy="{{selectedStudy}}"
                         studies="{{studies}}"
+                        args="{{args}}"
+
                         >
 
                 </jso-prediction>
@@ -378,6 +380,8 @@
                         userData="{{userData}}"
                         selectedStudy="{{selectedStudy}}"
                         studies="{{studies}}"
+                        args="{{args}}"
+
                         >
 
                 </jso-class-comparison>
@@ -389,6 +393,8 @@
                         userData="{{userData}}"
                         selectedStudy="{{selectedStudy}}"
                         studies="{{studies}}"
+                        args="{{args}}"
+
                         >
 
                 </jso-correlation>
@@ -400,6 +406,8 @@
                         userData="{{userData}}"
                         selectedStudy="{{selectedStudy}}"
                         studies="{{studies}}"
+                        args="{{args}}"
+
                         >
                 </jso-survival>
             </template>
