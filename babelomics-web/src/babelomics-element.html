@@ -259,12 +259,13 @@
                 <jso-project-browser userData="{{userData}}" selectedStudy="{{selectedStudy}}" studies="{{studies}}"
                                      selectedProject="{{selectedProject}}"></jso-project-browser>
             </template>
-            <template if="{{selectedOption == 'networkminer'}}">
+            <template if="{{selectedOption == 'network-miner'}}">
                 <jso-network-miner
                         selectedOption="{{selectedOption}}"
                         userData="{{userData}}"
                         selectedStudy="{{selectedStudy}}"
                         studies="{{studies}}"
+                        args={{args}}
                         ></jso-network-miner>
             </template>
 
