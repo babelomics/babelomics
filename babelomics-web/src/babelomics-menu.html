@@ -92,6 +92,7 @@
                 <div horizontal layout style="width:460px;">
                     <div style="margin-left: 5px;">
                         <div class="title">Normalization</div>
+                        <div class="title l1">NGS</div>
                         <div class="option l1" option="rnaseq-norm" on-click="{{handleMenu}}">RNA-Seq</div>
                         <div class="title l1">Microarray one channel</div>
                         <div class="option l2" option="affymetrix" on-click="{{handleMenu}}">Affymetrix</div>
@@ -116,10 +117,14 @@
                 </div>
                 <div horizontal layout>
                     <div>
-                        <div class="option" option="clustering" on-click="{{handleMenu}}">Clustering</div>
-                        <div class="option" option="class-prediction" on-click="{{handleMenu}}">Class prediction</div>
+                        <div class="title">Unsupervised analysis</div>
+                        <div class="option l2
+                        " option="clustering" on-click="{{handleMenu}}">Clustering</div>
+                        <div class="title">Supervised analysis</div>
+                        <div class="option l2" option="class-prediction" on-click="{{handleMenu}}">Class prediction</div>
                         <div class="title">Differential expression</div>
-                        <div class="option l1" option="rnaseq-diffexpr" on-click="{{handleMenu}}">RNA-seq</div>
+                        <div class="title l1">RNA-seq</div>
+                        <div class="option l2" option="rnaseq-diffexpr" on-click="{{handleMenu}}">Two classes comparison</div>
                         <div class="title l1">Microarray</div>
                         <div class="option l2" option="class-comparison" on-click="{{handleMenu}}">Class comparison</div>
                         <div class="option l2" option="correlation" on-click="{{handleMenu}}">Correlation</div>
