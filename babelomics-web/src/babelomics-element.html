@@ -47,6 +47,7 @@
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-oncodrivefm.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-oncodriveclust.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-burden.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-contact.html">
 
 
 <!--<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-nm-result.html">-->
@@ -70,6 +71,7 @@
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-genome-viewer-element.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-job-info-widget.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-protein-viewer.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-pvalue-button.html">
 
 
 <script src="../lib/jsorolla/src/lib/data-adapter/network/sif-network-data-adapter.js"></script>
@@ -206,6 +208,7 @@
         <jso-header id="jsoHeader"
                     isLogged="{{isLogged}}"
                     on-session-change="{{handleSessionChange}}"
+
                     selectedOption="{{selectedOption}}"
                     userData="{{userData}}"
                     showJobs="{{showJobs}}"
@@ -230,15 +233,15 @@
 
             <jso-help-menu class="helpmenu" selectedOption="{{selectedOption}}">
                 <div class="link">
-                    <font-awesome icon="home"></font-awesome>
+                    <font-awesome icon="book"></font-awesome>
                     <a class="a" href="https://github.com/babelomics/babelomics/wiki" target="_blank"> &nbsp; Tutorial</a>
                 </div>
                 <div class="link">
-                    <font-awesome icon="home"></font-awesome>
+                    <font-awesome icon="pencil-square-o"></font-awesome>
                     <a class="a" href="https://github.com/babelomics/babelomics/wiki/How-to-cite-babelomics" target="_blank"> &nbsp; How to cite</a>
                 </div>
                 <div class="link">
-                    <font-awesome icon="home"></font-awesome>
+                    <font-awesome icon="comment"></font-awesome>
                     <span class="a" on-click="{{handleContact}}"> &nbsp; Contact</span>
                 </div>
             </jso-help-menu>
@@ -251,14 +254,21 @@
                         isLogged="{{isLogged}}"
                         ></babelomics-home>
             </template>
-            <jso-job-result
-                    jobItem="{{jobItem}}"
-                    hidden?="{{selectedOption != 'jobReady' }}"
-                    selectedOption="{{selectedOption}}"
-                    on-redirection="{{handleRedirection}}"
+            <template if="{{selectedOption == 'contact'}}">
+                <jso-contact></jso-contact>
+            </template>
+            <template if="{{selectedOption=='jobReady'}}">
+                <jso-job-result
+                        id="jsoJobResult"
+                        jobItem="{{jobItem}}"
+                        selectedOption="{{selectedOption}}"
+                        on-redirection="{{handleRedirection}}"
 
-                    ></jso-job-result>
-            <jso-job-no-ready hidden?="{{selectedOption != 'jobNoReady' }}" jobItem="{{jobItem}}"></jso-job-no-ready>
+                        ></jso-job-result>
+            </template>
+            <template if="{{selectedOption=='jobNoReady'}}">
+                <jso-job-no-ready jobItem="{{jobItem}}"></jso-job-no-ready>
+            </template>
             <template if="{{selectedOption == 'projects'}}">
                 <jso-project-browser userData="{{userData}}" selectedStudy="{{selectedStudy}}" studies="{{studies}}"
                                      selectedProject="{{selectedProject}}"></jso-project-browser>
@@ -543,11 +553,13 @@
                 this.studies;
 
             },
+
             handleAppMenu: function (e) {
                 this.$.sidePanel.classList.toggle('side-panel-shown');
             },
 //            handleJobItemClick: function (e) {
-//                this.jobItem = e.detail.jobItem;
+////                this.jobItem = e.detail.jobItem;
+//                this.$.jsoJobResult.pvalue = 0.05;
 //            },
 
             userDataChanged: function (oldValue, newValue) {
@@ -591,8 +603,7 @@
             },
             handleContact: function (e) {
                 this.selectedOption = "contact";
-                this.selectedOption = "";
-            },
+            }
 //    userDataChanged: function (oldValue, newValue) {
 //
 //        var me = this
