@@ -181,7 +181,13 @@
             created: function () {
             },
             handleMenu: function (e) {
-                this.selectedOption = e.target.getAttribute("option");
+                var me = this;
+                var option = e.target.getAttribute("option");
+                this.selectedOption = "loading";
+                setTimeout(function(){
+                    me.selectedOption = option;
+                }, 0);
+
             }
         })
     </script>

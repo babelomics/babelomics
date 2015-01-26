@@ -159,6 +159,7 @@
 
 
 <link rel="import" href="babelomics-home.html">
+<link rel="import" href="babelomics-loading.html">
 <link rel="import" href="babelomics-menu.html">
 
 <polymer-element name="babelomics-element">
@@ -246,13 +247,16 @@
                 </div>
             </jso-help-menu>
         </jso-header>
-        <div class="content">
+        <div id="content" class="content">
             <template if="{{ selectedOption == 'home' || selectedOption == 'none' || selectedOption == ''}}">
                 <babelomics-home
                         id="babelomicsHome"
                         on-annonymous="{{annonymousLogin}}"
                         isLogged="{{isLogged}}"
                         ></babelomics-home>
+            </template>
+            <template if="{{selectedOption == 'loading'}}">
+                <babelomics-loading></babelomics-loading>
             </template>
             <template if="{{selectedOption == 'contact'}}">
                 <jso-contact></jso-contact>
@@ -285,6 +289,7 @@
 
             <template if="{{selectedOption == 'snow'}}">
                 <jso-snow
+                        id="jsoSnow"
                         selectedOption="{{selectedOption}}"
                         userData="{{userData}}"
                         selectedStudy="{{selectedStudy}}"
@@ -553,7 +558,10 @@
                 this.studies;
 
             },
-
+            babelomicsMenuClicked: function(){
+                debugger
+                this.selectedOption = "";
+            },
             handleAppMenu: function (e) {
                 this.$.sidePanel.classList.toggle('side-panel-shown');
             },
