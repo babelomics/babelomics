@@ -2,6 +2,7 @@ CELLBASE_HOST = "http://wwwdev.ebi.ac.uk/cellbase/webservices/rest";
 CELLBASE_VERSION = "v3";
 // OPENCGA_HOST = "http://ws-beta.bioinfo.cipf.es/opencga-staging/rest";
 OPENCGA_HOST = "http://ws.babelomics.org/opencga/rest";
+//OPENCGA_HOST = "http://web02:8080/opencga/rest";
 OPENCGA_VERSION = "v1";
 
 //if (
@@ -41,3 +42,8 @@ var AVAILABLE_SPECIES = {
 
 /** Reference to a species from the list to be shown at start **/
 var DEFAULT_SPECIES = AVAILABLE_SPECIES.items[0].items[0];
+
+var TOOLS = ["affy-expression-normalization", "agilent-expression-one-color-normalization", "agilent-expression-two-colors-normalization", "association", "burden",
+    "class-comparison", "class-prediction", "clustering", "communities-structure-detection", "correlation", "fatigo", "fatiscan", "genepix-expression-one-color-normalization",
+    "genepix-expression-two-colors-normalization", "network-miner", "oncodriveclust", "oncodrivefm", "preprocessing", "rnaseq-diffexpr", "rnaseq-norm", "snow", "stratification",
+    "survival"];
