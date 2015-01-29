@@ -22,6 +22,8 @@ OPENCGA_VERSION = "v1";
 ////    OPENCGA_HOST = "http://localhost:8080/opencga/rest";
 //}
 
+
+/** Config file for genome maps**/
 var AVAILABLE_SPECIES = {
     "text": "Species",
     "items": [
@@ -42,6 +44,20 @@ var AVAILABLE_SPECIES = {
 
 /** Reference to a species from the list to be shown at start **/
 var DEFAULT_SPECIES = AVAILABLE_SPECIES.items[0].items[0];
+
+/** available species for protein viewer **/
+var SPECIES = [
+    {name: "Homo sapiens", value: "hsapiens", dbname: "hgnc_symbol"},
+    {name: "Mus musculus", value: "mmusculus", dbname: "mgi_symbol"},
+    {name: "Rattus norvegicus", value: "rnorvegicus", dbname: "EntrezGene"},
+    {name: "Drosophila melanogaster", value: "dmelanogaster", dbname: "EntrezGene"},
+    {name: "Caenorhabditis elegans", value: "celegans", dbname: "sgd"},
+    {name: "Saccharomyces cerevisiae", value: "scerevisiae", dbname: "sgd"},
+    {name: "Danio rerio", value: "drerio", dbname: "EntrezGene"},
+    {name: "Arabidopsis thaliana", value: "athaliana", dbname: "EntrezGene"}
+];
+
+STUDY_NAME = "WorkSpace";
 
 var TOOLS = ["affy-expression-normalization", "agilent-expression-one-color-normalization", "agilent-expression-two-colors-normalization", "association", "burden",
     "class-comparison", "class-prediction", "clustering", "communities-structure-detection", "correlation", "fatigo", "fatiscan", "genepix-expression-one-color-normalization",
