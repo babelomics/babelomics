@@ -17,15 +17,15 @@ ParseMatrix.prototype.getDataset = function () {
     var featNumber = 0;
     var firstLine = 0;
     for (var i = 0; i < lines.length; i++) {
-        var line = lines[i];
-        if (line.trim() == "") {
+        var line = lines[i].trim();
+        if (line == "") {
             firstLine++;
             continue
         }
         if (line.indexOf("#") == 0) {
             var fields = line.split("\t");
             if (fields[0] == "#VARIABLE") {
-                var arr = datasetHeader[fields[0]]
+                var arr = datasetHeader[fields[0]];
                 arr.push(fields);
                 datasetHeader[fields[0]] = arr;
             }
@@ -36,7 +36,7 @@ ParseMatrix.prototype.getDataset = function () {
             var fields = new Array();
             if (datasetHeader["#NAMES"].length == 0) {
                 if (i > firstLine) {
-                    fields = lines[i - 1].split("\t");
+                    fields = lines[i - 1].trim().split("\t");
                     datasetHeader["#NAMES"] = fields.slice(1);
                 }
                 else {
