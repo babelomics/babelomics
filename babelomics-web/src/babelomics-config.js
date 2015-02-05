@@ -63,3 +63,5 @@ var TOOLS = ["affy-expression-normalization", "agilent-expression-one-color-norm
     "class-comparison", "class-prediction", "clustering", "communities-structure-detection", "correlation", "fatigo", "fatiscan", "genepix-expression-one-color-normalization",
     "genepix-expression-two-colors-normalization", "network-miner", "oncodriveclust", "oncodrivefm", "preprocessing", "rnaseq-diffexpr", "rnaseq-norm", "snow", "stratification",
     "survival"];
+
+var MAINTENANCE_MODE = true;

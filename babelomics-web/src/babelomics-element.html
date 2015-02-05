@@ -48,6 +48,7 @@
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-oncodriveclust.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-burden.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-contact.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-maintenance.html">
 
 
 <!--<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-nm-result.html">-->
@@ -206,21 +207,27 @@
                 height: calc(100vh - 160px);
             }
         </style>
-        <jso-header id="jsoHeader"
-                    isLogged="{{isLogged}}"
-                    on-session-change="{{handleSessionChange}}"
+        <template if="{{maintenanceMode}}">
+            <jso-maintenance></jso-maintenance>
+            <jso-contact></jso-contact>
+        </template>
+        <template if="{{!maintenanceMode}}">
 
-                    selectedOption="{{selectedOption}}"
-                    userData="{{userData}}"
-                    showJobs="{{showJobs}}"
-                    options="{{options}}"
-                    studies="{{studies}}"
-                    selectedStudy="{{selectedStudy}}"
-                    allowedTools="{{allowedTools}}"
-                    jobItem="{{jobItem}}"
-                    helpLink="https://github.com/babelomics/babelomics/wiki"
-                    tutorialLink="https://github.com/babelomics/babelomics/wiki/Tutorial"
-                    hideHomeLink="true">
+            <jso-header id="jsoHeader"
+                        isLogged="{{isLogged}}"
+                        on-session-change="{{handleSessionChange}}"
+
+                        selectedOption="{{selectedOption}}"
+                        userData="{{userData}}"
+                        showJobs="{{showJobs}}"
+                        options="{{options}}"
+                        studies="{{studies}}"
+                        selectedStudy="{{selectedStudy}}"
+                        allowedTools="{{allowedTools}}"
+                        jobItem="{{jobItem}}"
+                        helpLink="https://github.com/babelomics/babelomics/wiki"
+                        tutorialLink="https://github.com/babelomics/babelomics/wiki/Tutorial"
+                        hideHomeLink="true">
             <span class="icon">
                     <img src="images/logoBabelomics_positive_trans.svg" style="height: 54px;margin: 1px 5px 0 0;">
             </span>
@@ -229,332 +236,334 @@
             </span>
             <span class="description">
             </span>
-            <babelomics-menu class="menu" selectedOption="{{selectedOption}}">
-            </babelomics-menu>
 
-            <jso-help-menu class="helpmenu" selectedOption="{{selectedOption}}">
-                <div class="link">
-                    <font-awesome icon="book"></font-awesome>
-                    <a class="a" href="https://github.com/babelomics/babelomics/wiki" target="_blank"> &nbsp; Tutorial</a>
-                </div>
-                <div class="link">
-                    <font-awesome icon="pencil-square-o"></font-awesome>
-                    <a class="a" href="https://github.com/babelomics/babelomics/wiki/How-to-cite-babelomics" target="_blank"> &nbsp; How to cite</a>
-                </div>
-                <div class="link">
-                    <font-awesome icon="comment"></font-awesome>
-                    <span class="a" on-click="{{handleContact}}"> &nbsp; Contact</span>
-                </div>
-                <div class="link">
-                    <font-awesome icon="twitter"></font-awesome>
-                    <a class="a" href="https://twitter.com/babelomics" target="_blank"> &nbsp; Follow us</a>
-                </div>
-            </jso-help-menu>
-        </jso-header>
-        <div id="content" class="content">
-            <template if="{{ selectedOption == 'home' || selectedOption == 'none' || selectedOption == ''}}">
-                <babelomics-home
-                        id="babelomicsHome"
-                        on-annonymous="{{annonymousLogin}}"
-                        isLogged="{{isLogged}}"
-                        ></babelomics-home>
-            </template>
-            <template if="{{selectedOption == 'loading'}}">
-                <babelomics-loading></babelomics-loading>
-            </template>
-            <template if="{{selectedOption == 'contact'}}">
-                <jso-contact></jso-contact>
-            </template>
-            <template if="{{selectedOption=='jobReady'}}">
-                <jso-job-result
-                        id="jsoJobResult"
-                        jobItem="{{jobItem}}"
-                        selectedOption="{{selectedOption}}"
-                        on-redirection="{{handleRedirection}}"
-
-                        ></jso-job-result>
-            </template>
-            <template if="{{selectedOption=='jobNoReady'}}">
-                <jso-job-no-ready jobItem="{{jobItem}}"></jso-job-no-ready>
-            </template>
-            <template if="{{selectedOption == 'projects'}}">
-                <jso-project-browser userData="{{userData}}" selectedStudy="{{selectedStudy}}" studies="{{studies}}"
-                                     selectedProject="{{selectedProject}}"></jso-project-browser>
-            </template>
-            <template if="{{selectedOption == 'network-miner'}}">
-                <jso-network-miner
-                        selectedOption="{{selectedOption}}"
-                        userData="{{userData}}"
-                        selectedStudy="{{selectedStudy}}"
-                        studies="{{studies}}"
-                        args={{args}}
-                        ></jso-network-miner>
-            </template>
-
-            <template if="{{selectedOption == 'snow'}}">
-                <jso-snow
-                        id="jsoSnow"
-                        selectedOption="{{selectedOption}}"
-                        userData="{{userData}}"
-                        selectedStudy="{{selectedStudy}}"
-                        studies="{{studies}}"
-                        args={{args}}
-                        >
-                </jso-snow>
-            </template>
-            <template if="{{selectedOption == 'fatigo'}}">
-                <jso-fatigo
-                        selectedOption="{{selectedOption}}"
-                        userData="{{userData}}"
-                        selectedStudy="{{selectedStudy}}"
-                        studies="{{studies}}"
-                        args={{args}}
-                        >
-
-                </jso-fatigo>
-            </template>
-            <template if="{{selectedOption == 'fatiscan'}}">
-                <jso-fatiscan
-                        selectedOption="{{selectedOption}}"
-                        userData="{{userData}}"
-                        selectedStudy="{{selectedStudy}}"
-                        studies="{{studies}}"
-                        args="{{args}}"
-                        >
-
-                </jso-fatiscan>
-            </template>
-            <template if="{{selectedOption == 'affymetrix'}}">
-                <jso-affy
-                        selectedOption="{{selectedOption}}"
-                        userData="{{userData}}"
-                        selectedStudy="{{selectedStudy}}"
-                        studies="{{studies}}"
-                        >
-
-                </jso-affy>
-            </template>
-            <template if="{{selectedOption == 'one-channel-agilent'}}">
-                <jso-one-channel-agilent
-                        selectedOption="{{selectedOption}}"
-                        userData="{{userData}}"
-                        selectedStudy="{{selectedStudy}}"
-                        studies="{{studies}}"
-                        >
-
-                </jso-one-channel-agilent>
-            </template>
-            <template if="{{selectedOption == 'one-channel-genepix'}}">
-                <jso-one-channel-genepix
-                        selectedOption="{{selectedOption}}"
-                        userData="{{userData}}"
-                        selectedStudy="{{selectedStudy}}"
-                        studies="{{studies}}"
-                        >
-
-                </jso-one-channel-genepix>
-            </template>
-            <template if="{{selectedOption == 'two-channels-agilent'}}">
-                <jso-two-channels-agilent
-                        selectedOption="{{selectedOption}}"
-                        userData="{{userData}}"
-                        selectedStudy="{{selectedStudy}}"
-                        studies="{{studies}}"
-                        >
-
-                </jso-two-channels-agilent>
-            </template>
-            <template if="{{selectedOption == 'two-channels-genepix'}}">
-                <jso-two-channels-genepix
-                        selectedOption="{{selectedOption}}"
-                        userData="{{userData}}"
-                        selectedStudy="{{selectedStudy}}"
-                        studies="{{studies}}"
-                        >
-
-                </jso-two-channels-genepix>
-            </template>
-            <template if="{{selectedOption == 'clustering'}}">
-                <jso-clustering
-                        selectedOption="{{selectedOption}}"
-                        userData="{{userData}}"
-                        selectedStudy="{{selectedStudy}}"
-                        studies="{{studies}}"
-                        args="{{args}}"
-                        >
-
-                </jso-clustering>
-            </template>
-            <template if="{{selectedOption == 'class-prediction'}}">
-                <jso-prediction
-                        selectedOption="{{selectedOption}}"
-                        userData="{{userData}}"
-                        selectedStudy="{{selectedStudy}}"
-                        studies="{{studies}}"
-                        args="{{args}}"
-
-                        >
-
-                </jso-prediction>
-            </template>
-            <template if="{{selectedOption == 'class-comparison'}}">
-                <jso-class-comparison
-                        selectedOption="{{selectedOption}}"
-                        userData="{{userData}}"
-                        selectedStudy="{{selectedStudy}}"
-                        studies="{{studies}}"
-                        args="{{args}}"
-
-                        >
-
-                </jso-class-comparison>
-            </template>
-
-            <template if="{{selectedOption == 'correlation'}}">
-                <jso-correlation
-                        selectedOption="{{selectedOption}}"
-                        userData="{{userData}}"
-                        selectedStudy="{{selectedStudy}}"
-                        studies="{{studies}}"
-                        args="{{args}}"
-
-                        >
-
-                </jso-correlation>
-            </template>
-
-            <template if="{{selectedOption == 'survival'}}">
-                <jso-survival
-                        selectedOption="{{selectedOption}}"
-                        userData="{{userData}}"
-                        selectedStudy="{{selectedStudy}}"
-                        studies="{{studies}}"
-                        args="{{args}}"
-
-                        >
-                </jso-survival>
-            </template>
-            <template if="{{selectedOption == 'rnaseq-diffexpr'}}">
-                <jso-rnaseq-diffexpr
-                        selectedOption="{{selectedOption}}"
-                        userData="{{userData}}"
-                        selectedStudy="{{selectedStudy}}"
-                        studies="{{studies}}"
-                        >
-
-                </jso-rnaseq-diffexpr>
-            </template>
-            <template if="{{selectedOption == 'rnaseq-norm'}}">
-                <jso-rnaseq-norm
-                        selectedOption="{{selectedOption}}"
-                        userData="{{userData}}"
-                        selectedStudy="{{selectedStudy}}"
-                        studies="{{studies}}"
-                        >
-
-                </jso-rnaseq-norm>
-            </template>
-
-            <template if="{{selectedOption == 'preprocessing'}}">
-                <jso-preprocessing-matrix
-                        selectedOption="{{selectedOption}}"
-                        userData="{{userData}}"
-                        selectedStudy="{{selectedStudy}}"
-                        studies="{{studies}}"
-                        args="{{args}}"
-                        >
-                </jso-preprocessing-matrix>
-            </template>
-            <template if="{{selectedOption == 'edit'}}">
-                <jso-edit
-                        selectedOption="{{selectedOption}}"
-                        userData="{{userData}}"
-                        selectedStudy="{{selectedStudy}}"
-                        studies="{{studies}}"
-                        args="{{args}}"
-                        >
-                </jso-edit>
-            </template>
-
-            <template if="{{selectedOption == 'association'}}">
-                <jso-association
-                        selectedOption="{{selectedOption}}"
-                        userData="{{userData}}"
-                        selectedStudy="{{selectedStudy}}"
-                        studies="{{studies}}"
-                        >
-                </jso-association>
-            </template>
-
-            <template if="{{selectedOption == 'stratification'}}">
-                <jso-stratification
-                        selectedOption="{{selectedOption}}"
-                        userData="{{userData}}"
-                        selectedStudy="{{selectedStudy}}"
-                        studies="{{studies}}"
-                        >
-                </jso-stratification>
-            </template>
-            <template if="{{selectedOption == 'oncodrivefm'}}">
-                <jso-oncodrivefm
-                        selectedOption="{{selectedOption}}"
-                        userData="{{userData}}"
-                        selectedStudy="{{selectedStudy}}"
-                        studies="{{studies}}"
-                        >
-                </jso-oncodrivefm>
-            </template>
-            <template if="{{selectedOption == 'oncodriveclust'}}">
-                <jso-oncodriveclust
-                        selectedOption="{{selectedOption}}"
-                        userData="{{userData}}"
-                        selectedStudy="{{selectedStudy}}"
-                        studies="{{studies}}"
-                        >
-                </jso-oncodriveclust>
-            </template>
-            <template if="{{selectedOption == 'burden'}}">
-                <jso-burden
-                        selectedOption="{{selectedOption}}"
-                        userData="{{userData}}"
-                        selectedStudy="{{selectedStudy}}"
-                        studies="{{studies}}"
-                        >
-                </jso-burden>
-            </template>
-            <!--<jso-job-launched hidden?="{{selectedOption != 'jobLaunched' }}"></jso-job-launched>-->
-            <!--&lt;!&ndash;<div id="sidePanel" class="side-panel side-panel-shown">&ndash;&gt;-->
-            <!--&lt;!&ndash;&lt;!&ndash;<jso-job-list jobItem="{{jobItem}}" selectedOption="{{selectedOption}}" userData="{{userData}}"&ndash;&gt;&ndash;&gt;-->
-            <!--&lt;!&ndash;&lt;!&ndash;hide="{{!showJobs}}" showJobs="{{showJobs}}" selectedStudy="{{selectedStudy}}" ></jso-job-list>&ndash;&gt;&ndash;&gt;-->
-            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-            <!--<template if="{{ showJobs }}">-->
-            <!--<jso-job-list-->
-            <!--on-job-item-click="{{handleJobItemClick}}"-->
-            <!--userData="{{userData}}"-->
-            <!--selectedOption="{{selectedOption}}"-->
-            <!--selectedStudy="{{selectedStudy}}"-->
-            <!--allowedTools="{{allowedTools}}"-->
-            <!--showJobs="{{showJobs}}">-->
-            <!--</jso-job-list>-->
-            <!--</template>-->
+                <babelomics-menu class="menu" selectedOption="{{selectedOption}}">
+                </babelomics-menu>
+                <jso-help-menu class="helpmenu" selectedOption="{{selectedOption}}">
+                    <div class="link">
+                        <font-awesome icon="book"></font-awesome>
+                        <a class="a" href="https://github.com/babelomics/babelomics/wiki" target="_blank"> &nbsp; Tutorial</a>
+                    </div>
+                    <div class="link">
+                        <font-awesome icon="pencil-square-o"></font-awesome>
+                        <a class="a" href="https://github.com/babelomics/babelomics/wiki/How-to-cite-babelomics" target="_blank"> &nbsp; How to cite</a>
+                    </div>
+                    <div class="link">
+                        <font-awesome icon="comment"></font-awesome>
+                        <span class="a" on-click="{{handleContact}}"> &nbsp; Contact</span>
+                    </div>
+                    <div class="link">
+                        <font-awesome icon="twitter"></font-awesome>
+                        <a class="a" href="https://twitter.com/babelomics" target="_blank"> &nbsp; Follow us</a>
+                    </div>
+                </jso-help-menu>
+            </jso-header>
 
 
-        </div>
+            <div id="content" class="content">
+                <template if="{{ selectedOption == 'home' || selectedOption == 'none' || selectedOption == ''}}">
+                    <babelomics-home
+                            id="babelomicsHome"
+                            on-annonymous="{{annonymousLogin}}"
+                            isLogged="{{isLogged}}"
+                            ></babelomics-home>
+                </template>
+                <template if="{{selectedOption == 'loading'}}">
+                    <babelomics-loading></babelomics-loading>
+                </template>
+                <template if="{{selectedOption == 'contact'}}">
+                    <jso-contact></jso-contact>
+                </template>
+                <template if="{{selectedOption=='jobReady'}}">
+                    <jso-job-result
+                            id="jsoJobResult"
+                            jobItem="{{jobItem}}"
+                            selectedOption="{{selectedOption}}"
+                            on-redirection="{{handleRedirection}}"
 
-        <jso-footer>
-            BABELOMICS: developed by the Computational Genomics Department
-            <br>
-            <a href="http://bioinfo.cipf.es/" target="_blank" class="a" style="margin-left: 10px;">bioinfo.cipf.es:</a>
-            <a href="mailto:babelomics@cipf.es" class="a" style="margin-left: 10px;">babelomics@cipf.es</a>
+                            ></jso-job-result>
+                </template>
+                <template if="{{selectedOption=='jobNoReady'}}">
+                    <jso-job-no-ready jobItem="{{jobItem}}"></jso-job-no-ready>
+                </template>
+                <template if="{{selectedOption == 'projects'}}">
+                    <jso-project-browser userData="{{userData}}" selectedStudy="{{selectedStudy}}" studies="{{studies}}"
+                                         selectedProject="{{selectedProject}}"></jso-project-browser>
+                </template>
+                <template if="{{selectedOption == 'network-miner'}}">
+                    <jso-network-miner
+                            selectedOption="{{selectedOption}}"
+                            userData="{{userData}}"
+                            selectedStudy="{{selectedStudy}}"
+                            studies="{{studies}}"
+                            args={{args}}
+                            ></jso-network-miner>
+                </template>
 
-            <br>
-            Principe Felipe Research Center
-            <br>
-            2015
-            <a href="https://twitter.com/babelomics" target="_blank" class="a" style="margin-left: 10px;">
-                <font-awesome icon="twitter" style="font-size:20px;"></font-awesome>
-            </a>
-        </jso-footer>
+                <template if="{{selectedOption == 'snow'}}">
+                    <jso-snow
+                            id="jsoSnow"
+                            selectedOption="{{selectedOption}}"
+                            userData="{{userData}}"
+                            selectedStudy="{{selectedStudy}}"
+                            studies="{{studies}}"
+                            args={{args}}
+                            >
+                    </jso-snow>
+                </template>
+                <template if="{{selectedOption == 'fatigo'}}">
+                    <jso-fatigo
+                            selectedOption="{{selectedOption}}"
+                            userData="{{userData}}"
+                            selectedStudy="{{selectedStudy}}"
+                            studies="{{studies}}"
+                            args={{args}}
+                            >
+
+                    </jso-fatigo>
+                </template>
+                <template if="{{selectedOption == 'fatiscan'}}">
+                    <jso-fatiscan
+                            selectedOption="{{selectedOption}}"
+                            userData="{{userData}}"
+                            selectedStudy="{{selectedStudy}}"
+                            studies="{{studies}}"
+                            args="{{args}}"
+                            >
+
+                    </jso-fatiscan>
+                </template>
+                <template if="{{selectedOption == 'affymetrix'}}">
+                    <jso-affy
+                            selectedOption="{{selectedOption}}"
+                            userData="{{userData}}"
+                            selectedStudy="{{selectedStudy}}"
+                            studies="{{studies}}"
+                            >
+
+                    </jso-affy>
+                </template>
+                <template if="{{selectedOption == 'one-channel-agilent'}}">
+                    <jso-one-channel-agilent
+                            selectedOption="{{selectedOption}}"
+                            userData="{{userData}}"
+                            selectedStudy="{{selectedStudy}}"
+                            studies="{{studies}}"
+                            >
+
+                    </jso-one-channel-agilent>
+                </template>
+                <template if="{{selectedOption == 'one-channel-genepix'}}">
+                    <jso-one-channel-genepix
+                            selectedOption="{{selectedOption}}"
+                            userData="{{userData}}"
+                            selectedStudy="{{selectedStudy}}"
+                            studies="{{studies}}"
+                            >
+
+                    </jso-one-channel-genepix>
+                </template>
+                <template if="{{selectedOption == 'two-channels-agilent'}}">
+                    <jso-two-channels-agilent
+                            selectedOption="{{selectedOption}}"
+                            userData="{{userData}}"
+                            selectedStudy="{{selectedStudy}}"
+                            studies="{{studies}}"
+                            >
+
+                    </jso-two-channels-agilent>
+                </template>
+                <template if="{{selectedOption == 'two-channels-genepix'}}">
+                    <jso-two-channels-genepix
+                            selectedOption="{{selectedOption}}"
+                            userData="{{userData}}"
+                            selectedStudy="{{selectedStudy}}"
+                            studies="{{studies}}"
+                            >
+
+                    </jso-two-channels-genepix>
+                </template>
+                <template if="{{selectedOption == 'clustering'}}">
+                    <jso-clustering
+                            selectedOption="{{selectedOption}}"
+                            userData="{{userData}}"
+                            selectedStudy="{{selectedStudy}}"
+                            studies="{{studies}}"
+                            args="{{args}}"
+                            >
+
+                    </jso-clustering>
+                </template>
+                <template if="{{selectedOption == 'class-prediction'}}">
+                    <jso-prediction
+                            selectedOption="{{selectedOption}}"
+                            userData="{{userData}}"
+                            selectedStudy="{{selectedStudy}}"
+                            studies="{{studies}}"
+                            args="{{args}}"
+
+                            >
+
+                    </jso-prediction>
+                </template>
+                <template if="{{selectedOption == 'class-comparison'}}">
+                    <jso-class-comparison
+                            selectedOption="{{selectedOption}}"
+                            userData="{{userData}}"
+                            selectedStudy="{{selectedStudy}}"
+                            studies="{{studies}}"
+                            args="{{args}}"
+
+                            >
+
+                    </jso-class-comparison>
+                </template>
+
+                <template if="{{selectedOption == 'correlation'}}">
+                    <jso-correlation
+                            selectedOption="{{selectedOption}}"
+                            userData="{{userData}}"
+                            selectedStudy="{{selectedStudy}}"
+                            studies="{{studies}}"
+                            args="{{args}}"
+
+                            >
+
+                    </jso-correlation>
+                </template>
+
+                <template if="{{selectedOption == 'survival'}}">
+                    <jso-survival
+                            selectedOption="{{selectedOption}}"
+                            userData="{{userData}}"
+                            selectedStudy="{{selectedStudy}}"
+                            studies="{{studies}}"
+                            args="{{args}}"
+
+                            >
+                    </jso-survival>
+                </template>
+                <template if="{{selectedOption == 'rnaseq-diffexpr'}}">
+                    <jso-rnaseq-diffexpr
+                            selectedOption="{{selectedOption}}"
+                            userData="{{userData}}"
+                            selectedStudy="{{selectedStudy}}"
+                            studies="{{studies}}"
+                            >
+
+                    </jso-rnaseq-diffexpr>
+                </template>
+                <template if="{{selectedOption == 'rnaseq-norm'}}">
+                    <jso-rnaseq-norm
+                            selectedOption="{{selectedOption}}"
+                            userData="{{userData}}"
+                            selectedStudy="{{selectedStudy}}"
+                            studies="{{studies}}"
+                            >
+
+                    </jso-rnaseq-norm>
+                </template>
+
+                <template if="{{selectedOption == 'preprocessing'}}">
+                    <jso-preprocessing-matrix
+                            selectedOption="{{selectedOption}}"
+                            userData="{{userData}}"
+                            selectedStudy="{{selectedStudy}}"
+                            studies="{{studies}}"
+                            args="{{args}}"
+                            >
+                    </jso-preprocessing-matrix>
+                </template>
+                <template if="{{selectedOption == 'edit'}}">
+                    <jso-edit
+                            selectedOption="{{selectedOption}}"
+                            userData="{{userData}}"
+                            selectedStudy="{{selectedStudy}}"
+                            studies="{{studies}}"
+                            args="{{args}}"
+                            >
+                    </jso-edit>
+                </template>
+
+                <template if="{{selectedOption == 'association'}}">
+                    <jso-association
+                            selectedOption="{{selectedOption}}"
+                            userData="{{userData}}"
+                            selectedStudy="{{selectedStudy}}"
+                            studies="{{studies}}"
+                            >
+                    </jso-association>
+                </template>
+
+                <template if="{{selectedOption == 'stratification'}}">
+                    <jso-stratification
+                            selectedOption="{{selectedOption}}"
+                            userData="{{userData}}"
+                            selectedStudy="{{selectedStudy}}"
+                            studies="{{studies}}"
+                            >
+                    </jso-stratification>
+                </template>
+                <template if="{{selectedOption == 'oncodrivefm'}}">
+                    <jso-oncodrivefm
+                            selectedOption="{{selectedOption}}"
+                            userData="{{userData}}"
+                            selectedStudy="{{selectedStudy}}"
+                            studies="{{studies}}"
+                            >
+                    </jso-oncodrivefm>
+                </template>
+                <template if="{{selectedOption == 'oncodriveclust'}}">
+                    <jso-oncodriveclust
+                            selectedOption="{{selectedOption}}"
+                            userData="{{userData}}"
+                            selectedStudy="{{selectedStudy}}"
+                            studies="{{studies}}"
+                            >
+                    </jso-oncodriveclust>
+                </template>
+                <template if="{{selectedOption == 'burden'}}">
+                    <jso-burden
+                            selectedOption="{{selectedOption}}"
+                            userData="{{userData}}"
+                            selectedStudy="{{selectedStudy}}"
+                            studies="{{studies}}"
+                            >
+                    </jso-burden>
+                </template>
+                <!--<jso-job-launched hidden?="{{selectedOption != 'jobLaunched' }}"></jso-job-launched>-->
+                <!--&lt;!&ndash;<div id="sidePanel" class="side-panel side-panel-shown">&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;<jso-job-list jobItem="{{jobItem}}" selectedOption="{{selectedOption}}" userData="{{userData}}"&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;&lt;!&ndash;hide="{{!showJobs}}" showJobs="{{showJobs}}" selectedStudy="{{selectedStudy}}" ></jso-job-list>&ndash;&gt;&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!--<template if="{{ showJobs }}">-->
+                <!--<jso-job-list-->
+                <!--on-job-item-click="{{handleJobItemClick}}"-->
+                <!--userData="{{userData}}"-->
+                <!--selectedOption="{{selectedOption}}"-->
+                <!--selectedStudy="{{selectedStudy}}"-->
+                <!--allowedTools="{{allowedTools}}"-->
+                <!--showJobs="{{showJobs}}">-->
+                <!--</jso-job-list>-->
+                <!--</template>-->
+
+
+            </div>
+            <jso-footer>
+                BABELOMICS: developed by the Computational Genomics Department
+                <br>
+                <a href="http://bioinfo.cipf.es/" target="_blank" class="a" style="margin-left: 10px;">bioinfo.cipf.es:</a>
+                <a href="mailto:babelomics@cipf.es" class="a" style="margin-left: 10px;">babelomics@cipf.es</a>
+
+                <br>
+                Principe Felipe Research Center
+                <br>
+                2015
+                <a href="https://twitter.com/babelomics" target="_blank" class="a" style="margin-left: 10px;">
+                    <font-awesome icon="twitter" style="font-size:20px;"></font-awesome>
+                </a>
+            </jso-footer>
+        </template>
     </template>
     <script>
         Polymer({
@@ -563,6 +572,7 @@
                 this.showJobs = false;
                 this.userData = {};
                 this.allowedTools = TOOLS;
+                this.maintenanceMode = MAINTENANCE_MODE;
 //                this.hideJobView = true;
 
                 this.isLogged
