@@ -65,3 +65,4 @@ var TOOLS = ["affy-expression-normalization", "agilent-expression-one-color-norm
     "survival"];
 
 var MAINTENANCE_MODE = false;
+var CONTACT_MAIL = "babelomics@cipf.es";
