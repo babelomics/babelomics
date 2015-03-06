@@ -2,7 +2,7 @@
 mkdir -p build
 rm -rf build/index.html build/index.js build/workers build/fonts build/images
 
-vulcanize babelomics-index.html -o build/index.html --inline --strip --csp
+vulcanize babelomics-index.html -o build/index.html --strip --csp --inline
 
 cp -r bower_components/fontawesome/fonts build/
 cp -r src/fonts/*.woff* build/fonts/

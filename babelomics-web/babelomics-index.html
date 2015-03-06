@@ -12,6 +12,7 @@
     <!--Web Components-->
     <script src="bower_components/webcomponentsjs/webcomponents.min.js"></script>
     <link rel="import" href="bower_components/polymer/polymer.html">
+    <script src="bower_components/bowser/bowser.min.js"></script>
 
 
     <!--Libraries-->
@@ -61,6 +62,11 @@
             font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, 'sans-serif' !important;
         }
 
+        .iconloading1:after {
+            margin: 10px;
+            font-family: FontAwesome;
+            content: '\f021';
+        }
     </style>
     <script>
         WORKERS_PATH = 'lib/jsorolla/src/lib/';
@@ -68,13 +74,59 @@
 </head>
 
 <body>
-<babelomics-element></babelomics-element>
+<div id="loading"
+     style="
+box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.2);
+display:none;
+font-size: 18px;
+position:fixed;
+margin:auto auto;
+padding:30px;
+left:0;
+right:0;
+top:30px;
+width:550px;
+background-color:#314559;
+text-align: center;
+border: 1px solid #AAA;
+color:#DDD;">
+    <b>Initializing... please wait.</b> <span class="iconloading1" style="color:#FFAD76"></span>
+    <br>
+    <br>
 
+    <div style="font-size: 15px;">
+        <div>
+            Click "continue" if your browser shows:
+            "Warning: Unresponsive script"
+        </div>
+        <div>
+            This program has been optimized for:
+            Chrome, Chromium and Opera
+        </div>
+    </div>
+</div>
 <script>
-    var babelomics;
-    window.addEventListener('polymer-ready', function (debuggere) {
-        babelomics = document.querySelector('babelomics-element');
+    var element;
+    var loadingEl = document.querySelector('#loading');
+
+    var init = function () {
+        element = document.createElement('babelomics-element');
+        document.body.appendChild(element);
+        document.body.removeChild(loadingEl);
+    };
+
+    if (bowser.name == "Chrome" || bowser.name == "Opera") {
+        init();
+    } else {
+        loadingEl.style.display = 'block';
+    }
+    window.addEventListener('polymer-ready', function () {
         console.log('polymer-ready');
+        if (!(bowser.name == "Chrome" || bowser.name == "Opera")) {
+            setTimeout(function () {
+                init();
+            }, 20);
+        }
     });
 </script>
 </body>
