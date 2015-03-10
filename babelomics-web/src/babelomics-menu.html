@@ -5,6 +5,7 @@
                 display: block;
                 position: relative;
                 box-sizing: border-box;
+                white-space: nowrap;
             }
 
             .l1 {
@@ -21,12 +22,11 @@
 
             div.dropdown {
                 position: relative;
-                color: #CCCCCC;
-                margin: 0 0.5vw;
+                color: #CCCCCC !important;
+                margin: 0 10px;
             }
 
             div.dropdown > div {
-
             }
 
             div.dropdown > div:first-of-type {
@@ -42,7 +42,8 @@
             div.dropdown > div:first-of-type:after {
                 font-family: 'FontAwesome';
                 margin-left: 2px;
-                content: '\f0d7';
+                /*content: '\f0d7';*/
+                content: '\f107';
             }
 
             div.dropdown > div:first-of-type + div {
@@ -70,7 +71,7 @@
                 /*text-transform: uppercase;*/
                 color: #ffad76;
                 /*margin-top: 10px;*/
-                font-size: 14px !important;
+                /*font-size: 14px !important;*/
             }
 
             .option:hover {
@@ -119,7 +120,8 @@
                     <div>
                         <div class="title">Unsupervised analysis</div>
                         <div class="option l2
-                        " option="clustering" on-click="{{handleMenu}}">Clustering</div>
+                        " option="clustering" on-click="{{handleMenu}}">Clustering
+                        </div>
                         <div class="title">Supervised analysis</div>
                         <div class="option l2" option="class-prediction" on-click="{{handleMenu}}">Class prediction</div>
                         <div class="title">Differential expression</div>
@@ -184,7 +186,7 @@
                 var me = this;
                 var option = e.target.getAttribute("option");
                 this.selectedOption = "loading";
-                setTimeout(function(){
+                setTimeout(function () {
                     me.selectedOption = option;
                 }, 0);
 

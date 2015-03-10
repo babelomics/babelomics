@@ -165,6 +165,10 @@
 
 <polymer-element name="babelomics-element">
     <template>
+        <link rel="stylesheet" href="../lib/jsorolla/src/lib/components/jso-style.css">
+        <link rel="stylesheet" href="../lib/jsorolla/src/lib/components/jso-panel.css">
+        <link rel="stylesheet" href="../lib/jsorolla/src/lib/components/jso-form.css">
+        <link rel="stylesheet" href="../lib/jsorolla/src/lib/components/jso-dropdown.css">
         <style>
             :host {
                 display: block;
@@ -213,10 +217,10 @@
         </template>
         <template if="{{mode != 'MAINTENANCE'}}">
             <template if="{{mode == 'DEBUG'}}">
-                <div style="display: inline-block">
-                <div style="background: red">{{mode}}</div>
-                <div style="background: red">{{cellbaseHost}}</div>
-                <div style="background: red">{{opencgaHost}}</div>
+                <div class="formbox" style="display: inline-block">
+                    <div style="background: red">{{mode}}</div>
+                    <div style="background: red">{{cellbaseHost}}</div>
+                    <div style="background: red">{{opencgaHost}}</div>
                 </div>
             </template>
             <jso-header id="jsoHeader"
@@ -336,7 +340,6 @@
                             studies="{{studies}}"
                             args="{{args}}"
                             >
-
                     </jso-fatiscan>
                 </template>
                 <template if="{{selectedOption == 'affymetrix'}}">
