@@ -207,12 +207,18 @@
                 height: calc(100vh - 160px);
             }
         </style>
-        <template if="{{maintenanceMode}}">
+        <template if="{{mode == 'MAINTENANCE'}}">
             <jso-maintenance></jso-maintenance>
 
         </template>
-        <template if="{{!maintenanceMode}}">
-
+        <template if="{{mode != 'MAINTENANCE'}}">
+            <template if="{{mode == 'DEBUG'}}">
+                <div style="display: inline-block">
+                <div style="background: red">{{mode}}</div>
+                <div style="background: red">{{cellbaseHost}}</div>
+                <div style="background: red">{{opencgaHost}}</div>
+                </div>
+            </template>
             <jso-header id="jsoHeader"
                         isLogged="{{isLogged}}"
                         on-session-change="{{handleSessionChange}}"
@@ -242,7 +248,7 @@
                 <jso-help-menu class="helpmenu" selectedOption="{{selectedOption}}">
                     <div class="link">
                         <font-awesome icon="book"></font-awesome>
-                        <a class="a" href="https://github.com/babelomics/babelomics/wiki" target="_blank"> &nbsp; Tutorial</a>
+                        <a class="a" href="https://github.com/babelomics/babelomics/wiki" target="_blank"> &nbsp; Documentation</a>
                     </div>
                     <div class="link">
                         <font-awesome icon="pencil-square-o"></font-awesome>
@@ -572,8 +578,8 @@
                 this.showJobs = false;
                 this.userData = {};
                 this.allowedTools = TOOLS;
-                this.maintenanceMode = MAINTENANCE_MODE;
-//                this.hideJobView = true;
+                this.mode = MODE;
+
 
                 this.isLogged
 
@@ -581,9 +587,12 @@
                 this.selectedStudy;
                 this.studies;
 
+                /** configs **/
+                this.cellbaseHost = CELLBASE_HOST;
+                this.opencgaHost = OPENCGA_HOST;
+
             },
             babelomicsMenuClicked: function () {
-                debugger
                 this.selectedOption = "";
             },
             handleAppMenu: function (e) {
