@@ -67,4 +67,4 @@ var TOOLS = ["affy-expression-normalization", "agilent-expression-one-color-norm
 
 var CONTACT_MAIL = "babelomics@cipf.es";
 // MAINTENANCE, DEBUG, PRODUCTION
-var MODE = "PRODUCTION";
+var MODE = "DEBUG";
