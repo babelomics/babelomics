@@ -119,9 +119,7 @@
                 <div horizontal layout>
                     <div>
                         <div class="title">Unsupervised analysis</div>
-                        <div class="option l2
-                        " option="clustering" on-click="{{handleMenu}}">Clustering
-                        </div>
+                        <div class="option l2" option="clustering" on-click="{{handleMenu}}">Clustering</div>
                         <div class="title">Supervised analysis</div>
                         <div class="option l2" option="class-prediction" on-click="{{handleMenu}}">Class prediction</div>
                         <div class="title">Differential expression</div>
@@ -167,10 +165,14 @@
                 </div>
                 <div horizontal layout>
                     <div>
-                        <div class="option" option="fatigo" on-click="{{handleMenu}}">Single enrichment</div>
-                        <div class="option" option="fatiscan" on-click="{{handleMenu}}">Gene set enrichment</div>
-                        <div class="option" option="snow" on-click="{{handleMenu}}">Network enrichment</div>
-                        <div class="option" option="network-miner" on-click="{{handleMenu}}">Gene set network enrichment</div>
+                        <div class="title">Single enrichment</div>
+                        <div class="option" option="fatigo" on-click="{{handleMenu}}">Fatigo</div>
+                        <div class="title">Gene set enrichment</div>
+                        <div class="option" option="fatiscan" on-click="{{handleMenu}}">Logistic model</div>
+                        <div class="title">Network enrichment</div>
+                        <div class="option" option="snow" on-click="{{handleMenu}}">Snow</div>
+                        <div class="title">Gene set network enrichment</div>
+                        <div class="option" option="network-miner" on-click="{{handleMenu}}">Network Miner</div>
                     </div>
                 </div>
             </div>

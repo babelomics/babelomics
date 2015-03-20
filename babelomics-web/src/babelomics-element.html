@@ -219,8 +219,13 @@
                     <jso-job-no-ready jobItem="{{jobItem}}"></jso-job-no-ready>
                 </template>
                 <template if="{{selectedOption == 'projects'}}">
-                    <jso-project-browser userData="{{userData}}" selectedStudy="{{selectedStudy}}" studies="{{studies}}"
-                                         selectedProject="{{selectedProject}}"></jso-project-browser>
+                    <jso-project-browser
+                            userData="{{userData}}"
+                            selectedStudy="{{selectedStudy}}"
+                            studies="{{studies}}"
+                            selectedProject="{{selectedProject}}"
+                            bioformat="MICROARRAY_EXPRESSION_ONECHANNEL_AFFYMETRIX,MICROARRAY_EXPRESSION_ONECHANNEL_AGILENT,MICROARRAY_EXPRESSION_ONECHANNEL_GENEPIX,MICROARRAY_EXPRESSION_TWOCHANNELS_AGILENT,MICROARRAY_EXPRESSION_TWOCHANNELS_GENEPIX,DATAMATRIX_EXPRESSION,IDLIST,IDLIST_RANKED,ANNOTATION_GENEVSANNOTATION,idlist_extendedannotationExtended,OTHER_INTERACTION,OTHER_GENOTYPE,OTHER_PED,VARIANT">
+                    </jso-project-browser>
                 </template>
                 <template if="{{selectedOption == 'network-miner'}}">
                     <jso-network-miner

@@ -10,15 +10,15 @@ FormUtils.prototype.basicValidationForm = function () {
     var validated = true;
     var msg = "";
     if( this.scope.$.outdir.selectedFile === undefined ||  this.scope.$.outdir.selectedFile.type != "FOLDER"){
-        msg += "Error: Please select an output folder.\n";
+        msg += "Missing output folder. Please select one.\n";
         validated=false;
     }
     if( this.scope.$.inputFile.selectedFile === undefined ||  this.scope.$.inputFile.selectedFile.type != "FILE"){
-        msg += "Error: Please select an input file.\n";
+        msg += "Missing input file. Please select one.\n";
         validated=false;
     }
      if( this.scope.$.jobName.value == "" ){
-            msg += "Error: Please add a job name.\n";
+            msg += "Missing job name. Please select one.\n";
             validated=false;
         }
     if(!validated){
