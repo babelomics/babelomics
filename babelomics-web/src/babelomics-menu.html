@@ -10,14 +10,17 @@
 
             .l1 {
                 margin-left: 10px;
+
             }
 
             .l2 {
                 margin-left: 20px;
+
             }
 
             .l3 {
                 margin-left: 30px;
+
             }
 
             div.dropdown {
@@ -71,7 +74,7 @@
                 /*text-transform: uppercase;*/
                 color: #ffad76;
                 /*margin-top: 10px;*/
-                font-size: 15px !important;
+                font-size: 18px !important;
             }
 
             .option:hover {
@@ -94,7 +97,7 @@
                     <div style="margin-left: 5px;">
                         <div class="title">Normalization</div>
                         <div class="title l1">NGS</div>
-                        <div class="option l1" option="rnaseq-norm" on-click="{{handleMenu}}">RNA-Seq</div>
+                        <div class="option l2" option="rnaseq-norm" on-click="{{handleMenu}}">RNA-Seq</div>
                         <div class="title l1">Microarray one channel</div>
                         <div class="option l2" option="affymetrix" on-click="{{handleMenu}}">Affymetrix</div>
                         <div class="option l2" option="one-channel-agilent" on-click="{{handleMenu}}">Agilent</div>
@@ -104,10 +107,10 @@
                         <div class="option l2" option="two-channels-genepix" on-click="{{handleMenu}}">Genepix</div>
                     </div>
                     <div style="margin-left: 30px;">
-                        <div class="title">Edit</div>
-                        <div class="option" option="edit" on-click="{{handleMenu}}">Edit your uploaded data</div>
-                        <div class="title">Data Matrix</div>
-                        <div class="option" option="preprocessing" on-click="{{handleMenu}}">Pre-processing</div>
+                        <div class="title l1">Edit</div>
+                        <div class="option l2" option="edit" on-click="{{handleMenu}}">Edit your uploaded data</div>
+                        <div class="title l1">Data Matrix</div>
+                        <div class="option l2" option="preprocessing" on-click="{{handleMenu}}">Pre-processing</div>
                     </div>
                 </div>
             </div>
@@ -123,12 +126,12 @@
                         <div class="title">Supervised analysis</div>
                         <div class="option l2" option="class-prediction" on-click="{{handleMenu}}">Class prediction</div>
                         <div class="title">Differential expression</div>
-                        <div class="title l1">RNA-seq</div>
-                        <div class="option l2" option="rnaseq-diffexpr" on-click="{{handleMenu}}">Two classes comparison</div>
-                        <div class="title l1">Microarray</div>
+                        <div class="title l2">Microarray</div>
                         <div class="option l2" option="class-comparison" on-click="{{handleMenu}}">Class comparison</div>
                         <div class="option l2" option="correlation" on-click="{{handleMenu}}">Correlation</div>
                         <div class="option l2" option="survival" on-click="{{handleMenu}}">Survival</div>
+                        <div class="title l2">RNA-seq</div>
+                        <div class="option l2" option="rnaseq-diffexpr" on-click="{{handleMenu}}">Class comparison</div>
 
                     </div>
                 </div>

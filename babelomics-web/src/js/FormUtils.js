@@ -9,7 +9,7 @@ function FormUtils(scope) {
 FormUtils.prototype.basicValidationForm = function () {
     var validated = true;
     var msg = "";
-    if( this.scope.$.outdir.selectedFile === undefined ||  this.scope.$.outdir.selectedFile.type != "FOLDER"){
+    if( this.scope.$.outdir.selectedFile === undefined){
         msg += "Missing output folder. Please select one.\n";
         validated=false;
     }

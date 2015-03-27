@@ -1,4 +1,5 @@
 #!/bin/sh
+echo "WIRNING: RECUERDA Q TIENES Q IR A LA RAMA HEIGTHWIDTH"
 mkdir -p build
 rm -rf build/index.html build/index.js build/fonts build/images
 
