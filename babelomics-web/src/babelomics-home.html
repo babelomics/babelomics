@@ -84,17 +84,39 @@
                 text-align: center;
             }
 
+            .infobox {
+                position: relative;
+                padding: 10px 10px 10px 40px;
+                border-left: 5px solid #e9d295;
+                background-color: #faf3d7;
+                color: #585858;
+                font-size:16px;
+                font-weight: normal;
+                text-align: center;
+                width:500px;
+                margin:10px auto;
+                box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.5);
+            }
+
+            .infobox:after {
+                position: absolute;
+                left: 10px;
+                top: 10px;
+                box-sizing: border-box;
+                font-family: FontAwesome;
+                content: '\f071';
+                color: #bf9947;
+                font-size: 16px;
+            }
+
+
         </style>
         <br>
         <br>
 
-
-        <!--<div class="paragraph">-->
-        <!--Welcome to Babelomics 5.-->
-        <!--<br>-->
-
-        <!--</div>-->
-        <br>
+        <div class="infobox">
+            On March 30th, 2015 there will be interruptions due to electrical cuts. Mainly from 7pm to 9pm GMT +1. Sorry for the inconvenience.
+        </div>
         <br>
 
         <div horizontal layout>
@@ -121,15 +143,17 @@
         </div>
 
         <!--<div class="paragraph2" style="background: lightcoral">-->
-            <!--System will be down due to electric cut on 5th of March from 7pm to 9pm UTC/GMT +1 . Sorry for the inconvenience.-->
+        <!--System will be down due to electric cut on 5th of March from 7pm to 9pm UTC/GMT +1 . Sorry for the inconvenience.-->
         <!--</div>-->
         <!--<div class="title2">Note</div>-->
         <div class="paragraph2">
+
             Web optimized for Chrome. Only modern web browsers are fully supported, these include Chrome 36+, Firefox 36+, Safari 8+ and Opera 24+.
 
         </div>
         <br>
         <br>
+
         <div style="border: 1px  #000000; text-align: center">Babelomics 4 is accessible at <a href="http://v4.babelomics.org/">v4.babelomics.org</a></div>
 
         <!--<div class="button action" on-click="{{annonymousLogin}}">Try it now!!</div>-->
