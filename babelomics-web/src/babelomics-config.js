@@ -69,3 +69,4 @@ var CONTACT_MAIL = "babelomics@cipf.es";
 // MAINTENANCE, DEBUG, PRODUCTION
 var MODE = "PRODUCTION";
 //var MODE = "DEBUG";
+//var MODE = "MAINTENANCE";
