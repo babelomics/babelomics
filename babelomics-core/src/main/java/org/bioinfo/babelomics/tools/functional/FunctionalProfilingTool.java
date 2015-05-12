@@ -31,6 +31,7 @@ import org.bioinfo.infrared.funcannot.filter.KeggFilter;
 import org.bioinfo.infrared.funcannot.filter.MiRnaTargetFilter;
 import org.bioinfo.infrared.funcannot.filter.OregannoFilter;
 import org.bioinfo.infrared.funcannot.filter.ReactomeFilter;
+import org.bioinfo.babelomics.utils.filters.ReconFilter;
 import org.bioinfo.math.stats.inference.FisherExactTest;
 import org.bioinfo.tool.OptionFactory;
 
@@ -89,12 +90,13 @@ public abstract class FunctionalProfilingTool extends BabelomicsTool {
 
 		addGenericOptions("go-slim");
 		addGenericOptions("interpro");
-		addGenericOptions("kegg");
-		addGenericOptions("reactome");
-		addGenericOptions("biocarta");
-		addGenericOptions("mirna");
-		addGenericOptions("jaspar");
-		addGenericOptions("oreganno");
+//		addGenericOptions("kegg");
+//		addGenericOptions("reactome");
+//		addGenericOptions("biocarta");
+//		addGenericOptions("mirna");
+//		addGenericOptions("jaspar");
+//		addGenericOptions("oreganno");
+		addGenericOptions("recon");
 
 		// your annotations
 		getOptions().addOption(OptionFactory.createOption("annotations", "Your own annotations",false,true));
@@ -160,12 +162,13 @@ public abstract class FunctionalProfilingTool extends BabelomicsTool {
 
 		parseGenericDb(commandLine,"go-slim");
 		parseGenericDb(commandLine,"interpro");
-		parseGenericDb(commandLine,"kegg");
-		parseGenericDb(commandLine,"reactome");
-		parseGenericDb(commandLine,"biocarta");
-		parseGenericDb(commandLine,"mirna");
-		parseGenericDb(commandLine,"jaspar");
-		parseGenericDb(commandLine,"oreganno");
+//		parseGenericDb(commandLine,"kegg");
+//		parseGenericDb(commandLine,"reactome");
+//		parseGenericDb(commandLine,"biocarta");
+//		parseGenericDb(commandLine,"mirna");
+//		parseGenericDb(commandLine,"jaspar");
+//		parseGenericDb(commandLine,"oreganno");
+		parseGenericDb(commandLine,"recon");
 				
 		// species must be provided if any db is selected
 		if(commandLine.hasOption("go-bp") || commandLine.hasOption("go-mf") || commandLine.hasOption("go-cc") || commandLine.hasOption("go-slim") || commandLine.hasOption("interpro") || commandLine.hasOption("kegg") || commandLine.hasOption("reactome") || commandLine.hasOption("biocarta") || commandLine.hasOption("mirna") || commandLine.hasOption("jaspar") || commandLine.hasOption("oreganno")){
@@ -294,6 +297,9 @@ public abstract class FunctionalProfilingTool extends BabelomicsTool {
 			}
 			if(db.equalsIgnoreCase("oreganno")){
 				filter = new OregannoFilter();						
+			}
+			if(db.equalsIgnoreCase("recon")){
+				filter = new ReconFilter();
 			}
 			if(filter!=null){
 				filter.setMinNumberGenes(Integer.parseInt(cmdLine.getOptionValue(db + "-min-num-genes","2")));	

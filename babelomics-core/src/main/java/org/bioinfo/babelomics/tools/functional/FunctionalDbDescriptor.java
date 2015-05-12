@@ -10,6 +10,8 @@ import org.bioinfo.infrared.funcannot.filter.KeggFilter;
 import org.bioinfo.infrared.funcannot.filter.MiRnaTargetFilter;
 import org.bioinfo.infrared.funcannot.filter.OregannoFilter;
 import org.bioinfo.infrared.funcannot.filter.ReactomeFilter;
+import org.bioinfo.babelomics.utils.filters.ReconFilter;
+
 
 public class FunctionalDbDescriptor {
 
@@ -30,20 +32,21 @@ public class FunctionalDbDescriptor {
 	}
 	
 	protected void initFromFunctionalFilter(final FunctionalFilter filter){
-		String levels;
+		//String levels;
 		// Untitled
 		title = "Untitled";
 		// GO
 		if(filter instanceof GOFilter) {						
 			GOFilter goFilter = (GOFilter) filter;
-			if(goFilter.getMinLevel()==goFilter.getMaxLevel()) {
-				levels = "(level " + goFilter.getMinLevel() + ")";
-			} else{
-				levels = "(levels from " + goFilter.getMinLevel() + " to " + goFilter.getMaxLevel() + ")"; 
-			}						
-			title = "GO " + goFilter.getNamespace().replace("_", " ") + " " + levels;
-			name = "go_" + goFilter.getNamespace() + "_" + goFilter.getMinLevel() + "_" + goFilter.getMaxLevel();
-			prefix = "go";			
+//			if(goFilter.getMinLevel()==goFilter.getMaxLevel()) {
+//				levels = "(level " + goFilter.getMinLevel() + ")";
+//			} else{
+//				levels = "(levels from " + goFilter.getMinLevel() + " to " + goFilter.getMaxLevel() + ")";
+//			}
+			title = "GO " + goFilter.getNamespace().replace("_", " ");// + " " + levels;
+//			name = "go_" + goFilter.getNamespace() + "_" + goFilter.getMinLevel() + "_" + goFilter.getMaxLevel();
+			name = "go_" + goFilter.getNamespace();
+			prefix = "go";
 			description = getDefaultDescription(filter, title);			
 			if(goFilter.isPropagated()) {
 				description+= ", each term parent within levels has been included";
@@ -110,6 +113,12 @@ public class FunctionalDbDescriptor {
 			title = "ORegAnno";
 			name = "oreganno";
 			prefix = "oreganno";
+			description = getDefaultDescription(filter, title);
+		}
+		else if(filter instanceof ReconFilter) {
+			title = "Recon";
+			name = "recon";
+			prefix = "recon";
 			description = getDefaultDescription(filter, title);
 		}
 	

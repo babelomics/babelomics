@@ -15,6 +15,7 @@ import org.bioinfo.commons.utils.ListUtils;
 import org.bioinfo.commons.utils.StringUtils;
 import org.bioinfo.data.dataset.Dataset;
 import org.bioinfo.data.dataset.FeatureData;
+import org.bioinfo.data.dataset.Variables;
 import org.bioinfo.data.list.DataFrame;
 import org.bioinfo.data.list.exception.InvalidIndexException;
 import org.bioinfo.graphics.canvas.Canvas;
@@ -41,7 +42,7 @@ public class ClassComparison extends BabelomicsTool {
 	private double foldChangeValue = 2;
 
 	private int minDisplay = 10;
-	private int maxDisplay = 500;
+	private int maxDisplay = Integer.MAX_VALUE;
 	private String msg = "";
 
 	public ClassComparison() {
@@ -85,7 +86,7 @@ public class ClassComparison extends BabelomicsTool {
 			classValues = new ArrayList<String>();
 			for(String val: values) {
 				if ( val != null && val.trim().length() > 0 ) {
-					classValues.add(val.trim());		
+					classValues.add(val.trim());
 				}
 			}
 		}
@@ -104,12 +105,12 @@ public class ClassComparison extends BabelomicsTool {
 				}
 			} catch (NumberFormatException e) {
 				pValue = 0.05;
-			}			
+			}
 		}
 
 		// input parameters
-		//		
-		result.addOutputItem(new Item("dataset_input_param", (datasetParam == null ? "" : new File(datasetParam).getName()), "Dataset file name", Item.TYPE.MESSAGE, Arrays.asList("INPUT_PARAM"), new HashMap<String,String>(), "Input parameters"));						
+		//
+		result.addOutputItem(new Item("dataset_input_param", (datasetParam == null ? "" : new File(datasetParam).getName()), "Dataset file name", Item.TYPE.MESSAGE, Arrays.asList("INPUT_PARAM"), new HashMap<String,String>(), "Input parameters"));
 		result.addOutputItem(new Item("test_input_param", test, "Test", Item.TYPE.MESSAGE, Arrays.asList("INPUT_PARAM"), new HashMap<String,String>(), "Input parameters"));
 		result.addOutputItem(new Item("class_input_param", (className == null ? "" : className) + " [" + ListUtils.toString(classValues, ", ") + "]", "Class", Item.TYPE.MESSAGE, Arrays.asList("INPUT_PARAM"), new HashMap<String,String>(), "Input parameters"));
 		if ("fold_change".equalsIgnoreCase(test) || "fold-change".equalsIgnoreCase(test)) {
@@ -126,11 +127,11 @@ public class ClassComparison extends BabelomicsTool {
 		}
 
 		if ( className == null ) {
-			abort("classnamemissing_execute_classcomparison", "class name missing", "class name missing", "class name missing");				
+			abort("classnamemissing_execute_classcomparison", "class name missing", "class name missing", "class name missing");
 		}
 
 		if ( classValues == null ) {
-			abort("classvaluesmissing_execute_classcomparison", "class values missing", "class values missing", "class values missing");				
+			abort("classvaluesmissing_execute_classcomparison", "class values missing", "class values missing", "class values missing");
 		}
 
 		if ( test == null ) {
@@ -143,11 +144,11 @@ public class ClassComparison extends BabelomicsTool {
 		try {
 			dataset = new Dataset(datasetFile);
 			if (!dataset.load() && !dataset.validate()) {
-				abort("exception_execute_classcomparison", "Error", "Error loading dataset " + datasetFile.getName() + ": " + dataset.getMessages().getErrorString(""), "");				
+				abort("exception_execute_classcomparison", "Error", "Error loading dataset " + datasetFile.getName() + ": " + dataset.getMessages().getErrorString(""), "");
 			}
 		} catch (Exception e) {
 			abort("exception_execute_clustering", "Error", "Error reading dataset " + datasetFile.getName(), "");
-		}		
+		}
 
 		// executing test
 		//
@@ -158,27 +159,27 @@ public class ClassComparison extends BabelomicsTool {
 			if ( classValues.size() == 2 ) {
 				executeT();
 			} else {
-				abort("testmismatched_execute_classcomparison", "test " + test + " not supported for " + classValues.size() + "-class test", "test " + test + " not supported for " + classValues.size() + "-class test", "test " + test + " not supported for " + classValues.size() + "-class test");								
+				abort("testmismatched_execute_classcomparison", "test " + test + " not supported for " + classValues.size() + "-class test", "test " + test + " not supported for " + classValues.size() + "-class test", "test " + test + " not supported for " + classValues.size() + "-class test");
 			}
 		} else if ("fold_change".equalsIgnoreCase(test) || "fold-change".equalsIgnoreCase(test)) {
 			if ( classValues.size() == 2 ) {
 				executeFoldChange();
 			} else {
-				abort("testmismatched_execute_classcomparison", "test " + test + " not supported for " + classValues.size() + "-class test", "test " + test + " not supported for " + classValues.size() + "-class test", "test " + test + " not supported for " + classValues.size() + "-class test");								
+				abort("testmismatched_execute_classcomparison", "test " + test + " not supported for " + classValues.size() + "-class test", "test " + test + " not supported for " + classValues.size() + "-class test", "test " + test + " not supported for " + classValues.size() + "-class test");
 			}
 		} else if ( "anova".equalsIgnoreCase(test) ) {
 			if ( classValues.size() > 2 ) {
 				executeAnova();
 			} else {
-				abort("testmismatched_execute_classcomparison", "test " + test + " not supported for " + classValues.size() + "-class test", "test " + test + " not supported for " + classValues.size() + "-class test", "test " + test + " not supported for " + classValues.size() + "-class test");												
+				abort("testmismatched_execute_classcomparison", "test " + test + " not supported for " + classValues.size() + "-class test", "test " + test + " not supported for " + classValues.size() + "-class test", "test " + test + " not supported for " + classValues.size() + "-class test");
 			}
 		} else {
-			abort("testunknown_execute_classcomparison", "unknown test " + test, "unknown test " + test, "unknown test " + test);															
+			abort("testunknown_execute_classcomparison", "unknown test " + test, "unknown test " + test, "unknown test " + test);
 		}
-	}	
+	}
 
 	/**
-	 * 
+	 *
 	 */
 	public void executeT() {
 
@@ -212,21 +213,22 @@ public class ClassComparison extends BabelomicsTool {
 			File file = new File(outdir + "/t.txt");
 			featureData.save(file);
 			if ( file.exists() ) {
-				result.addOutputItem(new Item("tfile", file.getName(), "T-test output file", TYPE.FILE, new ArrayList<String>(), new HashMap<String, String>(), "T-test output files"));							
+				result.addOutputItem(new Item("tfile", file.getName(), "T-test output file", TYPE.FILE, new ArrayList<String>(), new HashMap<String, String>(), "T-test output files"));
 			}
 
 			// getting significative genes
 			//
 			DiffExpressionUtils.addSignificativeResults(subDataset, test, "statistic", res.getStatistics(), "adj. p-value", res.getAdjPValues(), "p-value", res.getPValues(), null, null, null, null, className, columnOrder, pValue, maxDisplay, this);
-			DiffExpressionUtils.createFatiScanRedirection(dataFrame, test, "statistic", result, outdir);			
+			DiffExpressionUtils.createFatiScanRedirection(dataFrame, test, "statistic", result, outdir);
 		} catch (Exception e) {
 			e.printStackTrace();
-			abort("exception_executet_classcomparison", "ERROR", "Error running t-test", "");
-		}		
+			System.out.println("e.getMessage() = " + e.getMessage());
+			abort("exception_executet_classcomparison", "ERROR", e.getMessage(), "");
+		}
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public void executeFoldChange() {
 
@@ -325,31 +327,111 @@ public class ClassComparison extends BabelomicsTool {
 		} catch (Exception e) {
 			e.printStackTrace();
 			abort("exception_executefoldchange_classcomparison", "error running fold-change", "error running fold-change: " + e.getMessage(), "error running fold-change: " + e.getMessage());
-		}		
+		}
 	}
 
 
 	private void setFoldChangeResults(Dataset subDataset, String test, String testLabel, double[] res, String className) throws InvalidIndexException, IOException {
 
-		int[] columnOrder = ListUtils.order(subDataset.getVariables().getByName(className).getValues());
+
+//		int[] columnOrder = ListUtils.order(subDataset.getVariables().getByName(className).getValues());
 		int[] rowOrder = ListUtils.order(ArrayUtils.toList(res), true);
 
 		DataFrame dataFrame = new DataFrame(subDataset.getFeatureNames().size(), 0);
 		dataFrame.addColumn(test, ListUtils.ordered(ArrayUtils.toStringList(res), rowOrder));
-		dataFrame.setRowNames(ListUtils.ordered(subDataset.getFeatureNames(), rowOrder));	
-		FeatureData featureData = new FeatureData(dataFrame);
+		dataFrame.setRowNames(ListUtils.ordered(subDataset.getFeatureNames(), rowOrder));
+
+        FeatureData featureData = new FeatureData(dataFrame);
 		File file = new File(outdir + "/" + test + "_foldchange.txt");
 		IOUtils.write(file, dataFrame.toString(true, true));
+
+		/** Get significative terms, babelomics 5 **/
+		List<String> featureNames = new ArrayList<String>();
+		List<String> featureValues = new ArrayList<String>();
+
+		List<String> featureNamesUp = new ArrayList<String>();
+		List<String> featureNamesDown = new ArrayList<String>();
+
+
+        for (String rowName : dataFrame.getRowNames()) {
+            List<String> row = dataFrame.getRow(rowName);
+            double stats = Double.parseDouble(row.get(0));
+            if (stats >= foldChangeValue) {
+                featureNames.add(rowName);
+                featureValues.add(row.get(0));
+                if (stats >= 0)
+                    featureNamesUp.add(rowName);
+                else
+                    featureNamesDown.add(rowName);
+            }
+        }
+
+		dataFrame = new DataFrame(featureNames.size(), 0);
+		dataFrame.addColumn(test, featureValues);
+		dataFrame.setRowNames(featureNames);
+
+
+        List<Integer> sigRowIndexes = new ArrayList<Integer>();
+        for(String feat: featureNames){
+            int idx = 0;
+            for(String featSub: subDataset.getFeatureNames()){
+                if(feat.equalsIgnoreCase(featSub))
+                    sigRowIndexes.add(idx);
+                idx++;
+            }
+        }
+        DoubleMatrix doubleMatrix = new DoubleMatrix(dataFrame.getRowDimension(), subDataset.getColumnDimension());
+        for (int i = 0; i < sigRowIndexes.size(); i++) {
+            doubleMatrix.setRow(i, subDataset.getDoubleMatrix().getRow(sigRowIndexes.get(i)));
+        }
+        File fileXX = new File(outdir + "/" + test + "_foldchange_significative_dataset.txt");
+        Dataset sigDataset = new Dataset(subDataset.getSampleNames(), featureNames, doubleMatrix);
+        sigDataset.save(fileXX);
+
+
+		File fileAux = new File(outdir + "/" + test + "_foldchange_significative_table.txt");
+		IOUtils.write(fileAux, dataFrame.toString(true, true));
+
+		fileAux = new File(outdir + "/" + test + "_foldchange_significative_table_up.txt");
+		IOUtils.write(fileAux, featureNamesUp);
+
+		fileAux = new File(outdir + "/" + test + "_foldchange_significative_table_down.txt");
+		IOUtils.write(fileAux, featureNamesDown);
+
+//        fileAux = new File(outdir + "/" + test + "_foldchange_significative_dataset.txt");
+//        IOUtils.write(fileAux, featureNamesDown);
+
+
+//
+//		List<String> featuresUp = new ArrayList<String>();
+//		List<String> featuresDown = new ArrayList<String>();
+//		for (String rowName : dataFrame.getRowNames()) {
+//                List<String> row = dataFrame.getRow(rowName);
+//                double stats = Double.parseDouble(row.get(0));
+//                if(stats>=foldChangeValue){
+//
+//
+////                    featuresUp.add(rowName);
+////                else
+////                    featuresDown.add(rowName);
+//				}
+//            }
+//			file = new File(tool.getOutdir() + "/" + test + "_significative_table_up.txt");
+//			IOUtils.write(file, featuresUp);
+//			file = new File(tool.getOutdir() + "/" + test + "_significative_table_down.txt");
+//			IOUtils.write(file, featuresDown);
+
+
 		//featureData.save(file);
 		if ( file.exists() ) {
-			result.addOutputItem(new Item(test + "_foldchange", file.getName(), testLabel + " fold-change output file", TYPE.FILE, new ArrayList<String>(), new HashMap<String, String>(), testLabel + " fold-change.Output files"));			
-		
+			result.addOutputItem(new Item(test + "_foldchange", file.getName(), testLabel + " fold-change output file", TYPE.FILE, new ArrayList<String>(), new HashMap<String, String>(), testLabel + " fold-change.Output files"));
+
 			String json = "{\\\"paramfilename\\\": \\\"input_params.txt\\\", \\\"testfilename\\\": \\\"" + file.getName() + "\\\"}";
 			result.addOutputItem(new Item("diff_expr_" + StringUtils.randomString(8), json, "Significative results", TYPE.FILE, StringUtils.toList("DIFF_EXPRESSION_VIEWER"), new HashMap<String, String>(), testLabel + " fold-change. Significative results"));
-			
+
 			DiffExpressionUtils.createFatiScanRedirection(dataFrame, test, test, result, outdir, testLabel + " fold-change.");
 		}
-		
+
 		
 /*		
 		List<Double> orderedRes = ListUtils.ordered(ArrayUtils.toList(res), rowOrder);
@@ -446,11 +528,11 @@ public class ClassComparison extends BabelomicsTool {
 		}
 		DiffExpressionUtils.createFatiGoRedirection(dataFrame.getRowNames(), dataFrame.getColumnAsDoubleArray(test), test, result, outdir, testLabel + " fold-change.");
 		DiffExpressionUtils.createFatiScanRedirection(sigDataFrame, test, test, result, outdir, testLabel + " fold-change.");
-*/			
+*/
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public void executeAnova() {
 
@@ -496,23 +578,23 @@ public class ClassComparison extends BabelomicsTool {
 			File file = new File(outdir + "/" + test + ".txt");
 			featureData.save(file);
 			if ( file.exists() ) {
-				result.addOutputItem(new Item(test + "file", file.getName(), "Anova output file", TYPE.FILE, new ArrayList<String>(2), new HashMap<String, String>(2), "Anova output files"));							
+				result.addOutputItem(new Item(test + "file", file.getName(), "Anova output file", TYPE.FILE, new ArrayList<String>(2), new HashMap<String, String>(2), "Anova output files"));
 			}
 
 			// getting significative genes
 			//
 			DiffExpressionUtils.addSignificativeResults(subDataset, test, "statistic", res.getStatistics(), "adj. p-value", res.getAdjPValues(), "p-value", res.getPValues(), null, null, null, null, className, columnOrder, pValue, maxDisplay, this);
-			DiffExpressionUtils.createFatiScanRedirection(dataFrame, test, "statistic", result, outdir);			
+			DiffExpressionUtils.createFatiScanRedirection(dataFrame, test, "statistic", result, outdir);
 		} catch (Exception e) {
 			e.printStackTrace();
 			abort("exception_executeanova_classcomparison", "error running anova", "error running anova: " + e.getMessage(), "error running anova: " + e.getMessage());
-		}		
+		}
 	}
 
 	/**
-	 * @throws InvalidColumnIndexException 
-	 * @throws IOException 
-	 * 
+	 * @throws InvalidColumnIndexException
+	 * @throws IOException
+	 *
 	 */
 	public void executeLimma() {
 
@@ -520,11 +602,11 @@ public class ClassComparison extends BabelomicsTool {
 		if ( classValues.size() > 2 ) {
 			limma = new Limma(babelomicsHomePath + "/bin/diffexp/limma_multiclasses.r");
 		} else if ( classValues.size() == 2 ) {
-			limma = new Limma(babelomicsHomePath + "/bin/diffexp/limma_twoclasses.r");			
+			limma = new Limma(babelomicsHomePath + "/bin/diffexp/limma_twoclasses.r");
 		} else if ( classValues.size() == 1 ) {
 			limma = new Limma(babelomicsHomePath + "/bin/diffexp/limma_oneclass.r");
 		} else {
-			abort("testmismatched_executelimma_classcomparison", "test " + test + " not supported for " + classValues.size() + "-class test", "test " + test + " not supported for " + classValues.size() + "-class test", "test " + test + " not supported for " + classValues.size() + "-class test");												
+			abort("testmismatched_executelimma_classcomparison", "test " + test + " not supported for " + classValues.size() + "-class test", "test " + test + " not supported for " + classValues.size() + "-class test", "test " + test + " not supported for " + classValues.size() + "-class test");
 		}
 
 		//System.out.println("dataset = " + dataset.toString());
@@ -557,16 +639,16 @@ public class ClassComparison extends BabelomicsTool {
 			File file = new File(outdir + "/" + test + ".txt");
 			featureData.save(file);
 			if ( file.exists() ) {
-				result.addOutputItem(new Item(test + "file", file.getName(), "Limma output file", TYPE.FILE, new ArrayList<String>(2), new HashMap<String, String>(2), "Limma output files"));							
+				result.addOutputItem(new Item(test + "file", file.getName(), "Limma output file", TYPE.FILE, new ArrayList<String>(2), new HashMap<String, String>(2), "Limma output files"));
 			}
 
 			// getting significative genes
 			//
 			DiffExpressionUtils.addSignificativeResults(subDataset, test, "statistic", res.getStatistics(), "adj. p-value", res.getAdjPValues(), "p-value", res.getPValues(), null, null, null, null, className, columnOrder, pValue, maxDisplay, this);
-			DiffExpressionUtils.createFatiScanRedirection(dataFrame, test, "statistic", result, outdir);			
+			DiffExpressionUtils.createFatiScanRedirection(dataFrame, test, "statistic", result, outdir);
 		} catch (Exception e) {
 			e.printStackTrace();
 			abort("exception_executelimma_classcomparison", "error running limma", "error running limma: " + e.toString(), "error running limma: " + e.toString());
-		}		
-	}	
+		}
+	}
 }

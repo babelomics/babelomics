@@ -115,7 +115,7 @@ public class FatiScanTool  extends FunctionalProfilingTool{
 			jobStatus.addStatusMessage("10", "Preparing data");			
 			
 			// infrared connector			
-			DBConnector dbConnector = new DBConnector(species, new File(babelomicsHomePath + "/conf/infrared.properties"));		
+//			DBConnector dbConnector = new DBConnector(species, new File(babelomicsHomePath + "/conf/infrared.properties"));
 			
 			// prepare params
 			prepare();	
@@ -130,7 +130,8 @@ public class FatiScanTool  extends FunctionalProfilingTool{
 				result.addOutputItem(new Item("ranked_list","ranked_list.txt","Ranked list",Item.TYPE.FILE,Arrays.asList("RANKED_LIST","CLEAN"),new HashMap<String,String>(),"Input data"));
 								
 				// order ranked list and save genes and rank separately
-				FatiScan fatiscan = new FatiScan(rankedList,null,dbConnector,FatiScan.DEFAULT_NUMBER_OF_PARTITIONS,testMode,outputFormat,order,duplicatesMode);
+//				FatiScan fatiscan = new FatiScan(rankedList,null,dbConnector,FatiScan.DEFAULT_NUMBER_OF_PARTITIONS,testMode,outputFormat,order,duplicatesMode);
+				FatiScan fatiscan = new FatiScan(rankedList,null,null,FatiScan.DEFAULT_NUMBER_OF_PARTITIONS,testMode,outputFormat,order,duplicatesMode);
 				fatiscan.prepareLists();
 				IOUtils.write(outdir + "/id_list.txt", fatiscan.getIdList());
 				result.addOutputItem(new Item("id_list","id_list.txt","Id list (sorted)",Item.TYPE.FILE,Arrays.asList("IDLIST","SORTED"),new HashMap<String,String>(),"Input data"));
@@ -153,7 +154,7 @@ public class FatiScanTool  extends FunctionalProfilingTool{
 				double progress = 20;
 				double inc = 60.0/filterList.size();
 				for(FunctionalFilter filter: filterList) {
-					doTest(rankedList,filter,dbConnector,method);					
+					doTest(rankedList,filter,method);
 					jobStatus.addStatusMessage("" + progress, "Executing test");
 					progress+=inc;
 				}
@@ -196,24 +197,24 @@ public class FatiScanTool  extends FunctionalProfilingTool{
 	 */
 	
 	
-	private void doTest(FeatureData rankedList,FunctionalFilter filter,DBConnector dbConnector, Method method) throws SQLException, IllegalAccessException, ClassNotFoundException, InstantiationException {
+	private void doTest(FeatureData rankedList,FunctionalFilter filter, Method method) throws SQLException, IllegalAccessException, ClassNotFoundException, InstantiationException {
 		
 		// db attributes
 		FunctionalDbDescriptor filterInfo = new FunctionalDbDescriptor(filter);
 
 		// get term sizes
-		AnnotationDBManager adbm = new AnnotationDBManager(dbConnector);
-		Map<String, Integer> termSizes = adbm.getAnnotationTermsSize(filterInfo.getPrefix());
+//		AnnotationDBManager adbm = new AnnotationDBManager(dbConnector);
+//		Map<String, Integer> termSizes = adbm.getAnnotationTermsSize(filterInfo.getPrefix());
 				
 		logger.info(filterInfo.getTitle() + "...\n");
 
 		GeneSetAnalysis gsea;
 		
 		if(method==Method.Logistic){			
-			gsea = new LogisticScan(rankedList,filter,dbConnector,order);
+			gsea = new LogisticScan(rankedList,filter,species,order);
 			((LogisticScan)gsea).setWorkingDirectory(outdir);
 		}else {
-			gsea = new FatiScan(rankedList,filter,dbConnector,numberOfPartitions,testMode,outputFormat,order, duplicatesMode);	
+			gsea = new FatiScan(rankedList,filter,null,numberOfPartitions,testMode,outputFormat,order, duplicatesMode);
 		}
 			
 		// run
@@ -222,7 +223,7 @@ public class FatiScanTool  extends FunctionalProfilingTool{
 			gsea.setLogger(logger);
 			
 			// set term sizes
-			gsea.setTermSizes(termSizes);
+//			gsea.setTermSizes(termSizes);
 			
 			gsea.run();
 							

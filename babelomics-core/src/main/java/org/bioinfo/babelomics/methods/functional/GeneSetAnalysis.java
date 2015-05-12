@@ -19,6 +19,8 @@ import org.bioinfo.infrared.common.DBConnector;
 import org.bioinfo.infrared.core.common.FeatureList;
 import org.bioinfo.infrared.core.funcannot.AnnotationItem;
 import org.bioinfo.infrared.funcannot.filter.FunctionalFilter;
+import org.bioinfo.babelomics.utils.XrefManager;
+import org.bioinfo.infrared.funcannot.filter.GOFilter;
 
 public abstract class GeneSetAnalysis {
 
@@ -35,7 +37,7 @@ public abstract class GeneSetAnalysis {
 	protected List<Double> statistic;
 	protected FeatureData rankedList;
 	protected FunctionalFilter filter;
-	protected DBConnector dbConnector;
+//	protected DBConnector dbConnector;
 	protected int order;
 	protected boolean isYourAnnotations;
 	
@@ -52,7 +54,7 @@ public abstract class GeneSetAnalysis {
 	private double meanAnnotationsPerId;
 	protected Logger logger;
 	
-	public void prepare() throws InvalidIndexException, SQLException, IllegalAccessException, ClassNotFoundException, InstantiationException, EmptyAnnotationException{
+	public void prepare(String species) throws InvalidIndexException, SQLException, IllegalAccessException, ClassNotFoundException, InstantiationException, EmptyAnnotationException{
 				
 		// init logger
 		if (logger==null) logger = new Logger();
@@ -64,7 +66,16 @@ public abstract class GeneSetAnalysis {
 		
 		// annotation		
 		logger.print("getting annotations...");
-		if(!isYourAnnotations) annotations = InfraredUtils.getAnnotations(dbConnector, idList, filter);
+		if(!isYourAnnotations) {
+			String db ="";
+			if (filter instanceof GOFilter) {
+				db = ((GOFilter) filter).getNamespace();
+			}
+			XrefManager xrefManager = new XrefManager(idList, species);
+			Map<String, List<String>> xrefs = xrefManager.getXrefs(db);
+			annotations = xrefManager.filter(xrefs, filter);
+//			annotations = InfraredUtils.getAnnotations(dbConnector, idList, filter);
+		}
 		if(annotations==null || annotations.size()==0) throw new EmptyAnnotationException();
 		logger.println(annotations.size() + " annotations found...OK");
 		

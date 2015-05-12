@@ -1,21 +1,32 @@
 package org.bioinfo.babelomics.methods.functional;
 
 import java.io.IOException;
+
+import org.bioinfo.babelomics.utils.XrefManager;
+import org.bioinfo.babelomics.utils.AnnotationManager;
+import org.bioinfo.babelomics.utils.GOManager;
+
+import java.lang.annotation.Annotation;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.*;
 
-import org.bioinfo.commons.io.utils.FileUtils;
 import org.bioinfo.commons.io.utils.IOUtils;
 import org.bioinfo.commons.log.Logger;
 import org.bioinfo.commons.utils.ListUtils;
-import org.bioinfo.commons.utils.StringUtils;
 import org.bioinfo.infrared.common.DBConnector;
 import org.bioinfo.infrared.core.common.FeatureList;
 import org.bioinfo.infrared.core.funcannot.AnnotationItem;
 import org.bioinfo.infrared.funcannot.filter.FunctionalFilter;
 import org.bioinfo.infrared.funcannot.filter.GOFilter;
+import org.bioinfo.infrared.funcannot.filter.GOSlimFilter;
+import org.bioinfo.infrared.funcannot.filter.InterproFilter;
 import org.bioinfo.math.exception.InvalidParameterException;
 import org.bioinfo.math.stats.inference.FisherExactTest;
+import org.bioinfo.babelomics.utils.filters.ReconFilter;
+
 
 public class FatiGO {
 
@@ -25,15 +36,24 @@ public class FatiGO {
     public static final int REMOVE_GENOME = 3;
     public static final int REMOVE_ALL = 4;
 
+    private enum modeTypes {
+        list2list, list2genome, list2rest
+    }
+
+    private String mode;
+
     // input params
     private List<String> list1;
     private List<String> list2;
     private FunctionalFilter filter;
-    private DBConnector dbConnector;
+    //    private DBConnector dbConnector;
     private int testMode;
     private int duplicatesMode;
     private boolean isYourAnnotations;
     private Logger logger;
+
+    private String species;
+    private String db;
 
     // test
     private TwoListFisherTest fisher;
@@ -57,48 +77,56 @@ public class FatiGO {
     private int list2SizeBeforeDuplicates;
     private int list2SizeAfterDuplicates;
 
+    private String babelomicsHome = System.getenv("BABELOMICS_HOME");
+
 
     // Two list constructor
-    public FatiGO(List<String> list1, List<String> list2, FunctionalFilter filter, DBConnector dbConnector, int testMode, int duplicatesMode) {
+    public FatiGO(List<String> list1, List<String> list2, FunctionalFilter filter, String species, int testMode, int duplicatesMode) {
         this.list1 = list1;
         this.list2 = list2;
         this.filter = filter;
-        this.dbConnector = dbConnector;
+        this.species = species;
         this.testMode = testMode;
         this.duplicatesMode = duplicatesMode;
         this.isYourAnnotations = false;
+        this.mode = modeTypes.list2list.name();
     }
 
     // One list against Genome constructor
-    public FatiGO(List<String> list1, FunctionalFilter filter, DBConnector dbConnector) {
+    public FatiGO(List<String> list1, FunctionalFilter filter, String species) {
         this.list1 = list1;
 //		this.list2 = InfraredUtils.getGenome(dbConnector);
         /** Leer el fichero del genoma **/
         try {
 
-            this.list2 = IOUtils.readLines("/home/ralonso/appl/babelomics-old/babelomics-old/example/genome.txt");
+            this.list2 = IOUtils.readLines(this.babelomicsHome + "/conf/annotations/" + species + "/genome.txt");
+            this.mode = modeTypes.list2genome.name();
+//            this.list2 = Files.readAllLines(Paths.get(this.babelomicsHome + "/conf/data/genome.txt"), Charset.defaultCharset());
 
         } catch (IOException e) {
             e.printStackTrace();
         }
         this.filter = filter;
-        this.dbConnector = dbConnector;
+        this.species = species;
         this.testMode = FisherExactTest.GREATER;
         this.duplicatesMode = REMOVE_GENOME;
         this.isYourAnnotations = false;
     }
 
     // Your annotations two list constructor
-    public FatiGO(List<String> list1, List<String> list2, FeatureList<AnnotationItem> annotations, int testMode, int duplicatesMode) {
+    public FatiGO(List<String> list1, List<String> list2, FeatureList<AnnotationItem> annotations, int testMode, int duplicatesMode, String species) {
         this.list1 = list1;
         this.list2 = list2;
         this.annotations = annotations;
         this.testMode = testMode;
         this.duplicatesMode = duplicatesMode;
         this.isYourAnnotations = true;
+        this.mode = modeTypes.list2list.name();
+        this.species = species;
+        System.out.println("");
     }
 
-    // Your anntoations one list constructor
+    // Your annotations one list constructor
     public FatiGO(List<String> list1, FeatureList<AnnotationItem> annotations) {
         this.list1 = list1;
         this.list2 = getAnnotationIds(annotations);
@@ -106,6 +134,7 @@ public class FatiGO {
         this.testMode = FisherExactTest.GREATER;
         this.duplicatesMode = REMOVE_REF;
         this.isYourAnnotations = true;
+        this.mode = modeTypes.list2rest.name();
     }
 
 
@@ -121,6 +150,14 @@ public class FatiGO {
         return idList;
     }
 
+    public void setSpecies(String species) {
+        this.species = species;
+    }
+
+    public void setDb(String db) {
+        this.db = db;
+    }
+
     public void run() throws SQLException, IllegalAccessException, ClassNotFoundException, InstantiationException, InvalidParameterException, IOException {
 
         if (logger == null) logger = new Logger("FatiGO");
@@ -133,90 +170,83 @@ public class FatiGO {
         logger.println("OK");
 
         logger.print("preparing list union...");
-        List<String> all = new ArrayList<String>(list1.size() + list2.size());
+        List<String> all = new ArrayList<String>();
+
         all.addAll(list1);
-        all.addAll(list2);
+        if (!this.mode.equalsIgnoreCase(modeTypes.list2genome.name())) {
+            all.addAll(list2);
+        }
 
         //logger.println("list2_annotation.size: " + InfraredUtils.getAnnotations(dbConnector, list2, filter).size());
 
         // annotation
-        logger.print("getting annotations from file system");
+        logger.println("getting annotations from file system");
+        String db = "";
         if (!isYourAnnotations) {
+
+
             if (filter instanceof GOFilter) {
-                filter = (GOFilter) filter;
-                ((GOFilter) filter).getNamespace();
+                db = ((GOFilter) filter).getNamespace();
             }
-            System.out.println("\n\n filter= " + filter.getMaxNumberGenes());
-
-
-            List<String> annots = IOUtils.readLines("/home/ralonso/appl/babelomics-old/babelomics-old/example/go_biological_process_3_9.annot");
-            /** Remove duplicates annotation**/
-            Set<String> uniqAnnots = new HashSet<String>();
-
-            for (String annot : annots) {
-                if (annot.startsWith("#") || !annot.contains("\t")) {
-                    continue;
-                }
-                if (!uniqAnnots.contains(annot))
-                    uniqAnnots.add(annot);
+            if (filter instanceof ReconFilter) {
+                db = "recon";
             }
-            System.out.println("uniqAnnots.size() = " + uniqAnnots.size());
-            /** Get [annotation:features] map **/
-            Map<String, List<String>> annotFeature = new HashMap<String, List<String>>();
-            for (String uniqs : uniqAnnots) {
-                String uniqsArr[] = uniqs.split("\t");
-                String feature = uniqsArr[0];
-                String annot = uniqsArr[1];
-                List<String> features = new ArrayList<String>();
-                if (!annotFeature.containsKey(annot)) {
-                    annotFeature.put(annot, features);
-                } else {
-                    features = annotFeature.get(annot);
-
-                }
-                features.add(feature);
-                annotFeature.put(annot, features);
+            if (filter instanceof GOSlimFilter) {
+                db = "go_slim";
+            }
+            if (filter instanceof InterproFilter) {
+                db = "interpro";
             }
 
-            /** Filter annotation **/
-            annotations = new FeatureList<AnnotationItem>();
-            for (String annot : annotFeature.keySet()) {
-                List<String> features = annotFeature.get(annot);
-                /** Size filter **/
-                if (filter.getMinNumberGenes() <= features.size() && features.size() <= filter.getMaxNumberGenes()) {
-                    for (String feature : features) {
-                        annotations.add(new AnnotationItem(feature, annot));
-                    }
+            System.out.println("db = " + db);
+
+
+            XrefManager xrefManager = new XrefManager(all, this.species);
+            Map<String, List<String>> xrefs = xrefManager.getXrefs(db);
+//            System.out.println("xrefs = " + xrefs);
+            if (this.mode.equalsIgnoreCase(modeTypes.list2genome.name())) {
+                Set<String> list2set = new HashSet<String>();
+                list2set.addAll(list2);
+                AnnotationManager annoManager = new AnnotationManager(this.species);
+                Map<String, List<String>> annots = annoManager.getIdAnnotationsGenome(db);
+                for (String s : annots.keySet()) {
+                    if (list2set.contains(s))
+                        xrefs.put(s, annots.get(s));
                 }
             }
 
+            annotations = xrefManager.filter(xrefs, filter);
+//            System.out.println("annotations = " + annotations);
 
-//            // init annotation object
-//            annotations = new FeatureList<AnnotationItem>();
-//            // init map to detect duplicated annotations
-//            Map<String, Boolean> uniqAnnots = new HashMap<String, Boolean>();
-//
-//            String[] fields;
-//            for (String annot : annots) {
-//                if (!uniqAnnots.containsKey(annot)) {
-//                    if (!annot.startsWith("#") && annot.contains("\t")) {
-//                        fields = annot.split("\t");
-//                        annotations.add(new AnnotationItem(fields[0], fields[1]));
-//                        uniqAnnots.put(annot, true);
-//                    }
-//                }
-//            }
+
+            /** Set term sizes **/
 //            annotations = InfraredUtils.getAnnotations(dbConnector, all, filter);
         }
+        if (!db.equals("") && !this.species.equals("none")) {
+//            this.termSizes = new HashMap<String, Integer>();
+            this.termSizes = getAnnotationsTermSizesInGenome(db, this.species);
+        }
+
+        /** Add go name to id **/
+//        Map<String, List<String>> goTerms = new HashMap<String, List<String>>();
+//        if (db.equalsIgnoreCase("biological_process") || db.equalsIgnoreCase("cellular_component") || db.equalsIgnoreCase("molecular_function")) {
+//            GOManager goManager = new GOManager();
+//            goTerms = goManager.getTerms();
+//        }
+//        for (AnnotationItem annot : annotations) {
+//            if (goTerms.containsKey(annot.getFunctionalTermId())) {
+//                String descTerm = goTerms.get(annot.getFunctionalTermId()).get(0) + "(" + annot + ")";
+//                annot.setFunctionalTermId(descTerm);
+//
+//            }
+//        }
 
         logger.println("OK");
 
         computeAnnotateds();
 
         // run test
-        fisher = new
-
-                TwoListFisherTest();
+        fisher = new TwoListFisherTest();
 
         logger.print("executing fisher test...");
         fisher.test(list1, list2, annotations, testMode, termSizes);
@@ -231,6 +261,21 @@ public class FatiGO {
         logger.println("end of FatiGO test...");
     }
 
+    protected Map<String, Integer> getAnnotationsTermSizesInGenome(String db, String species) {
+        Map<String, Integer> termSizes = new HashMap<String, Integer>();
+        AnnotationManager annotationManager = new AnnotationManager(species);
+        Map<String, List<String>> annots = annotationManager.getAnnotationIdsGenome(db);
+        String termId;
+        for (AnnotationItem annotation : annotations) {
+            termId = annotation.getFunctionalTermId();
+            if (annots.containsKey(termId)) {
+                termSizes.put(termId, annots.get(termId).size());
+            }
+        }
+
+        logger.println("OK");
+        return termSizes;
+    }
 
     public void removeDuplicates() {
         // before
@@ -254,7 +299,13 @@ public class FatiGO {
         //genome
         if (duplicatesMode == REMOVE_GENOME) {
             list1 = ListUtils.unique(list1);
-            List<String> ensemblList1 = InfraredUtils.toEnsemblId(dbConnector, list1);
+            XrefManager xrefManager = new XrefManager(list1, this.species);
+            Map<String, List<String>> xrefs = xrefManager.getXrefs("ensembl_transcript");
+            List<String> ensemblList1 = new ArrayList<String>();
+            for (String xref : xrefs.keySet()) {
+                ensemblList1.addAll(xrefs.get(xref));
+            }
+            ensemblList1 = ListUtils.unique(ensemblList1);
             for (String id : ensemblList1) {
                 if (list2.contains(id)) {
                     list2.remove(id);

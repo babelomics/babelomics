@@ -115,7 +115,7 @@ public class FatiGOTool extends FunctionalProfilingTool{
 			logger.debug("species: " + getSpecies());
 
 			// llamada a cell base con las species
-            DBConnector dbConnector = new DBConnector(species, new File(babelomicsHomePath + "/conf/infrared.properties"));
+//            DBConnector dbConnector = new DBConnector(species, new File(babelomicsHomePath + "/conf/infrared.properties"));
 
 			// prepare params
 			prepare();
@@ -129,10 +129,10 @@ public class FatiGOTool extends FunctionalProfilingTool{
 			List<String> idList2 = null;
 			if(list2!=null) {
 				idList2 = list2.getDataFrame().getRowNames();//list2.getDataFrame().getColumn(0); //InfraredUtils.toEnsemblId(dbConnector, list2.getDataFrame().getColumn(0));
-				fatigo = new FatiGO(idList1, idList2, null, dbConnector, testMode, duplicatesMode);
+				fatigo = new FatiGO(idList1, idList2, null, species, testMode, duplicatesMode);
 			} else if(isRestOfGenome()) {
 				duplicatesMode = FatiGO.REMOVE_GENOME;
-				fatigo = new FatiGO(idList1, null, dbConnector);
+				fatigo = new FatiGO(idList1, null, species);
 				list2label = "Genome";
 			} else if(chromosomes!=null) {
 				throw new ParseException("chromosomes comparison not yet implemented");
@@ -171,7 +171,7 @@ public class FatiGOTool extends FunctionalProfilingTool{
 
 				// run fatigo's
 				for(FunctionalFilter filter: filterList) {
-					fatigo = doFatigo(idList1,idList2,filter,dbConnector);
+					fatigo = doFatigo(idList1,idList2,filter);
 				}
 				if(isYourAnnotations){
 					fatigo = doFatigoYourAnnotations(idList1, idList2, yourAnnotations);
@@ -199,33 +199,34 @@ public class FatiGOTool extends FunctionalProfilingTool{
 
 	}
 
-	private FatiGO doFatigo(List<String> idList1, List<String> idList2,FunctionalFilter filter,DBConnector dbConnector) throws IOException, SQLException, IllegalAccessException, ClassNotFoundException, InstantiationException, InvalidParameterException{
+	private FatiGO doFatigo(List<String> idList1, List<String> idList2,FunctionalFilter filter) throws IOException, SQLException, IllegalAccessException, ClassNotFoundException, InstantiationException, InvalidParameterException{
 
 		// db attributes
 		FunctionalDbDescriptor filterInfo = new FunctionalDbDescriptor(filter);
 
 		// get term sizes
-		AnnotationDBManager adbm = new AnnotationDBManager(dbConnector);
-		System.err.println("dbConnector:     "  +  dbConnector);
-
-		Map<String, Integer> termSizes = adbm.getAnnotationTermsSize(filterInfo.getPrefix());
-
-
-		logger.println(filterInfo.getTitle() + "...");
+//		AnnotationDBManager adbm = new AnnotationDBManager(dbConnector);
+//		System.err.println("dbConnector:     "  +  dbConnector);
+//
+//		Map<String, Integer> termSizes = adbm.getAnnotationTermsSize(filterInfo.getPrefix());
+//
+//		logger.println(filterInfo.getTitle() + "...");
 
 		// init test
 		FatiGO fatigo = null;
 		//if(list2!=null) fatigo = new FatiGO(idList1, idList2, filter, dbConnector, testMode, duplicatesMode);
-		if(idList2!=null) fatigo = new FatiGO(idList1, idList2, filter, dbConnector, testMode, duplicatesMode);
-		else if(isRestOfGenome()) fatigo = new FatiGO(idList1, filter, dbConnector);
+		if(idList2!=null) fatigo = new FatiGO(idList1, idList2, filter, species, testMode, duplicatesMode);
+		else if(isRestOfGenome()) fatigo = new FatiGO(idList1, filter, species);
 
 
 		fatigo.setLogger(logger);
 
 		// term sizes
-		fatigo.setTermSizes(termSizes);
+//		fatigo.setTermSizes(termSizes);
 
 		// run test
+//		String species = commandLine.getOptionValue("species", "unknown");
+//		fatigo.setSpecies(this.species);
 		fatigo.run();
 
 		// save results
@@ -250,18 +251,19 @@ public class FatiGOTool extends FunctionalProfilingTool{
 		// get term sizes
 		Map<String, Integer> termSizes = getYourAnnotationsTermSizes();
 
+
 		logger.println(filterInfo.getTitle() + "...");
 
 		// init test
 		FatiGO fatigo = null;
-		if(list2!=null) fatigo = new FatiGO(idList1, idList2, yourAnnotations, testMode, duplicatesMode);
+		if(list2!=null) fatigo = new FatiGO(idList1, idList2, yourAnnotations, testMode, duplicatesMode, species);
 		//else if(isRestOfGenome()) fatigo = new FatiGO(idList1,yourAnnotations);
 		else fatigo = new FatiGO(idList1,yourAnnotations);
 
 		fatigo.setLogger(logger);
 
 		// term sizes
-		fatigo.setTermSizes(termSizes);
+//		fatigo.setTermSizes(termSizes);
 
 		// run test
 		fatigo.run();

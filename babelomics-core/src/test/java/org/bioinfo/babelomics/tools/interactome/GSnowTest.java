@@ -9,7 +9,7 @@ public class GSnowTest {
 
 	String BABELOMICS_HOME = System.getenv("BABELOMICS_HOME");
 	
-	@Test
+//	@Test
 	public void testOtherSpecie(){
 		String outdir = "/tmp/gsnow/testOtherSpecie";
 		System.out.println("Results allocated in: "+outdir);
@@ -28,14 +28,17 @@ public class GSnowTest {
 				"--home", BABELOMICS_HOME};
 		main(args);
 	}
-	//@Test
+
+
+
+//	/@Test
 	public void otherExample1(){
 		String outdir = "/tmp/gsnow/example1";
 		System.out.println("Results allocated in: "+outdir);
 		new File(outdir).mkdirs();
 		String []args = {
 				"--tool", "network-miner",
-				"-o", outdir, 
+				"-o", outdir,
 				"--o-name","result",
 				"--interactome","hsa",
 				"--list-tags", "idlist,gene",
@@ -48,9 +51,14 @@ public class GSnowTest {
 				"--home", BABELOMICS_HOME};
 		main(args);
 	}
-	
+
 	//@Test
 	public void testExample1(){
+	///opt/opencga/analysis/network-miner/babelomics/babelomics.sh
+	// --tool network-miner  --order curated --significant-value 0.05
+	// --list /opt/opencga/analysis/network-miner/examples/K562.txt --list-tags gene --components true --interactome hsa
+	// --randoms 1000 --intermediate 1 --group curated --o-name result --outdir /opt/opencga/jobs/J_sjvqcR4SNo/
+
 		String outdir = "/tmp/gsnow/example1";
 		System.out.println("Results allocated in: "+outdir);
 		new File(outdir).mkdirs();
@@ -64,6 +72,25 @@ public class GSnowTest {
 				"--intermediate","1",
 				"--order","ascending",
 				"--list",BABELOMICS_HOME+"/example/K562_symbol.txt",
+				"--home", BABELOMICS_HOME};
+		main(args);
+	}
+	@Test
+	public void testExample3(){
+
+		String outdir = "/tmp/gsnow/example3";
+		System.out.println("Results allocated in: "+outdir);
+		new File(outdir).mkdirs();
+		String []args = {
+				"--tool", "network-miner",
+				"-o", outdir,
+				"--o-name","result",
+				"--interactome","hsa",
+				"--list-tags", "idlist,gene",
+				"--group", "all",
+				"--intermediate","1",
+				"--order","ascending",
+				"--list",BABELOMICS_HOME+"/example/FA-differentialExpression-statistic.txt",
 				"--home", BABELOMICS_HOME};
 		main(args);
 	}

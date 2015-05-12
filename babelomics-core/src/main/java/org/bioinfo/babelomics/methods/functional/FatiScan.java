@@ -32,7 +32,9 @@ public class FatiScan extends GeneSetAnalysis {
 	private int numberOfPartitions;
 	private int outputFormat;
 	private int duplicatesMode;
-		
+
+	protected DBConnector dbConnector;
+
 	// test
 	private TwoListFisherTest fisher;
 		
@@ -85,7 +87,7 @@ public class FatiScan extends GeneSetAnalysis {
 		removeDuplicates();		
 		logger.println("OK");
 		// prepare list
-		prepare();
+		prepare(this.dbConnector.getSpecies());
 		
 		int thresholdPosition;
 		List<String> list1,list2;

@@ -33,7 +33,7 @@ public class Clustering extends BabelomicsTool {
 
 
 	private int maxDisplay = 1000;
-	
+
 	public Clustering() {
 	}
 
@@ -61,11 +61,11 @@ public class Clustering extends BabelomicsTool {
 
 		// input parameters
 		//
-		List<String> aux = new ArrayList<String>();		
+		List<String> aux = new ArrayList<String>();
 		String datasetParam, methodParam, sampleKvalueParam = "5", geneKvalueParam = "15", distanceParam, sampleClusteringParam, geneClusteringParam;
 
 		datasetParam = commandLine.getOptionValue("dataset");
-		result.addOutputItem(new Item("dataset_input_param", (datasetParam == null ? "" : new File(datasetParam).getName()), "Dataset file name", Item.TYPE.MESSAGE, Arrays.asList("INPUT_PARAM"), new HashMap<String,String>(), "Input parameters"));						
+		result.addOutputItem(new Item("dataset_input_param", (datasetParam == null ? "" : new File(datasetParam).getName()), "Dataset file name", Item.TYPE.MESSAGE, Arrays.asList("INPUT_PARAM"), new HashMap<String,String>(), "Input parameters"));
 
 		aux.clear();
 		sampleClusteringParam = commandLine.getOptionValue("sample-clustering",  "false");
@@ -81,8 +81,8 @@ public class Clustering extends BabelomicsTool {
 
 		aux.clear();
 		methodParam = commandLine.getOptionValue("method", "upgma");
-		aux.add(methodParam);		
-		if ( "kmeans".equalsIgnoreCase(methodParam) ) {			
+		aux.add(methodParam);
+		if ( "kmeans".equalsIgnoreCase(methodParam) ) {
 			if (Boolean.parseBoolean(sampleClusteringParam)) {
 				sampleKvalueParam = commandLine.getOptionValue("sample-kvalue", "5");
 				aux.add(" k-value (samples clustering) = " + sampleKvalueParam);
@@ -127,7 +127,7 @@ public class Clustering extends BabelomicsTool {
 		}
 
 		if ( !"upgma".equalsIgnoreCase(methodParam) && !"sota".equalsIgnoreCase(methodParam) && !"kmeans".equalsIgnoreCase(methodParam) ) {
-			abort("unknownclusteringmethod_execute_clustering", "Unknown clustering method", "Unknown clustering method '" + methodParam + "'", "Unknown clustering method '" + methodParam + "'");			
+			abort("unknownclusteringmethod_execute_clustering", "Unknown clustering method", "Unknown clustering method '" + methodParam + "'", "Unknown clustering method '" + methodParam + "'");
 		}
 
 		try {
@@ -140,22 +140,22 @@ public class Clustering extends BabelomicsTool {
 		try {
 			dataset = new Dataset(datasetFile);
 			if (!dataset.load() && !dataset.validate()) {
-				abort("exception_execute_clustering", "Error", "Error loading dataset " + datasetFile.getName() + ": " + dataset.getMessages().getErrorString(""), "");				
+				abort("exception_execute_clustering", "Error", "Error loading dataset " + datasetFile.getName() + ": " + dataset.getMessages().getErrorString(""), "");
 			}
 		} catch (Exception e) {
 			abort("exception_execute_clustering", "Error", "Error reading dataset " + datasetFile.getName(), "");
 		}
-				
+
 		if (dataset.getAttributes() != null && dataset.getAttributes().containsKey("NUMBER_MISSING_VALUES")) {
 			abort("exception_execute_clustering", "Error", "Your data contain missing values, please, go to the Preprocessing tool in order to impute missing values", "");
 		}
-		
+
 		if (dataset.getAttributes() != null && dataset.getAttributes().containsKey("DUPLICATED_FEATURES") ) {
-			abort("exception_execute_clustering", "Error", "Your data contain duplicated names, please, go to the Preprocessing tool in order to remove these duplicated names", "");			
+			abort("exception_execute_clustering", "Error", "Your data contain duplicated names, please, go to the Preprocessing tool in order to remove these duplicated names", "");
 		}
 
 		//		if(commandLine.hasOption("sample-filter") || commandLine.hasOption("feature-filter")) {
-		//			dataset = dataset.getSubDataset(commandLine.getOptionValue("sample-filter"), "4", commandLine.getOptionValue("feature-filter"), ""); 
+		//			dataset = dataset.getSubDataset(commandLine.getOptionValue("sample-filter"), "4", commandLine.getOptionValue("feature-filter"), "");
 		//		}
 
 
@@ -187,10 +187,12 @@ public class Clustering extends BabelomicsTool {
 			if (nwGenesStr != null && nwGenesStr.length() > 0) {
 				file = new File(outdir + "/genes.nw");
 				try {
-					IOUtils.write(file, nwGenesStr.toString());		
+					IOUtils.write(file, nwGenesStr.toString());
 					result.addOutputItem(new Item("gene_newick_file", "genes.nw", "Clusters of genes", TYPE.FILE, tags, new HashMap<String, String>(2), "Clusters in newick format"));
 
 					nwGenes = new NewickParser().parse(file);
+					/**
+                     * babelomics 5
 					String clusterFolder = outdir + "/clusters/";
 					new  File(clusterFolder).mkdir();
 					MultipleTreeUtils.saveClusters(nwGenes, "", clusterFolder);
@@ -201,16 +203,16 @@ public class Clustering extends BabelomicsTool {
 					IOUtils.write(bottomListFile, nwGenes.getLabels());
 					if ( bottomListFile.exists() ) {
 						File[] clusterFiles = FileUtils.listFiles(new File(clusterFolder), "cluster_.+.txt", true);
-						for(File clusterFile: clusterFiles) {					
+						for(File clusterFile: clusterFiles) {
 							if ( !clusterFile.getName().equalsIgnoreCase(bottomListFile.getName()) ) {
 								redirectionFile = new File(clusterFolder + clusterFile.getName().replace(".txt", "") + ".fatigo.redirection");
 								createFatiGORedirectionFile(redirectionFile, clusterFile, bottomListFile);
 							}
 							redirectionFile = new File(clusterFolder + clusterFile.getName().replace(".txt", "") + ".fatigo.genome.redirection");
-							createFatiGORedirectionFile(redirectionFile, clusterFile, null);							
-						}					
+							createFatiGORedirectionFile(redirectionFile, clusterFile, null);
+						}
 					}
-
+                    **/
 				} catch (IOException e) {
 					if (!file.exists()) {
 						printError("ioexception_execute_clustering", "Error", "Error generating genes newick");
@@ -243,11 +245,11 @@ public class Clustering extends BabelomicsTool {
 			if (nwSamplesStr != null && nwSamplesStr.length() > 0) {
 				file = new File(outdir + "/samples.nw");
 				try {
-					IOUtils.write(file, nwSamplesStr.toString());		
+					IOUtils.write(file, nwSamplesStr.toString());
 					result.addOutputItem(new Item("sample_newick_file", file.getName(), "Clusters of samples", TYPE.FILE, tags, new HashMap<String, String>(2), "Clusters in newick format"));
-					
+
 					nwSamples = new NewickParser().parse(file);
-					
+
 				} catch (IOException e) {
 					if (!file.exists()) {
 						printError("ioexception_execute" + methodParam + "_clustering", "Error", "Error saving samples newick");
@@ -255,7 +257,7 @@ public class Clustering extends BabelomicsTool {
 					}
 				} catch (InvalidFileFormatException e) {
 					printError("ioexception_execute_clustering", "Error", "Error newick format invalid, please, check your sample names");
-				}			
+				}
 			}
 		}
 
@@ -274,9 +276,9 @@ public class Clustering extends BabelomicsTool {
 		//				ClusteringUtils.saveImageTree(nwSamples, "Clusters of samples",  imgFilename, false, false);
 		//				imgFile = new File(imgFilename);
 		//				if ( imgFile.exists() ) {
-		//					result.addOutputItem(new Item(method + "_clustering_image", imgFile.getName(), method.toUpperCase() + " sample clustering image (png format)", TYPE.IMAGE, new ArrayList<String>(2), new HashMap<String, String>(2), "Cluster images"));					
+		//					result.addOutputItem(new Item(method + "_clustering_image", imgFile.getName(), method.toUpperCase() + " sample clustering image (png format)", TYPE.IMAGE, new ArrayList<String>(2), new HashMap<String, String>(2), "Cluster images"));
 		//				} else {
-		//					printError("execute" + method + "_clustering", "error saving sample clustering image", "error saving sample clustering image");										
+		//					printError("execute" + method + "_clustering", "error saving sample clustering image", "error saving sample clustering image");
 		//				}
 		//			} catch (IOException e) {
 		//				printError("ioexception_execute" + method + "_clustering", "error saving clustering image", e.toString(), StringUtils.getStackTrace(e));
@@ -291,7 +293,7 @@ public class Clustering extends BabelomicsTool {
 		//				imgFile = new File(imgFilename);
 		//				if ( imgFile.exists() ) {
 		//					result.addOutputItem(new Item(method + "_clustering_image", imgFile.getName(), method.toUpperCase() + " gene clustering image (png format)", TYPE.IMAGE, new ArrayList<String>(2), new HashMap<String, String>(2), "Cluster images"));
-		//					
+		//
 		//					String mapFilename = imgFilename + ".html.map";
 		//					File mapFile = new File(mapFilename);
 		//					if ( mapFile.exists() ) {
@@ -309,7 +311,7 @@ public class Clustering extends BabelomicsTool {
 		//						}
 		//					}
 		//				} else {
-		//					printError("execute" + method + "_clustering", "error saving gene clustering image", "error saving gene clustering image");										
+		//					printError("execute" + method + "_clustering", "error saving gene clustering image", "error saving gene clustering image");
 		//				}
 		//			} catch (IOException e) {
 		//				printError("ioexception_execute" + method + "_clustering", "error saving clustering image", e.toString(), StringUtils.getStackTrace(e));
@@ -340,9 +342,9 @@ public class Clustering extends BabelomicsTool {
 				ClusteringUtils.saveImageTree(matrix, nwGenes, nwSamples, (nwSamples == null ? dataset.getSampleNames() : nwSamples.getLabels()), (nwGenes == null ? dataset.getFeatureNames() : nwGenes.getLabels()), imgFilename, true);
 				imgFile = new File(imgFilename);
 				if ( imgFile.exists() ) {
-					result.addOutputItem(new Item(methodParam + "_clustering_image", imgFile.getName(), methodParam.toUpperCase() + " heatmap image (png format)", TYPE.IMAGE, Arrays.asList("CLUSTER"), new HashMap<String, String>(2), "Cluster images"));					
+					result.addOutputItem(new Item(methodParam + "_clustering_image", imgFile.getName(), methodParam.toUpperCase() + " heatmap image (png format)", TYPE.IMAGE, Arrays.asList("CLUSTER"), new HashMap<String, String>(2), "Cluster images"));
 				} else {
-					printError("execute" + methodParam + "_clustering", "Error", "Error saving clustering image");					
+					printError("execute" + methodParam + "_clustering", "Error", "Error saving clustering image");
 				}
 			} catch (IOException e) {
 				printError("ioexception_execute" + methodParam + "_clustering", "error saving clustering image", e.toString(), StringUtils.getStackTrace(e));
@@ -356,9 +358,9 @@ public class Clustering extends BabelomicsTool {
 					ClusteringUtils.saveImageTree(nwSamples, "Clusters of samples",  imgFilename, false, false);
 					imgFile = new File(imgFilename);
 					if ( imgFile.exists() ) {
-						result.addOutputItem(new Item(methodParam + "_clustering_image", imgFile.getName(), methodParam.toUpperCase() + " sample clustering image (png format)", TYPE.IMAGE, new ArrayList<String>(2), new HashMap<String, String>(2), "Cluster images"));					
+						result.addOutputItem(new Item(methodParam + "_clustering_image", imgFile.getName(), methodParam.toUpperCase() + " sample clustering image (png format)", TYPE.IMAGE, new ArrayList<String>(2), new HashMap<String, String>(2), "Cluster images"));
 					} else {
-						printError("execute" + methodParam + "_clustering", "Error", "error saving sample clustering image");										
+						printError("execute" + methodParam + "_clustering", "Error", "error saving sample clustering image");
 					}
 				} catch (IOException e) {
 					printError("ioexception_execute" + methodParam + "_clustering", "Error", "error saving sample clustering image");
@@ -372,7 +374,7 @@ public class Clustering extends BabelomicsTool {
 		//		if ( nwGenes != null ) {
 		//
 		//			if ( "kmeans".equalsIgnoreCase(method) ) {
-		//				String redirectionTags = null; 
+		//				String redirectionTags = null;
 		//				List<String> redirectionInputs = null;
 		//				File redirectionFile = null, list1 = null;
 		//				File list2 = new File(outdir + "/rownames.txt");
@@ -398,7 +400,7 @@ public class Clustering extends BabelomicsTool {
 		//						redirectionInputs.add("duplicates=ref");
 		//
 		//						redirectionInputs.add("tool=fatigo");
-		//						redirectionInputs.add("jobname=fatigo from kmeans cluster " + 1);						
+		//						redirectionInputs.add("jobname=fatigo from kmeans cluster " + 1);
 		//						redirectionInputs.add("jobdescription=redirected from job $JOB_NAME");
 		//
 		//						try {
@@ -406,7 +408,7 @@ public class Clustering extends BabelomicsTool {
 		//						} catch (IOException e) {
 		//							// TODO Auto-generated catch block
 		//							e.printStackTrace();
-		//						}								
+		//						}
 		//
 		//						if ( redirectionFile.exists() ) {
 		//							redirectionTags = "REDIRECTION(" + redirectionFile.getName() + ":Send to FatiGO tool...)";
@@ -422,7 +424,7 @@ public class Clustering extends BabelomicsTool {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param matrix
 	 * @param rowNames
 	 * @param colNames
@@ -452,7 +454,7 @@ public class Clustering extends BabelomicsTool {
 			int k = (kvalue > rowNames.size() ? rowNames.size() : kvalue);
 
 			Kmeans kmeans = new Kmeans(matrix, rowNames, colNames, distance, k, outdir, babelomicsHomePath);
-			tree = kmeans.run(createClusterFiles);			
+			tree = kmeans.run(createClusterFiles);
 		}
 		return tree;
 	}
@@ -483,7 +485,7 @@ public class Clustering extends BabelomicsTool {
 				//matrix.set(row, col, inputMatrix.get(rowOrder[row], columnOrder[col]));
 				matrix.set(row, col, inputMatrix.get(r, c));
 			}
-		}				
+		}
 		return matrix;
 	}
 
@@ -516,7 +518,7 @@ public class Clustering extends BabelomicsTool {
 			redirectionInputs.add("list1_wum_data=true");
 			redirectionInputs.add("list1_databox=" + bottomListFile.getName() + " (top list from job $JOB_NAME)");
 			redirectionInputs.add("list1=$JOB_FOLDER/clusters/" + bottomListFile.getName());
-		}		
+		}
 
 		redirectionInputs.add("tool=fatigo");
 		redirectionInputs.add("jobname=fatigo");
@@ -526,7 +528,7 @@ public class Clustering extends BabelomicsTool {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
+		}
 	}
 
 }

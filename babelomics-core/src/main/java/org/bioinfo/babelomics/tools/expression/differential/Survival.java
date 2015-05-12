@@ -22,7 +22,7 @@ import org.bioinfo.tool.result.Item.TYPE;
 public class Survival extends BabelomicsTool {
 
 	private double pValue = 0.05;
-	private int maxDisplay = 500;
+	private int maxDisplay = Integer.MAX_VALUE;
 	
 	public Survival() {
 	}

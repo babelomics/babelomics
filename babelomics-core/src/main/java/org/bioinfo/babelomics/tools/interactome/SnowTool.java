@@ -167,7 +167,8 @@ public abstract class SnowTool extends BabelomicsTool{
 		StringBuilder sbReturn = new StringBuilder();
 		if(!sb.toString().equals("")){
 			//System.out.println(sb);
-			sb.deleteCharAt(sb.lastIndexOf(ch));
+			if (sb.lastIndexOf(ch) >= 0)
+				sb.deleteCharAt(sb.lastIndexOf(ch));
 		}
 		return sbReturn.append(sb.toString());
 	}

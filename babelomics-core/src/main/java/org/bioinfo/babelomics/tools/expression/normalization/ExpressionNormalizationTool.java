@@ -287,8 +287,12 @@ public class ExpressionNormalizationTool extends BabelomicsTool {
 
 				File redirectionFile = new File(outdir + "/normalized.redirection");
 				createPreprocessingRedirectionFile(redirectionFile, file);
+
+				File redirectionFileAttr = new File(outdir + "/attibute_editor.redirection");
+			    createAttributeEditorRedirectionFile(redirectionFileAttr, file);
 				if ( redirectionFile.exists() ) {
-					tags = "REDIRECTION(" + redirectionFile.getName() + ":Send to Preprocessing tool...)";
+//					tags = "REDIRECTION(" + redirectionFile.getName() + ":Send to Preprocessing tool...)";
+					tags = "REDIRECTION(" + redirectionFile.getName() + ":Send to Preprocessing tool...),REDIRECTION("+ redirectionFileAttr.getName() + ":Send to Attribute editor tool...)";
 					result.addOutputItem(new Item("normalized", file.getName(), "Normalized dataset ", TYPE.FILE, StringUtils.toList(tags, ","), new HashMap<String, String>(2), "Normalization output files"));
 				}
 				saveBoxPlot(file, false, "Box-plot", "boxplot", "Box-plots");				
@@ -492,9 +496,13 @@ public class ExpressionNormalizationTool extends BabelomicsTool {
 			result.addOutputItem(new Item("rma.summary", file.getName(), "RMA summary ", TYPE.DATA, StringUtils.toList(tags, ","), new HashMap<String, String>(1), "RMA.Summary"));
 			File redirectionFile = new File(outdir + "/rma.summary.redirection");
 			createPreprocessingRedirectionFile(redirectionFile, file);
+
+			File redirectionFileAttr = new File(outdir + "/attibute_editor.redirection");
+			createAttributeEditorRedirectionFile(redirectionFileAttr, file);
 			if ( redirectionFile.exists() ) {
-				tags = "REDIRECTION(" + redirectionFile.getName() + ":Send to Preprocessing tool...)";
+				tags = "REDIRECTION(" + redirectionFile.getName() + ":Send to Preprocessing tool...),REDIRECTION("+ redirectionFileAttr.getName() + ":Send to Attribute editor tool...)";
 				result.addOutputItem(new Item("rma.summary", file.getName(), "RMA summary ", TYPE.FILE, StringUtils.toList(tags, ","), new HashMap<String, String>(1), "RMA.Summary"));
+
 			}
 
 			saveBoxPlot(file, false, "RMA box-plot", "rmaimg", "RMA.Box-plot");
@@ -515,9 +523,13 @@ public class ExpressionNormalizationTool extends BabelomicsTool {
 			result.addOutputItem(new Item("plier-mm.summary", file.getName(), "Plier MM summary ", TYPE.DATA, StringUtils.toList(tags, ","), new HashMap<String, String>(1), "Plier MM.Summary"));								
 			File redirectionFile = new File(outdir + "/plier_mm.summary.redirection");
 			createPreprocessingRedirectionFile(redirectionFile, file);
+
+			File redirectionFileAttr = new File(outdir + "/attibute_editor.redirection");
+			createAttributeEditorRedirectionFile(redirectionFileAttr, file);
 			if ( redirectionFile.exists() ) {
-				tags = "REDIRECTION(" + redirectionFile.getName() + ":Send to Preprocessing tool...)";
-				result.addOutputItem(new Item("plier-mm.summary", file.getName(), "Plier MM summary ", TYPE.FILE, StringUtils.toList(tags, ","), new HashMap<String, String>(1), "Plier MM.Summary"));								
+//				tags = "REDIRECTION(" + redirectionFile.getName() + ":Send to Preprocessing tool...)";
+				tags = "REDIRECTION(" + redirectionFile.getName() + ":Send to Preprocessing tool...),REDIRECTION("+ redirectionFileAttr.getName() + ":Send to Attribute editor tool...)";
+				result.addOutputItem(new Item("plier-mm.summary", file.getName(), "Plier MM summary ", TYPE.FILE, StringUtils.toList(tags, ","), new HashMap<String, String>(1), "Plier MM.Summary"));
 			}
 
 			saveBoxPlot(file, false, "Plier MM box-plot", "plierimg", "Plier MM.Box-plot");
@@ -538,8 +550,13 @@ public class ExpressionNormalizationTool extends BabelomicsTool {
 			result.addOutputItem(new Item("plier-gcbg.summary", file.getName(), "Plier GCBG summary ", TYPE.DATA, StringUtils.toList(tags, ","), new HashMap<String, String>(1), "Plier GCBG.Summary"));								
 			File redirectionFile = new File(outdir + "/plier_gcbg.summary.redirection");
 			createPreprocessingRedirectionFile(redirectionFile, file);
+
+			File redirectionFileAttr = new File(outdir + "/attibute_editor.redirection");
+			createAttributeEditorRedirectionFile(redirectionFileAttr, file);
 			if ( redirectionFile.exists() ) {
-				tags = "REDIRECTION(" + redirectionFile.getName() + ":Send to Preprocessing tool...)";
+//				tags = "REDIRECTION(" + redirectionFile.getName() + ":Send to Preprocessing tool...)";
+				tags = "REDIRECTION(" + redirectionFile.getName() + ":Send to Preprocessing tool...),REDIRECTION("+ redirectionFileAttr.getName() + ":Send to Attribute editor tool...)";
+
 				result.addOutputItem(new Item("plier-gcbg.summary", file.getName(), "Plier GCBG summary ", TYPE.FILE, StringUtils.toList(tags, ","), new HashMap<String, String>(1), "Plier GCBG.Summary"));								
 			}
 
@@ -559,8 +576,13 @@ public class ExpressionNormalizationTool extends BabelomicsTool {
 			result.addOutputItem(new Item("pm-mm.summary", file.getName(), "PM-MM summary ", TYPE.DATA, StringUtils.toList(tags, ","), new HashMap<String, String>(1), "Present-absent calls"));								
 			File redirectionFile = new File(outdir + "/pm_mm.summary.redirection");
 			createPreprocessingRedirectionFile(redirectionFile, file);
+
+			File redirectionFileAttr = new File(outdir + "/attibute_editor.redirection");
+			createAttributeEditorRedirectionFile(redirectionFileAttr, file);
 			if ( redirectionFile.exists() ) {
-				tags = "REDIRECTION(" + redirectionFile.getName() + ":Send to Preprocessing tool...)";
+//				tags = "REDIRECTION(" + redirectionFile.getName() + ":Send to Preprocessing tool...)";
+				tags = "REDIRECTION(" + redirectionFile.getName() + ":Send to Preprocessing tool...),REDIRECTION("+ redirectionFileAttr.getName() + ":Send to Attribute editor tool...)";
+
 				result.addOutputItem(new Item("pm-mm.summary", file.getName(), "PM-MM summary ", TYPE.FILE, StringUtils.toList(tags, ","), new HashMap<String, String>(1), "Present-absent calls"));								
 			}
 
@@ -587,8 +609,13 @@ public class ExpressionNormalizationTool extends BabelomicsTool {
 			result.addOutputItem(new Item("dabg.summary", file.getName(), "DABG summary ", TYPE.DATA, StringUtils.toList(tags, ","), new HashMap<String, String>(1), "Present-absent calls"));
 			File redirectionFile = new File(outdir + "/dabg.summary.redirection");
 			createPreprocessingRedirectionFile(redirectionFile, file);
+
+			File redirectionFileAttr = new File(outdir + "/attibute_editor.redirection");
+			createAttributeEditorRedirectionFile(redirectionFileAttr, file);
 			if ( redirectionFile.exists() ) {
-				tags = "REDIRECTION(" + redirectionFile.getName() + ":Send to Preprocessing tool...)";
+//				tags = "REDIRECTION(" + redirectionFile.getName() + ":Send to Preprocessing tool...)";
+				tags = "REDIRECTION(" + redirectionFile.getName() + ":Send to Preprocessing tool...),REDIRECTION("+ redirectionFileAttr.getName() + ":Send to Attribute editor tool...)";
+
 				result.addOutputItem(new Item("dabg.summary", file.getName(), "DABG summary ", TYPE.FILE, StringUtils.toList(tags, ","), new HashMap<String, String>(1), "Present-absent calls"));
 			}
 
@@ -854,5 +881,15 @@ public class ExpressionNormalizationTool extends BabelomicsTool {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}	
+	}
+	public void createAttributeEditorRedirectionFile(File redirectionFile, File fileToRedirect) {
+		List<String> redirectionInputs = new ArrayList<String>();
+		redirectionInputs.add("tool=edit");
+		redirectionInputs.add("dataset=" + fileToRedirect.getName());
+		try {
+			IOUtils.write(redirectionFile.getAbsolutePath(), redirectionInputs);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
