@@ -75,8 +75,8 @@ var TOOLS = ["affy-expression-normalization", "agilent-expression-one-color-norm
 
 var CONTACT_MAIL = "babelomics@cipf.es";
 
-// var MODE = "PRODUCTION";
-var MODE = "DEBUG";
+var MODE = "PRODUCTION";
+// var MODE = "DEBUG";
 // var MODE = "MAINTENANCE";
 var MAINTENANCE_MSG = "Babelomics 5 is currently not available due to a power outage. It will be available very soon";
 // var HOME_MSG =  "";
