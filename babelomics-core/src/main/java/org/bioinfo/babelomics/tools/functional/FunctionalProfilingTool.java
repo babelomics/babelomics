@@ -83,7 +83,7 @@ public abstract class FunctionalProfilingTool extends BabelomicsTool {
 		getOptions().addOption(OptionFactory.createOption("fisher", "the Fisher test mode, valid values: less, greater, two-tailed. By default, two-tailed", false));
 		getOptions().addOption(OptionFactory.createOption("go-dag", "Compute DAG for significant GO terms", false));
 		
-		// GO biological process options
+		// GO options
 		addGOOptions("bp");
 		addGOOptions("cc");
 		addGOOptions("mf");
@@ -112,14 +112,14 @@ public abstract class FunctionalProfilingTool extends BabelomicsTool {
 		if(namespace.equalsIgnoreCase("mf")) namespaceTitle = "molecular function";
 		getOptions().addOption(OptionFactory.createOption("go-" + namespace, "GO " + namespaceTitle + " database",false,false));
 //		getOptions().addOption(OptionFactory.createOption("go-" + namespace + "-inclusive", "GO " + namespaceTitle + ", inclusive analysis (one per GO level), otherwise joins GO levels",false,false));
-		getOptions().addOption(OptionFactory.createOption("go-" + namespace + "-min-level", "GO " + namespaceTitle + ", min go level to take into account, default 3",false));
-		getOptions().addOption(OptionFactory.createOption("go-" + namespace + "-max-level", "GO " + namespaceTitle + ", max GO level to take into account, default 15",false));
+//		getOptions().addOption(OptionFactory.createOption("go-" + namespace + "-min-level", "GO " + namespaceTitle + ", min go level to take into account, default 3",false));
+//		getOptions().addOption(OptionFactory.createOption("go-" + namespace + "-max-level", "GO " + namespaceTitle + ", max GO level to take into account, default 15",false));
 		getOptions().addOption(OptionFactory.createOption("go-" + namespace + "-min-num-genes", "GO " + namespaceTitle + ", min number of genes filter",false));
 		getOptions().addOption(OptionFactory.createOption("go-" + namespace + "-max-num-genes", "GO " + namespaceTitle + ", max number of genes filter",false));
-		getOptions().addOption(OptionFactory.createOption("go-" + namespace + "-nannot-domain", "GO " + namespaceTitle + ", computes the number of annotated genes from all genome, otherwise from your input list",false));
-		getOptions().addOption(OptionFactory.createOption("go-" + namespace + "-keyword-filter", "GO " + namespaceTitle + ", enables keywords filter",false,false));
-		getOptions().addOption(OptionFactory.createOption("go-" + namespace + "-keyword-list", "GO " + namespaceTitle + ", keywords filter",false));
-		getOptions().addOption(OptionFactory.createOption("go-" + namespace + "-keyword-operator", "GO " + namespaceTitle + ", keywords filter logic: all or any",false));
+//		getOptions().addOption(OptionFactory.createOption("go-" + namespace + "-nannot-domain", "GO " + namespaceTitle + ", computes the number of annotated genes from all genome, otherwise from your input list",false));
+//		getOptions().addOption(OptionFactory.createOption("go-" + namespace + "-keyword-filter", "GO " + namespaceTitle + ", enables keywords filter",false,false));
+//		getOptions().addOption(OptionFactory.createOption("go-" + namespace + "-keyword-list", "GO " + namespaceTitle + ", keywords filter",false));
+//		getOptions().addOption(OptionFactory.createOption("go-" + namespace + "-keyword-operator", "GO " + namespaceTitle + ", keywords filter logic: all or any",false));
 		getOptions().addOption(OptionFactory.createOption("go-" + namespace + "-propagation", "GO " + namespaceTitle + ", direct vs propagated annotation",false));
 	}
 	
@@ -127,7 +127,7 @@ public abstract class FunctionalProfilingTool extends BabelomicsTool {
 		getOptions().addOption(OptionFactory.createOption(db, db, false, false));
 		getOptions().addOption(OptionFactory.createOption(db + "-min-num-genes", db + " min number of genes filter",false));
 		getOptions().addOption(OptionFactory.createOption(db + "-max-num-genes", db + " max number of genes filter",false));
-		getOptions().addOption(OptionFactory.createOption(db + "-nannot-domain", db + " computes the number of annotated genes from all genome, otherwise from you input list",false,false));
+//		getOptions().addOption(OptionFactory.createOption(db + "-nannot-domain", db + " computes the number of annotated genes from all genome, otherwise from you input list",false,false));
 	}
 	
 	public void prepare() throws IOException, ParseException, InvalidIndexException{
@@ -236,9 +236,12 @@ public abstract class FunctionalProfilingTool extends BabelomicsTool {
 		GOFilter goFilter = new GOFilter(infraredNamespace);
 		
 		// direct vs propagated annotation
-		goFilter.setPropagated(true);
-		if(cmdLine.hasOption("go-" + namespace + "-propagation") && !cmdLine.getOptionValue("go-" + namespace + "-propagation").equalsIgnoreCase("propagate")){				
+		if(cmdLine.hasOption("go-" + namespace + "-propagation") && !cmdLine.getOptionValue("go-" + namespace + "-propagation").equalsIgnoreCase("propagate")){
 			goFilter.setPropagated(false);
+		}
+		else{
+			goFilter.setPropagated(true);
+			goFilter.setNamespace(infraredNamespace+"_propagated");
 		}
 		
 		// levels
@@ -249,7 +252,7 @@ public abstract class FunctionalProfilingTool extends BabelomicsTool {
 		goFilter.setMinNumberGenes(Integer.parseInt(cmdLine.getOptionValue("go-" + namespace + "-min-num-genes","5")));	
 		goFilter.setMaxNumberGenes(Integer.parseInt(cmdLine.getOptionValue("go-" + namespace + "-max-num-genes","500")));
 		goFilter.setGenomicNumberOfGenes(true);
-		System.err.println("estas? " + cmdLine.getOptionValue("go-" + namespace + "-nannot-domain"));
+//		System.err.println("estas? " + cmdLine.getOptionValue("go-" + namespace + "-nannot-domain"));
 		if(cmdLine.hasOption("go-" + namespace + "-nannot-domain") && !cmdLine.getOptionValue("go-" + namespace + "-nannot-domain").equals("genome")){
 			goFilter.setGenomicNumberOfGenes(false);
 		}		
@@ -399,14 +402,14 @@ public abstract class FunctionalProfilingTool extends BabelomicsTool {
 		return result;
 	}
 		
-	protected boolean createGoGraph(List<TwoListFisherTestResult> raw, double pvalue, FunctionalDbDescriptor filterInfo) throws GoGraphException{
-		List<GeneSetAnalysisTestResult> result = new ArrayList<GeneSetAnalysisTestResult>(raw.size());
-		for(TwoListFisherTestResult test: raw){			
-			GeneSetAnalysisTestResult gseaTest = new GeneSetAnalysisTestResult(test);
-			result.add(gseaTest);
-		}		
-		return createGseaGoGraph(result,pvalue,filterInfo);
-	}
+//	protected boolean createGoGraph(List<TwoListFisherTestResult> raw, double pvalue, FunctionalDbDescriptor filterInfo) throws GoGraphException{
+//		List<GeneSetAnalysisTestResult> result = new ArrayList<GeneSetAnalysisTestResult>(raw.size());
+//		for(TwoListFisherTestResult test: raw){
+//			GeneSetAnalysisTestResult gseaTest = new GeneSetAnalysisTestResult(test);
+//			result.add(gseaTest);
+//		}
+//		return createGseaGoGraph(result,pvalue,filterInfo);
+//	}
 	
 	protected boolean createGseaGoGraph(List<GeneSetAnalysisTestResult> significants, double pvalue, FunctionalDbDescriptor filterInfo) throws GoGraphException{
 		boolean outOfBounds = false;
