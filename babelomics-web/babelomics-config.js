@@ -65,8 +65,20 @@ var TOOLS = ["affy-expression-normalization", "agilent-expression-one-color-norm
     "genepix-expression-two-colors-normalization", "network-miner", "oncodriveclust", "oncodrivefm", "preprocessing", "rnaseq-diffexpr", "rnaseq-norm", "snow", "stratification",
     "survival"];
 
+/** README
+ * The application can be in three states: MAINTENANCE, DEBUG, PRODUCTION, this is controlled by the variable MODE.
+ * You can put an info message in the web by changing the variable HOME_MSG.
+ * You can put an info message for the maintance mode by changing the variable MAINTENANCE_MSG.
+ *
+ *  * **/
+
+
 var CONTACT_MAIL = "babelomics@cipf.es";
-// MAINTENANCE, DEBUG, PRODUCTION
-var MODE = "PRODUCTION";
-//var MODE = "DEBUG";
-//var MODE = "MAINTENANCE";
+
+// var MODE = "PRODUCTION";
+var MODE = "DEBUG";
+// var MODE = "MAINTENANCE";
+var MAINTENANCE_MSG = "Babelomics 5 is currently not available due to a power outage. It will be available very soon";
+// var HOME_MSG =  "";
+var HOME_MSG =  "System will be down due to electric cut on 14th of May from 7pm to 9pm UTC/GMT +1. Sorry for the inconvenience.";
+

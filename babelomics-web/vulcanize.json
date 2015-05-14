@@ -1,0 +1,11 @@
+{
+  "excludes": {
+    "imports": [
+
+    ],
+    "scripts": [
+      "babelomics-config.js"
+    ]
+  },
+  "strip-excludes": false
+}
