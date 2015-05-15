@@ -2,7 +2,7 @@ CELLBASE_HOST = "http://wwwdev.ebi.ac.uk/cellbase/webservices/rest";
 CELLBASE_VERSION = "v3";
 // OPENCGA_HOST = "http://ws-beta.bioinfo.cipf.es/opencga-staging/rest";
 OPENCGA_HOST = "http://ws.babelomics.org/opencga/rest";
-//OPENCGA_HOST = "http://test.babelomics.org/opencga/rest";
+OPENCGA_HOST = "http://test.babelomics.org/opencga/rest";
 
 OPENCGA_VERSION = "v1";
 
@@ -76,7 +76,9 @@ var TOOLS = ["affy-expression-normalization", "agilent-expression-one-color-norm
 var CONTACT_MAIL = "babelomics@cipf.es";
 
 var MODE = "PRODUCTION";
-// var MODE = "DEBUG";
+if (OPENCGA_HOST.indexOf("http://test.babelomics.org/opencga/rest") >= 0)
+    MODE = "DEBUG";
+
 // var MODE = "MAINTENANCE";
 var MAINTENANCE_MSG = "Babelomics 5 is currently not available due to a power outage. It will be available very soon";
 // var HOME_MSG =  "";
