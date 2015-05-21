@@ -8,8 +8,102 @@ import org.junit.Test;
 public class GSnowTest {
 
 	String BABELOMICS_HOME = System.getenv("BABELOMICS_HOME");
-	
-//	@Test
+
+
+	@Test
+	public void example1_Essential_genes_in_cancer_cell_line_K562(){
+		// Essential_genes_in_cancer_cell_line_K562
+
+		String outdir = "/tmp/gsnow/example1";
+		new File(outdir).mkdirs();
+
+		String []args = {
+				"--tool", "network-miner",
+				"-o", outdir,
+				"--o-name","result",
+				"--interactome","hsa",
+				"--list-tags", "gene",
+				"--group", "curated",
+				"--intermediate","1",
+				"--randoms","1000",
+				"--order","ascending",
+				"--significant-value","0.05",
+				"--list",BABELOMICS_HOME+"/example/K562.txt",
+				"--home", System.getenv("BABELOMICS_HOME")};
+		main(args);
+
+	}
+
+	@Test
+	public void example2_Essential_genes_in_cancer_cell_line_JURKAT(){
+
+		String outdir = "/tmp/gsnow/example2";
+		new File(outdir).mkdirs();
+
+		String []args = {
+				"--tool", "network-miner",
+				"-o", outdir,
+				"--o-name","result",
+				"--interactome","hsa",
+				"--list-tags", "gene",
+				"--group", "curated",
+				"--intermediate","1",
+				"--randoms","1000",
+				"--order","ascending",
+				"--significant-value","0.05",
+				"--list",BABELOMICS_HOME+"/example/JURKAT.txt",
+				"--home", System.getenv("BABELOMICS_HOME")};
+		main(args);
+
+	}
+	@Test
+	public void example3_Genes_Downregulated_in_Fanconi_Anemia(){
+
+		String outdir = "/tmp/gsnow/example3";
+		new File(outdir).mkdirs();
+
+		String []args = {
+				"--tool", "network-miner",
+				"-o", outdir,
+				"--o-name","result",
+				"--interactome","hsa",
+				"--list-tags", "gene",
+				"--group", "all",
+				"--intermediate","1",
+				"--randoms","1000",
+				"--order","ascending",
+				"--significant-value","0.05",
+				"--list",BABELOMICS_HOME+"/example/FA-differentialExpression-statistic.txt",
+				"--home", System.getenv("BABELOMICS_HOME")};
+		main(args);
+
+	}
+
+	@Test
+	public void example4_GenomeWide_Association_Study_in_Bipolar_Disorder(){
+		String outdir = "/tmp/gsnow/example4";
+		System.out.println("Results allocated in: "+outdir);
+		new File(outdir).mkdirs();
+		String []args = {
+				"--tool", "network-miner",
+				"--seedlist", BABELOMICS_HOME + "/example/BD-associatedgenesUniprot.txt",
+				"--list-tags", "gene",
+				"--list", BABELOMICS_HOME+"/example/BD-GWASplink_top.txt",
+				"--intermediate","1",
+				"-o", outdir,
+				"--significant-value", "0.06",
+				"--order","ascending",
+				"--randoms", "1000",
+				"--components", "true",
+				"--interactome","hsa",
+				"--group", "curated",
+				"--o-name","result",
+				"--home", BABELOMICS_HOME};
+		main(args);
+	}
+
+
+	//	@Test
 	public void testOtherSpecie(){
 		String outdir = "/tmp/gsnow/testOtherSpecie";
 		System.out.println("Results allocated in: "+outdir);
@@ -75,7 +169,7 @@ public class GSnowTest {
 				"--home", BABELOMICS_HOME};
 		main(args);
 	}
-	@Test
+	// @Test
 	public void testExample3(){
 
 		String outdir = "/tmp/gsnow/example3";
@@ -153,31 +247,8 @@ public class GSnowTest {
 		main(args);
 	}
 	
-	//@Test
-	public void test(){};
-	//@Test
-	public void example1(){
-		// Essential_genes_in_cancer_cell_line_K562
-		// /opt/babelomics/babelomics.sh --tool network-miner --outdir /httpd/bioinfo/wum_sessions_v0.7/4164/jobs/5880 --log-file /httpd/bioinfo/wum_sessions_v0.7/4164/jobs/5880/job.log --order ascendant --significant-value 0.05 --list /opt/babelomics/example/K562_symbol.txt --randoms 1000 --components true --interactome hsa --intermediate 0 --group curated --type genes --o-name result
-		String outdir = "/tmp/gsnow/example1";
-		new File(outdir).mkdirs();
 
-		String []args = {
-				"--tool", "network-miner", 
-				"-o", outdir, 
-				"--o-name","result",
-				"--interactome","hsa",
-				"--type", "genes",
-				"--group", "all",
-				"--intermediate","1",
-				"--randoms","1",
-				"--components","true",
-				"--order","ascendant",
-				"--significant-value","0.05",
-				"--list","/opt/babelomics/example/K562_symbol.txt",
-				"--home", System.getenv("BABELOMICS_HOME")};
-		main(args);
-	}
+
 	//@Test
 	public void example2(){
 		// Genes_up_in_control_Vs_case_Hirschsprung_disease

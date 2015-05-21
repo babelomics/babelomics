@@ -323,26 +323,32 @@ public class GSnowPreprocessing {
 //                System.out.println(node.getOriginalId() + "\t" + xrefList.get(node.getId()));
                 if (xrefList != null && !xrefList.get(node.getOriginalId()).isEmpty()) {
                     boolean matched = false;
-                    /** We get only the first xref hit **/
-                    String nodeId = xrefList.get(node.getId()).get(0);
-                    if (!idsAlreadyMatched.contains(nodeId)) {
-                        matched = true;
-                        idsAlreadyMatched.add(nodeId);
-                    } else {
-                        //System.out.println("Nodes con id ya introducido "+node.getId()+": "+nodeId);
-                        continue;
-                    }
-                    n = new Node(nodeId, node.getValue(), node.getOriginalId());
+                    List<String> nodeIdList =  xrefList.get(node.getId());
+                    for (String nodeId : nodeIdList) {
+                        if (!idsAlreadyMatched.contains(nodeId)) {
+//                            matched = true;
+                            idsAlreadyMatched.add(nodeId);
+                        } else {
+                            //System.out.println("Nodes con id ya introducido "+node.getId()+": "+nodeId);
+                            continue;
+                        }
+                        n = new Node(nodeId, node.getValue(), node.getOriginalId());
+                        n.setSeed(node.isSeed());
+                        if (proteinNetwork.getInteractomeGraph().getVertex(nodeId) != null) {
+                            curatedListNodes.add(n);
+                            matched = true;
+                        }
 
-                    n.setSeed(node.isSeed());
-                    if (proteinNetwork.getInteractomeGraph().getVertex(nodeId) != null)
-                        curatedListNodes.add(n);
-                    else {
-                        if (!node.isSeed()) {
-                            notMatchNodes.add(node.getId());
-                        } else
-                            notMatchSeedNodes.add(node.getOriginalId());
+//                        else {
+//                            if (!node.isSeed()) {
+//                                notMatchNodes.add(node.getId());
+//                            } else
+//                                notMatchSeedNodes.add(node.getOriginalId());
+//                        }
                     }
+
+
+
                     //}
                     if (!matched) {
                         if (!node.isSeed())
