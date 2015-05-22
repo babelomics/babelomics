@@ -38,7 +38,11 @@ import org.bioinfo.babelomics.tools.preprocessing.Preprocessing;
 public class BabelomicsFactory {
 
 	public static BabelomicsTool createTool(String toolName) {
-		
+
+		/** In order to avoid Could not initialize class sun.awt.X11GraphicsEnvironment exception
+		 * we have to put the next line **/
+		System.setProperty ("java.awt.headless", "true");
+
 		/*
 		 * **************************************************************************************************
 		 * *****	Preprocessing, normalization and annotation tools	*************************************
