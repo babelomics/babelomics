@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+import org.bioinfo.commons.io.utils.FileUtils;
 import org.bioinfo.commons.io.utils.IOUtils;
 import org.bioinfo.infrared.core.common.FeatureList;
 import org.bioinfo.infrared.core.funcannot.AnnotationItem;
@@ -13,10 +14,7 @@ import org.bioinfo.infrared.funcannot.filter.Filter;
 import org.bioinfo.infrared.funcannot.filter.FunctionalFilter;
 import org.bioinfo.babelomics.utils.GOManager;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -53,16 +51,16 @@ public class XrefManager {
 
         this.species = species;
         this.listXref = new HashMap<String, List<String>>();
-
-        /** This should be red from a file **/
         this.fsDb = new HashSet<String>();
-        this.fsDb.add("recon");
-        this.fsDb.add("biological_process");
-        this.fsDb.add("cellular_component");
-        this.fsDb.add("molecular_function");
-        this.fsDb.add("go_slim");
-        this.fsDb.add("go");
-        this.fsDb.add("interpro");
+//        /** This should be red from a file **/
+//        this.fsDb = new HashSet<String>();
+//        this.fsDb.add("recon");
+//        this.fsDb.add("biological_process");
+//        this.fsDb.add("cellular_component");
+//        this.fsDb.add("molecular_function");
+//        this.fsDb.add("go_slim");
+//        this.fsDb.add("go");
+//        this.fsDb.add("interpro");
     }
 
     public void fillXref(StringBuilder batch, String db) {
@@ -101,6 +99,9 @@ public class XrefManager {
         this.db = db;
         this.resolveUri();
         String oriDb = db;
+
+        //String file = this.babelomicsHome + "/conf/webservices.conf";
+
         if (this.fsDb.contains(db)) {
             db = "ensembl_transcript";
         }
@@ -257,15 +258,26 @@ public class XrefManager {
             if (species.equalsIgnoreCase("rno"))
                 auxSpecies = "rnorvegicus";
             if (species.equalsIgnoreCase("dme"))
-                                auxSpecies = "dmelanogaster";
+                auxSpecies = "dmelanogaster";
             if (species.equalsIgnoreCase("sce"))
                 auxSpecies = "scerevisiae";
             if (species.equalsIgnoreCase("cel"))
-               auxSpecies = "celegans";
+                auxSpecies = "celegans";
             if (species.equalsIgnoreCase("ath"))
-              auxSpecies = "athaliana";
+                auxSpecies = "athaliana";
 
             this.uri += auxSpecies + "/feature/id/";
+
+            /** resolve file system databases **/
+            File folder = new File(this.babelomicsHome + "/conf/annotations/" + species);
+            File[] listOfFiles = folder.listFiles();
+
+
+            for (File listOfFile : listOfFiles) {
+                if (listOfFile.isFile()) {
+                    this.fsDb.add((listOfFile.getName().split(".txt"))[0]);
+                }
+            }
 
             this.requests = Integer.parseInt(prop.getProperty("REQUESTS"));
         } catch (FileNotFoundException e) {
