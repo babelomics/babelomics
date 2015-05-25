@@ -236,13 +236,14 @@ public abstract class FunctionalProfilingTool extends BabelomicsTool {
 		GOFilter goFilter = new GOFilter(infraredNamespace);
 		
 		// direct vs propagated annotation
-		if(cmdLine.hasOption("go-" + namespace + "-propagation") && !cmdLine.getOptionValue("go-" + namespace + "-propagation").equalsIgnoreCase("propagate")){
-			goFilter.setPropagated(false);
-		}
-		else{
+		if(cmdLine.hasOption("go-" + namespace + "-propagation") && cmdLine.getOptionValue("go-" + namespace + "-propagation").equalsIgnoreCase("propagate")){
 			goFilter.setPropagated(true);
 			goFilter.setNamespace(infraredNamespace+"_propagated");
 		}
+//		else{
+//			goFilter.setPropagated(true);
+//			goFilter.setNamespace(infraredNamespace+"_propagated");
+//		}
 		
 		// levels
 		goFilter.setMinLevel(Integer.parseInt(cmdLine.getOptionValue("go-" + namespace + "-min-level","3")));
