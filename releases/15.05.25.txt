@@ -1,0 +1,2 @@
+- Solved problem with features from cellbase, now we are able to get more for network miner.
+- Added propagated to fatigo and logistic models
