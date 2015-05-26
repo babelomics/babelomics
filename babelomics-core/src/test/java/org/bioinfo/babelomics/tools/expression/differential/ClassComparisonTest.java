@@ -31,6 +31,27 @@ public class ClassComparisonTest {
 	}
 
 	@Test
+	public void foldChangeTest() {
+
+		String babelomicsHome = System.getenv("BABELOMICS_HOME");
+		String dataset = babelomicsHome + "/example/fold_change_babelomics.txt";
+		String outdir = "/tmp/ClassComparisonTest1";
+		new File(outdir).mkdir();
+
+		System.out.println("----- two classes - fold change ------");
+		String []args = {"--tool", "class-comparison", "--dataset", dataset, "--test","fold_change", "--class-values", "control,case", "--fold-change-value",  "0.5", "--class-name", "group", "--outdir", outdir, "--home", System.getenv("BABELOMICS_HOME")};
+
+		System.out.println(ArrayUtils.toString(args, " "));
+
+		try {
+			BabelomicsMain.main(args);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
+//	@Test
 	public void Test1() {
 	    
 		String dataset = "/mnt/commons/test/biodata/example/twoclasses.txt";

@@ -162,6 +162,7 @@ public class ClassComparison extends BabelomicsTool {
 				abort("testmismatched_execute_classcomparison", "test " + test + " not supported for " + classValues.size() + "-class test", "test " + test + " not supported for " + classValues.size() + "-class test", "test " + test + " not supported for " + classValues.size() + "-class test");
 			}
 		} else if ("fold_change".equalsIgnoreCase(test) || "fold-change".equalsIgnoreCase(test)) {
+
 			if ( classValues.size() == 2 ) {
 				executeFoldChange();
 			} else {
@@ -355,7 +356,7 @@ public class ClassComparison extends BabelomicsTool {
         for (String rowName : dataFrame.getRowNames()) {
             List<String> row = dataFrame.getRow(rowName);
             double stats = Double.parseDouble(row.get(0));
-            if (stats >= foldChangeValue) {
+            if (Math.abs(stats) >= foldChangeValue) {
                 featureNames.add(rowName);
                 featureValues.add(row.get(0));
                 if (stats >= 0)
