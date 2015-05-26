@@ -1,0 +1,1 @@
+- There was a bug fix for the fold change when there was a negativ value. Now is changed this part of code to a absolute values.
