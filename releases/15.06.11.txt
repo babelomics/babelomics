@@ -1,0 +1,1 @@
+Bug fix: In the fatigo and fatiscan form there was a bug that didn't get the max value of gos, now it gets the correct one 

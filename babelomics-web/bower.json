@@ -20,7 +20,7 @@
     "jquery": "~2.1.1",
     "polymer": "*",
     "cookies-js": "~1.1.0",
-    "crypto-js-evanvosberg": "~3.1.2",
+    "crypto-js-evanvosberg": "~3.1.4",
     "highcharts-release": "~4.0.4",
     "polymer-fontawesome": "~1.0.0-beta.2",
     "fontawesome": "*",
