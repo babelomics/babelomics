@@ -1,645 +1,397 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/core-list/core-list.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/jso-panel.html">
 
-<link rel="import" href="../bower_components/polymer-fontawesome/polymer-fontawesome.html">
-<!--<link rel="import" href="../bower_components/core-field/core-field.html">-->
-<link rel="import" href="../bower_components/sortable-table/sortable-table.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-opencga-header.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-opencga-footer.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/jso-help-menu.html">
 
-<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-header.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-footer.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-help-menu.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-opencga-select-folder.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-project-browser.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-project-browser-window.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-file-browser.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-job-list.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-job-launched.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-job-no-ready.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-class-edit.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-class-viewer.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-popup.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-bioformat.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-file-info.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-redirection.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/jso-opencga-input-text.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/jso-opencga-button-tooltip.html">
 
-<link rel="import" href="../lib/jsorolla/src/network-viewer/jso-network-viewer.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/files/jso-opencga-upload-file.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/files/jso-opencga-create-study.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/files/jso-opencga-create-project.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/files/jso-opencga-browser.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/files/jso-opencga-job-browser.html">
 
-<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-network-miner.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-snow.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-fatigo.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-fatigo-options.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-fatiscan.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-affy.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-one-channel-agilent.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-one-channel-genepix.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-two-channels-agilent.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-two-channels-genepix.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-clustering.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-prediction.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-class-comparison.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-correlation.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-survival.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-preprocessing-matrix.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-edit.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-association.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-stratification.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-rnaseq-diffexpr.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-rnaseq-norm.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-oncodrivefm.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-oncodriveclust.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-burden.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-contact.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-maintenance.html">
-
-
-<!--<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-nm-result.html">-->
-<!--<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-snow-result.html">-->
-<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-job-result.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-generic-table.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-rnaseq-norm-result.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-rnaseq-diffexpr-result.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-association-result.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-predictors-selection-table.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-fatigo-table.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-oncodrive-genes-table.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-oncodrive-pathways-table.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-oncodriveclust-genes-table.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-logistic-table.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-diffexpr-table.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-survival-table.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-interactors-table.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-interactome-viewer.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-go-viewer.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-job-info-widget.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-protein-viewer.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-pvalue-button.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/files/jso-opencga-browser-window.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/files/jso-opencga-job-launched.html">
 
 
 <link rel="import" href="../lib/jsorolla/src/lib/components/jso-genome-viewer-element.html">
 
+<!--<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/dashboard/jso-dashboard.html">-->
 
-<script src="js/ParseMatrix.js"></script>
-<script src="js/FormUtils.js"></script>
-
+<!-- Forms -->
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-affy.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-association.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-class-comparison.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-class-viewer.html">
 
 <link rel="import" href="babelomics-home.html">
-<link rel="import" href="babelomics-loading.html">
 <link rel="import" href="babelomics-menu.html">
+<!--
 
-<polymer-element name="babelomics-element">
+<link rel="import" href="../bower_components/sortable-table/sortable-table.html">
+<link rel="import" href="../bower_components/core-list/core-list.html">
+<link rel="import" href="../bower_components/core-ajax/core-ajax.html">
+<link rel="import" href="../bower_components/core-menu/core-menu.html">
+<link rel="import" href="../bower_components/core-item/core-item.html">
+
+<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-project-browser.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-bioformat.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-job-no-ready.html">
+
+<link rel="import" href="../lib/jsorolla/src/lib/components/variant/jso-variant-component.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/jso-sortable-table-ajax.html">
+
+<link rel="import" href="../lib/jsorolla/src/lib/components/variant/jso-variant-index-view.html">
+-->
+
+
+<dom-module id="babelomics-element">
+    <style>
+        :host {
+            display: block;
+            position: relative;
+            cursor: default;
+            font-size: 13px;
+            background-color: var(--default-primary-color);
+        }
+
+        .menu > div {
+            margin-left: 10px;
+            cursor: pointer;
+            text-align: center;
+            padding: 0 5px;
+        }
+
+        jso-opencga-header {
+            position: absolute;
+            top: 0;
+        }
+
+        jso-opencga-footer {
+            bottom: 0;
+        }
+
+        #content {
+            /*position: absolute;*/
+            top: 60px;
+            width: 100%;
+        }
+
+        jso-dashboard {
+            height: calc(100vh - 60px);
+        }
+
+        jso-variant-browser {
+            height: calc(100vh - 60px);
+        }
+
+        #jobBrowserPanel {
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
+        #version {
+            color: var(--accent-color);
+        }
+
+        .babelomics-form {
+            margin: 0px auto 0px auto;
+
+            width: 80%;
+            min-width: 800px;
+            border: 1px solid #c6d0da;
+            transition: all 0.2s;
+            box-shadow: 2px 6px 15px 8px rgba(0, 0, 0, 0.30);
+            background-color: #FFFFFF;
+
+        }
+
+    </style>
     <template>
-        <link rel="stylesheet" href="../lib/jsorolla/src/lib/components/jso-style.css">
-        <link rel="stylesheet" href="../lib/jsorolla/src/lib/components/jso-panel.css">
-        <link rel="stylesheet" href="../lib/jsorolla/src/lib/components/jso-form.css">
-        <link rel="stylesheet" href="../lib/jsorolla/src/lib/components/jso-dropdown.css">
-        <style>
-            :host {
-                display: block;
-                position: relative;
-                cursor: default;
-                font-size: 13px;
-                min-width: 1000px;
-            }
+        <div id="content">
+            <babelomics-home data-option="home"></babelomics-home>
 
-            .title {
 
-            }
+            <jso-panel id="browserPanel" hidden modal movable closable data-option="filebrowser">
+                <div class="header">Data browser</div>
+                <jso-opencga-browser
+                        id="browser"
+                        class="container"
+                        on-fileselect="handleFileSelect"
+                        bioformats="{{bioformats}}"
+                        projects="{{projects}}"
+                        on-need-refresh="handleUserNeedRefresh"></jso-opencga-browser>
+            </jso-panel>
 
-            .content {
-                background-color: #435f7a;
-                position: relative;
-                /*min-height: calc(100vh - 160px);*/
-            }
+            <jso-panel hidden collapsible movable closable
+                       id="jobBrowserPanel"
+                       data-option="jobbrowser">
+                <div class="header">Job browser</div>
+                <jso-opencga-job-browser class="container"
+                                         id="jobBrowser"
+                                         on-jobselect="handleJobSelect"
+                                         projects="{{projects}}"
+                                         allowed-tools="{{allowedTools}}">
+                </jso-opencga-job-browser>
+            </jso-panel>
 
-            .content > * {
-                min-height: calc(100vh - 160px);
-            }
+            <jso-job-launched hidden data-option="joblaunched"></jso-job-launched>
+            <jso-affy hidden data-option="affymetrix" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-affy>
+            <!--<jso-network-miner hidden data-option="network-miner" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-network-miner>-->
+            <!--<jso-snow hidden data-option="snow" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-snow>-->
+            <!--<jso-fatigo hidden data-option="fatigo" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-fatigo>-->
+            <!--<jso-fatiscan hidden data-option="fatiscan" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-fatiscan>-->
+            <!--<jso-one-channel-agilent hidden data-option="one-channel-agilent" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-one-channel-agilent>-->
+            <!--<jso-one-channel-genepix hidden data-option="one-channel-genepix" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-one-channel-genepix>-->
+            <!--<jso-two-channels-agilent hidden data-option="two-channels-agilent" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-two-channels-agilent>-->
+            <!--<jso-two-channels-genepix hidden data-option="two-channels-genepix" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-two-channels-genepix>-->
+            <!--<jso-clustering hidden data-option="clustering" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-clustering>-->
+            <!--<jso-prediction hidden data-option="class-prediction" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-prediction>-->
+            <jso-class-comparison class="babelomics-form" hidden data-option="class-comparison" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-class-comparison>
+            <!--<jso-correlation hidden data-option="correlation" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-correlation>-->
+            <!--<jso-survival hidden data-option="survival" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-survival>-->
+            <!--<jso-rnaseq-diffexpr hidden data-option="rnaseq-diffexpr" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-rnaseq-diffexpr>-->
+            <!--<jso-rnaseq-norm hidden data-option="rnaseq-norm" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-rnaseq-norm>-->
+            <!--<jso-preprocessing-matrix hidden data-option="preprocessing" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-preprocessing-matrix>-->
+            <!--<jso-edit hidden data-option="edit" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-edit>-->
+            <jso-association hidden data-option="association" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-association>
+            <!--<jso-oncodrivefm hidden data-option="oncodrivefm" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-oncodrivefm>-->
+            <!--<jso-oncodriveclust hidden data-option="oncodriveclust" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-oncodriveclust>-->
+        </div>
 
-            .a {
-                text-decoration: none;
-                color: #CCCCCC;
-                cursor: pointer;
-            }
 
-            .a:visited {
-                color: #CCCCCC;
-            }
+        <jso-opencga-header id="jsoHeader"
+                            selected-option="{{selectedOption}}"
+                            user-data="{{userData}}"
+                            on-login="handleLogin"
+                            on-logout="handleLogout"
+                            show-menu-on-login>
+             <span class="icon">
+                    <img src="images/logoBabelomics_positive_trans.svg" style="height: 50px;margin: 5px 0px 0 0;">
+            </span>
+            <span class="title">Babelomics <span id="version">5.1</span></span>
 
-            .a:hover {
-                color: white;
-                /*text-decoration: underline;*/
-            }
+            <span class="description"></span>
 
-            jso-project-browser {
-                height: calc(100vh - 160px);
-            }
-        </style>
-        <template if="{{mode == 'MAINTENANCE'}}">
-            <jso-maintenance></jso-maintenance>
+            <div class="menu horizontal layout flex">
+                <babelomics-menu class="menu flex center-justified" on-optionchanged="handleToggleMenu"></babelomics-menu>
 
-        </template>
-        <template if="{{mode != 'MAINTENANCE'}}">
-            <template if="{{mode == 'DEBUG'}}">
-                <div class="formbox" style="display: inline-block">
-                    <div style="background: red">{{mode}}</div>
-                    <div style="background: red">{{cellbaseHost}}</div>
-                    <div style="background: red">{{opencgaHost}}</div>
+                <div on-click="handleToggleMenu" data-option="filebrowser">
+                    <i class="fa fa-cloud"></i> My data
                 </div>
-            </template>
-            <jso-header id="jsoHeader"
-                        isLogged="{{isLogged}}"
-                        on-session-change="{{handleSessionChange}}"
-
-                        selectedOption="{{selectedOption}}"
-                        userData="{{userData}}"
-                        showJobs="{{showJobs}}"
-                        options="{{options}}"
-                        studies="{{studies}}"
-                        selectedStudy="{{selectedStudy}}"
-                        allowedTools="{{allowedTools}}"
-                        jobItem="{{jobItem}}"
-                        helpLink="https://github.com/babelomics/babelomics/wiki"
-                        tutorialLink="https://github.com/babelomics/babelomics/wiki/Tutorial"
-                        hideHomeLink="true">
-            <span class="icon">
-                    <img src="images/logoBabelomics_positive_trans.svg" style="height: 54px;margin: 1px 5px 0 0;">
-            </span>
-            <span class="title">
-                    <div>Babelomics&nbsp<span style="color:#ffad76;">5</span></div>
-            </span>
-            <span class="description">
-            </span>
-
-                <babelomics-menu class="menu" selectedOption="{{selectedOption}}">
-                </babelomics-menu>
-                <jso-help-menu class="helpmenu" selectedOption="{{selectedOption}}">
-                    <div class="link">
-                        <font-awesome icon="book"></font-awesome>
-                        <a class="a" href="https://github.com/babelomics/babelomics/wiki" target="_blank"> &nbsp; Documentation</a>
-                    </div>
-                    <div class="link">
-                        <font-awesome icon="pencil-square-o"></font-awesome>
-                        <a class="a" href="https://github.com/babelomics/babelomics/wiki/How-to-cite-babelomics" target="_blank"> &nbsp; How to cite</a>
-                    </div>
-                    <div class="link">
-                        <font-awesome icon="comment"></font-awesome>
-                        <span class="a" on-click="{{handleContact}}"> &nbsp; Contact</span>
-                    </div>
-                    <div class="link">
-                        <font-awesome icon="twitter"></font-awesome>
-                        <a class="a" href="https://twitter.com/babelomics" target="_blank"> &nbsp; Follow us</a>
-                    </div>
-                </jso-help-menu>
-            </jso-header>
-
-
-            <div id="content" class="content">
-                <template if="{{ selectedOption == 'home' || selectedOption == 'none' || selectedOption == ''}}">
-                    <babelomics-home
-                            id="babelomicsHome"
-                            on-annonymous="{{annonymousLogin}}"
-                            isLogged="{{isLogged}}"
-                            ></babelomics-home>
-                </template>
-                <template if="{{selectedOption == 'loading'}}">
-                    <babelomics-loading></babelomics-loading>
-                </template>
-                <template if="{{selectedOption == 'contact'}}">
-                    <jso-contact></jso-contact>
-                </template>
-                <template if="{{selectedOption=='jobReady'}}">
-                    <jso-job-result
-                            id="jsoJobResult"
-                            jobItem="{{jobItem}}"
-                            selectedOption="{{selectedOption}}"
-                            on-redirection="{{handleRedirection}}"
-
-                            ></jso-job-result>
-                </template>
-                <template if="{{selectedOption=='jobNoReady'}}">
-                    <jso-job-no-ready jobItem="{{jobItem}}"></jso-job-no-ready>
-                </template>
-                <template if="{{selectedOption == 'projects'}}">
-                    <jso-project-browser
-                            userData="{{userData}}"
-                            selectedStudy="{{selectedStudy}}"
-                            studies="{{studies}}"
-                            selectedProject="{{selectedProject}}"
-                            bioformat="MICROARRAY_EXPRESSION_ONECHANNEL_AFFYMETRIX,MICROARRAY_EXPRESSION_ONECHANNEL_AGILENT,MICROARRAY_EXPRESSION_ONECHANNEL_GENEPIX,MICROARRAY_EXPRESSION_TWOCHANNELS_AGILENT,MICROARRAY_EXPRESSION_TWOCHANNELS_GENEPIX,DATAMATRIX_EXPRESSION,IDLIST,IDLIST_RANKED,ANNOTATION_GENEVSANNOTATION,idlist_extendedannotationExtended,OTHER_INTERACTION,OTHER_GENOTYPE,OTHER_PED,VARIANT">
-                    </jso-project-browser>
-                </template>
-                <template if="{{selectedOption == 'network-miner'}}">
-                    <jso-network-miner
-                            selectedOption="{{selectedOption}}"
-                            userData="{{userData}}"
-                            selectedStudy="{{selectedStudy}}"
-                            studies="{{studies}}"
-                            args={{args}}
-                            ></jso-network-miner>
-                </template>
-
-                <template if="{{selectedOption == 'snow'}}">
-                    <jso-snow
-                            id="jsoSnow"
-                            selectedOption="{{selectedOption}}"
-                            userData="{{userData}}"
-                            selectedStudy="{{selectedStudy}}"
-                            studies="{{studies}}"
-                            args={{args}}
-                            >
-                    </jso-snow>
-                </template>
-                <template if="{{selectedOption == 'fatigo'}}">
-                    <jso-fatigo
-                            selectedOption="{{selectedOption}}"
-                            userData="{{userData}}"
-                            selectedStudy="{{selectedStudy}}"
-                            studies="{{studies}}"
-                            args={{args}}
-                            >
-
-                    </jso-fatigo>
-                </template>
-                <template if="{{selectedOption == 'fatiscan'}}">
-                    <jso-fatiscan
-                            selectedOption="{{selectedOption}}"
-                            userData="{{userData}}"
-                            selectedStudy="{{selectedStudy}}"
-                            studies="{{studies}}"
-                            args="{{args}}"
-                            >
-                    </jso-fatiscan>
-                </template>
-                <template if="{{selectedOption == 'affymetrix'}}">
-                    <jso-affy
-                            selectedOption="{{selectedOption}}"
-                            userData="{{userData}}"
-                            selectedStudy="{{selectedStudy}}"
-                            studies="{{studies}}"
-                            >
-
-                    </jso-affy>
-                </template>
-                <template if="{{selectedOption == 'one-channel-agilent'}}">
-                    <jso-one-channel-agilent
-                            selectedOption="{{selectedOption}}"
-                            userData="{{userData}}"
-                            selectedStudy="{{selectedStudy}}"
-                            studies="{{studies}}"
-                            >
-
-                    </jso-one-channel-agilent>
-                </template>
-                <template if="{{selectedOption == 'one-channel-genepix'}}">
-                    <jso-one-channel-genepix
-                            selectedOption="{{selectedOption}}"
-                            userData="{{userData}}"
-                            selectedStudy="{{selectedStudy}}"
-                            studies="{{studies}}"
-                            >
-
-                    </jso-one-channel-genepix>
-                </template>
-                <template if="{{selectedOption == 'two-channels-agilent'}}">
-                    <jso-two-channels-agilent
-                            selectedOption="{{selectedOption}}"
-                            userData="{{userData}}"
-                            selectedStudy="{{selectedStudy}}"
-                            studies="{{studies}}"
-                            >
-
-                    </jso-two-channels-agilent>
-                </template>
-                <template if="{{selectedOption == 'two-channels-genepix'}}">
-                    <jso-two-channels-genepix
-                            selectedOption="{{selectedOption}}"
-                            userData="{{userData}}"
-                            selectedStudy="{{selectedStudy}}"
-                            studies="{{studies}}"
-                            >
-
-                    </jso-two-channels-genepix>
-                </template>
-                <template if="{{selectedOption == 'clustering'}}">
-                    <jso-clustering
-                            selectedOption="{{selectedOption}}"
-                            userData="{{userData}}"
-                            selectedStudy="{{selectedStudy}}"
-                            studies="{{studies}}"
-                            args="{{args}}"
-                            >
-
-                    </jso-clustering>
-                </template>
-                <template if="{{selectedOption == 'class-prediction'}}">
-                    <jso-prediction
-                            selectedOption="{{selectedOption}}"
-                            userData="{{userData}}"
-                            selectedStudy="{{selectedStudy}}"
-                            studies="{{studies}}"
-                            args="{{args}}"
-
-                            >
-
-                    </jso-prediction>
-                </template>
-                <template if="{{selectedOption == 'class-comparison'}}">
-                    <jso-class-comparison
-                            selectedOption="{{selectedOption}}"
-                            userData="{{userData}}"
-                            selectedStudy="{{selectedStudy}}"
-                            studies="{{studies}}"
-                            args="{{args}}"
-
-                            >
-
-                    </jso-class-comparison>
-                </template>
-
-                <template if="{{selectedOption == 'correlation'}}">
-                    <jso-correlation
-                            selectedOption="{{selectedOption}}"
-                            userData="{{userData}}"
-                            selectedStudy="{{selectedStudy}}"
-                            studies="{{studies}}"
-                            args="{{args}}"
-
-                            >
-
-                    </jso-correlation>
-                </template>
-
-                <template if="{{selectedOption == 'survival'}}">
-                    <jso-survival
-                            selectedOption="{{selectedOption}}"
-                            userData="{{userData}}"
-                            selectedStudy="{{selectedStudy}}"
-                            studies="{{studies}}"
-                            args="{{args}}"
-
-                            >
-                    </jso-survival>
-                </template>
-                <template if="{{selectedOption == 'rnaseq-diffexpr'}}">
-                    <jso-rnaseq-diffexpr
-                            selectedOption="{{selectedOption}}"
-                            userData="{{userData}}"
-                            selectedStudy="{{selectedStudy}}"
-                            studies="{{studies}}"
-                            >
-
-                    </jso-rnaseq-diffexpr>
-                </template>
-                <template if="{{selectedOption == 'rnaseq-norm'}}">
-                    <jso-rnaseq-norm
-                            selectedOption="{{selectedOption}}"
-                            userData="{{userData}}"
-                            selectedStudy="{{selectedStudy}}"
-                            studies="{{studies}}"
-                            >
-
-                    </jso-rnaseq-norm>
-                </template>
-
-                <template if="{{selectedOption == 'preprocessing'}}">
-                    <jso-preprocessing-matrix
-                            selectedOption="{{selectedOption}}"
-                            userData="{{userData}}"
-                            selectedStudy="{{selectedStudy}}"
-                            studies="{{studies}}"
-                            args="{{args}}"
-                            >
-                    </jso-preprocessing-matrix>
-                </template>
-                <template if="{{selectedOption == 'edit'}}">
-                    <jso-edit
-                            selectedOption="{{selectedOption}}"
-                            userData="{{userData}}"
-                            selectedStudy="{{selectedStudy}}"
-                            studies="{{studies}}"
-                            args="{{args}}"
-                            >
-                    </jso-edit>
-                </template>
-
-                <template if="{{selectedOption == 'association'}}">
-                    <jso-association
-                            selectedOption="{{selectedOption}}"
-                            userData="{{userData}}"
-                            selectedStudy="{{selectedStudy}}"
-                            studies="{{studies}}"
-                            >
-                    </jso-association>
-                </template>
-
-                <template if="{{selectedOption == 'stratification'}}">
-                    <jso-stratification
-                            selectedOption="{{selectedOption}}"
-                            userData="{{userData}}"
-                            selectedStudy="{{selectedStudy}}"
-                            studies="{{studies}}"
-                            >
-                    </jso-stratification>
-                </template>
-                <template if="{{selectedOption == 'oncodrivefm'}}">
-                    <jso-oncodrivefm
-                            selectedOption="{{selectedOption}}"
-                            userData="{{userData}}"
-                            selectedStudy="{{selectedStudy}}"
-                            studies="{{studies}}"
-                            >
-                    </jso-oncodrivefm>
-                </template>
-                <template if="{{selectedOption == 'oncodriveclust'}}">
-                    <jso-oncodriveclust
-                            selectedOption="{{selectedOption}}"
-                            userData="{{userData}}"
-                            selectedStudy="{{selectedStudy}}"
-                            studies="{{studies}}"
-                            >
-                    </jso-oncodriveclust>
-                </template>
-                <template if="{{selectedOption == 'burden'}}">
-                    <jso-burden
-                            selectedOption="{{selectedOption}}"
-                            userData="{{userData}}"
-                            selectedStudy="{{selectedStudy}}"
-                            studies="{{studies}}"
-                            >
-                    </jso-burden>
-                </template>
-                <!--<jso-job-launched hidden?="{{selectedOption != 'jobLaunched' }}"></jso-job-launched>-->
-                <!--&lt;!&ndash;<div id="sidePanel" class="side-panel side-panel-shown">&ndash;&gt;-->
-                <!--&lt;!&ndash;&lt;!&ndash;<jso-job-list jobItem="{{jobItem}}" selectedOption="{{selectedOption}}" userData="{{userData}}"&ndash;&gt;&ndash;&gt;-->
-                <!--&lt;!&ndash;&lt;!&ndash;hide="{{!showJobs}}" showJobs="{{showJobs}}" selectedStudy="{{selectedStudy}}" ></jso-job-list>&ndash;&gt;&ndash;&gt;-->
-                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                <!--<template if="{{ showJobs }}">-->
-                <!--<jso-job-list-->
-                <!--on-job-item-click="{{handleJobItemClick}}"-->
-                <!--userData="{{userData}}"-->
-                <!--selectedOption="{{selectedOption}}"-->
-                <!--selectedStudy="{{selectedStudy}}"-->
-                <!--allowedTools="{{allowedTools}}"-->
-                <!--showJobs="{{showJobs}}">-->
-                <!--</jso-job-list>-->
-                <!--</template>-->
-
-
+                <div on-click="handleToggleJobBrowser" style="margin-right: 5vw">
+                    <i class="fa fa-pencil-square-o"></i> Jobs
+                </div>
             </div>
-            <jso-footer>
-                BABELOMICS: developed by the Computational Genomics Department
-                <br>
-                <a href="http://bioinfo.cipf.es/" target="_blank" class="a" style="margin-left: 10px;">bioinfo.cipf.es:</a>
-                <a href="mailto:babelomics@cipf.es" class="a" style="margin-left: 10px;">babelomics@cipf.es</a>
 
-                <br>
-                Principe Felipe Research Center
-                <br>
-                2015
-                <a href="https://twitter.com/babelomics" target="_blank" class="a" style="margin-left: 10px;">
-                    <font-awesome icon="twitter" style="font-size:20px;"></font-awesome>
+            <jso-help-menu class="helpmenu" selectedOption="{{selectedOption}}">
+                <a href="https://github.com/babelomics/babelomics/wiki" target="_blank">
+                    <i class="fa fa-book"></i>
+                    &nbsp; Documentation
                 </a>
-            </jso-footer>
-        </template>
+                <a href="https://github.com/babelomics/babelomics/wiki/Tutorial" target="_blank">
+                    <i class="fa fa-compass"></i>
+                    &nbsp; Tutorial
+                </a>
+                <a href="https://github.com/babelomics/babelomics/" target="_blank">
+                    <i class="fa fa-github"></i>
+                    &nbsp; Source code
+                </a>
+            </jso-help-menu>
+        </jso-opencga-header>
+
+        <jso-opencga-footer hidden$="{{computeFooter(selectedOption)}}">
+            babelomics: created by Computational Genomics Department
+            <br>
+            Principe Felipe Research Center
+            <br>
+            2015
+        </jso-opencga-footer>
+
     </template>
-    <script>
-        Polymer({
-            created: function () {
-                this.selectedOption = 'home';
-                this.showJobs = false;
-                this.userData = {};
-                this.allowedTools = TOOLS;
-                this.mode = MODE;
+</dom-module>
 
-
-                this.isLogged
-
-                this.selectedProject;
-                this.selectedStudy;
-                this.studies;
-
-                /** configs **/
-                this.cellbaseHost = CELLBASE_HOST;
-                this.opencgaHost = OPENCGA_HOST;
-
+<script>
+    Polymer({
+        is: "babelomics-element",
+        properties: {
+            selectedOption: {
+                type: String,
+                value: "home",
+                notify: true,
+                reflectToAttribute: true,
+                observer: 'selectedOptionChanged'
             },
-            babelomicsMenuClicked: function () {
-                this.selectedOption = "";
+            userData: {
+                type: Object,
+                notify: true,
+                observer: 'userDataChanged'
             },
-            handleAppMenu: function (e) {
-                this.$.sidePanel.classList.toggle('side-panel-shown');
+            projects: {
+                type: Array,
+                notify: true
             },
-//            handleJobItemClick: function (e) {
-////                this.jobItem = e.detail.jobItem;
-//                this.$.jsoJobResult.pvalue = 0.05;
-//            },
+            allowedTools: {
+                type: Array,
+                value: function () {
+                    return TOOLS;
+                }
+            },
+            browserHidden: {
+                type: Boolean,
+                value: true,
+                reflectToAttribute: true
+            },
+            uploadHidden: {
+                type: Boolean,
+                value: true,
+                reflectToAttribute: true
+            },
+            createStudyHidden: {
+                type: Boolean,
+                value: true,
+                reflectToAttribute: true
+            },
+            createProjectHidden: {
+                type: Boolean,
+                value: true,
+                reflectToAttribute: true
+            },
+            bioformats: {
+                type: Array,
+                notify: true,
+                value: [
+                    {
+                        text: "VARIANT"
+                    },
+                    {
+                        text: "VCF 4.0",
+                        value: "VARIANT"
+                    }
+                ]
+            }
+        },
+        ready: function () {
+        },
+        selectedOptionChanged: function (neo, old) {
+            var menuItems = Polymer.dom(this.root).querySelectorAll('[menu-option]');
+            for (var i = 0; i < menuItems.length; i++) {
+                var item = menuItems[i];
+                var currentItemValue = item.getAttribute("menu-option");
+                if (neo == currentItemValue) {
+                    item.removeAttribute("hidden");
+                } else {
+                    item.setAttribute('hidden', '');
+                }
+            }
+        },
+        handleMenu: function (e) {
+            var option = e.currentTarget.dataset['option'];
+            this.setMenu(option);
+        },
+        setMenu: function (option) {
+            if (option) {
+                this.selectedOption = option;
+            }
+        },
+        handleToggleJobBrowser: function () {
+            this.$.jobBrowserPanel.hidden = !this.$.jobBrowserPanel.hidden;
+        },
+        handleToggleMenu: function (e) {
+            var option = "";
+            if (e.currentTarget.dataset != null)
+                option = e.currentTarget.dataset.option;
+            if (e.detail.option != null)
+                option = e.detail.option;
+            var children = this.$.content.children;
+            for (var i = 0; i < children.length; i++) {
+                var child = children[i];
+                if (child.dataset.option == option)
+                    child.removeAttribute("hidden");
+                else
+                    child.setAttribute("hidden", "");
+            }
 
-            userDataChanged: function (oldValue, newValue) {
-                var me = this;
-                this.selectedProject = this.userData.projects[0];
 
+        },
+
+        handleCloseBrowser: function (e) {
+            this.browserHidden = true;
+        },
+
+
+        computeFooter: function (selectedOption) {
+            return selectedOption == 'dashboard' || selectedOption == 'variantbrowser';
+        },
+        handleFileSelect: function (e) {
+//            console.log("file");
+//            console.log(e.detail);
+//            var file = e.detail;
+//            if (file.index && file.index.status == 'READY') {
+//                this.$.variantBrowser.file = file;
+//                this.setMenu('variantbrowser');
+//                this.handleCloseBrowser();
+//
+//            }
+        },
+        handleLogin: function () {
+//            this.browserHidden = false;
+            this.selectedOption = "home";
+        },
+        handleLogout: function () {
+            this.browserHidden = true;
+        },
+        handleUserNeedRefresh: function () {
+            this.$.jsoHeader.getUserInfo(true);
+        },
+        userDataChanged: function (neo, old) {
+            var me = this;
+            if (this.userData) {
+                var projectIds = [];
+                for (var i = 0; i < this.userData.projects.length; i++) {
+                    var p = this.userData.projects[i];
+                    projectIds.push(p.id);
+                }
+                var projects = [];
                 OpencgaManager.projects.studies({
-                    id: this.selectedProject.id,
+                    id: projectIds.join(','),
                     query: {
                         sid: Cookies("bioinfo_sid")
                     },
                     request: {
                         success: function (response) {
                             if (response.response[0].errorMsg === '' || response.response[0].errorMsg == null) {
-                                me.studies = response.response[0].result;
-                                me.selectedStudy = me.studies[0];
+                                for (var i = 0; i < response.response.length; i++) {
+                                    var r = response.response[i];
+                                    me.userData.projects[i].studies = r.result;
+                                    projects.push(me.userData.projects[i]);
+                                }
+                                /* update projects property*/
+                                me.projects = projects;
                             } else {
                                 console.log(response.error);
                                 console.log(response.response[0].errorMsg);
                             }
+                            me.loading = false;
                         },
                         error: function () {
                             console.log('Server error, try again later.');
+                            me.loading = false;
                         }
                     }
-                })
-
-
-            },
-            annonymousLogin: function () {
-                this.$.jsoHeader.anonymousSign();
-            },
-            handleRedirection: function (e) {
-                this.selectedOption = e.detail.tool;
-                this.args = e.detail.args;
-
-            },
-            handleHowToCite: function (e) {
-                this.selectedOption = "cite";
-                this.selectedOption = "";
-            },
-            handleContact: function (e) {
-                this.selectedOption = "contact";
+                });
+            } else {
+                console.log("no user data")
             }
-//    userDataChanged: function (oldValue, newValue) {
-//
-//        var me = this
-//        /** These two if initialize selected project and study **/
-////            if (!this.selectedProject)
-//        this.selectedProject = this.userData.projects[0]
-//
-//        if (!this.selectedStudy) {
-//            var selectedStudyIdx = 0;
-//            this.selectedStudy = this.selectedProject.studies[selectedStudyIdx];
-//        }
-//        /** llamada analysis **/
-//        OpencgaManager.studies.analysis({
-//            id: this.selectedStudy.id,
-//            query: {
-//                sid: Cookies('bioinfo_sid')
-//            },
-//            request: {
-//                success: function (response) {
-//                    if (response.response[0].errorMsg === '' || response.response[0].errorMsg == null) {
-//                        var selectedAnalysis = response.response[0].result[0]
-//                        me.selectedStudy.analysis = selectedAnalysis
-//                    } else {
-//                        me.message = response.response[0].errorMsg;
-//                    }
-//                },
-//                error: function () {
-//                    alert('Server error, try again later.');
-//                }
-//            }
-//        });
-//
-//        /** llamada ficheros **/
-//        OpencgaManager.files.search({
-//            query: {
-//                sid: Cookies("bioinfo_sid"),
-//                studyId: me.selectedStudy.id
-////                        type: "file"
-//            },
-//            request: {
-//                //method: 'POST',
-//                success: function (response) {
-//                    if (response.response[0].errorMsg === '' || response.response[0].errorMsg == null) {
-//                        var files = response.response[0].result
-//                        var filesAux = new Array();
-//                        for (var i = 0; i < files.length; i++) {
-//                            if (files[i].path.indexOf("J_") >= 0) {
-//                                continue;
-//                            }
-//                            filesAux.push(files[i])
-//                        }
-//                        me.selectedStudy.files = filesAux
-//                    } else {
-//                        me.message = response.response[0].errorMsg;
-//                    }
-//                },
-//                error: function () {
-//                    me.message = 'Server error, try again later.';
-//                }
-//            }
-//        })
-////            }
-//
-//    },
-        });
-    </script>
+        },
+        annonymousLogin: function () {
+            this.$.jsoHeader.anonymousSign();
+        }
+    });
+</script>
 </polymer-element>

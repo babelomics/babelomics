@@ -17,18 +17,15 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "~2.1.1",
-    "polymer": "*",
-    "cookies-js": "~1.1.0",
-    "crypto-js-evanvosberg": "~3.1.4",
-    "highcharts-release": "~4.0.4",
-    "polymer-fontawesome": "~1.0.0-beta.2",
+  "polymer": "Polymer/polymer#1.0.0",
+    "iron-flex-layout": "PolymerElements/iron-flex-layout#1.0.1",
     "fontawesome": "*",
-    "sortable-table": "~0.11.1",
-    "js-xlsx": "~0.7.11",
+    "cookies-js": "~1.1.0",
+    "crypto-js-evanvosberg": "3.1.4",
+    "highcharts-release": "~4.0.4",
     "underscore": "~1.7.0",
+    "jquery": "1.11.3",
     "backbone": "~1.1.2",
-    "core-list": "polymer/core-list#*",
     "qtip2": "~2.2.1",
     "bowser": "~0.7.2"
   }

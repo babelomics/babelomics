@@ -1,116 +1,116 @@
-<polymer-element name="babelomics-menu" attributes="selectedOption">
+<dom-module id="babelomics-menu" attributes="selectedOption">
+    <style>
+        :host {
+            display: block;
+            position: relative;
+            box-sizing: border-box;
+            white-space: nowrap;
+        }
+
+        .l1 {
+            margin-left: 10px;
+
+        }
+
+        .l2 {
+            margin-left: 20px;
+
+        }
+
+        .l3 {
+            margin-left: 30px;
+
+        }
+
+        div.dropdown {
+            position: relative;
+            color: #CCCCCC !important;
+            margin: 0 10px;
+        }
+
+        div.dropdown > div {
+        }
+
+        div.dropdown > div:first-of-type {
+            outline: 0;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        div.dropdown > div:first-of-type:hover {
+            color: white;
+        }
+
+        div.dropdown > div:first-of-type:after {
+            font-family: 'FontAwesome';
+            margin-left: 2px;
+            /*content: '\f0d7';*/
+            content: '\f107';
+        }
+
+        div.dropdown > div:first-of-type + div {
+            position: absolute;
+            z-index: 1;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.25s;
+
+            margin: 0;
+            padding: 10px 10px 10px 10px;
+            background-color: #314559;
+            text-transform: none;
+            line-height: 25px;
+            box-shadow: 0px 0px 3px 2px rgba(0, 0, 0, 0.3);
+            width: 250px;
+        }
+
+        div.dropdown > div:first-of-type:focus + div {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .title {
+            /*text-transform: uppercase;*/
+            color: #ffad76;
+            /*margin-top: 10px;*/
+            font-size: 18px !important;
+        }
+
+        .option:hover {
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        .option:before {
+            font-family: 'FontAwesome';
+            content: '\f0da';
+            margin-right: 5px;
+        }
+    </style>
     <template>
-        <style>
-            :host {
-                display: block;
-                position: relative;
-                box-sizing: border-box;
-                white-space: nowrap;
-            }
-
-            .l1 {
-                margin-left: 10px;
-
-            }
-
-            .l2 {
-                margin-left: 20px;
-
-            }
-
-            .l3 {
-                margin-left: 30px;
-
-            }
-
-            div.dropdown {
-                position: relative;
-                color: #CCCCCC !important;
-                margin: 0 10px;
-            }
-
-            div.dropdown > div {
-            }
-
-            div.dropdown > div:first-of-type {
-                outline: 0;
-                height: 100%;
-                cursor: pointer;
-            }
-
-            div.dropdown > div:first-of-type:hover {
-                color: white;
-            }
-
-            div.dropdown > div:first-of-type:after {
-                font-family: 'FontAwesome';
-                margin-left: 2px;
-                /*content: '\f0d7';*/
-                content: '\f107';
-            }
-
-            div.dropdown > div:first-of-type + div {
-                position: absolute;
-                z-index: 1;
-                visibility: hidden;
-                opacity: 0;
-                transition: all 0.25s;
-
-                margin: 0;
-                padding: 10px 10px 10px 10px;
-                background-color: #314559;
-                text-transform: none;
-                line-height: 25px;
-                box-shadow: 0px 0px 3px 2px rgba(0, 0, 0, 0.3);
-                width: 250px;
-            }
-
-            div.dropdown > div:first-of-type:focus + div {
-                visibility: visible;
-                opacity: 1;
-            }
-
-            .title {
-                /*text-transform: uppercase;*/
-                color: #ffad76;
-                /*margin-top: 10px;*/
-                font-size: 18px !important;
-            }
-
-            .option:hover {
-                color: #ffffff;
-                cursor: pointer;
-            }
-
-            .option:before {
-                font-family: 'FontAwesome';
-                content: '\f0da';
-                margin-right: 5px;
-            }
-        </style>
-        <div horizontal layout id="main">
+        <div class="horizontal layout center-justified" id="main">
             <div class="dropdown">
                 <div tabindex="-1">
                     Processing
                 </div>
-                <div horizontal layout style="width:460px;">
+                <div class="horizontal layout" style="width:460px;">
                     <div style="margin-left: 5px;">
                         <div class="title">Normalization</div>
                         <div class="title l1">NGS</div>
-                        <div class="option l2" option="rnaseq-norm" on-click="{{handleMenu}}">RNA-Seq</div>
+                        <div class="option l2" data-option="rnaseq-norm" on-click="handleMenu">RNA-Seq</div>
                         <div class="title l1">Microarray one channel</div>
-                        <div class="option l2" option="affymetrix" on-click="{{handleMenu}}">Affymetrix</div>
-                        <div class="option l2" option="one-channel-agilent" on-click="{{handleMenu}}">Agilent</div>
-                        <div class="option l2" option="one-channel-genepix" on-click="{{handleMenu}}">Genepix</div>
+                        <div class="option l2" data-option="affymetrix" on-click="handleMenu">Affymetrix</div>
+                        <div class="option l2" data-option="one-channel-agilent" on-click="handleMenu">Agilent</div>
+                        <div class="option l2" data-option="one-channel-genepix" on-click="handleMenu">Genepix</div>
                         <div class="title l1">Microarray two channels</div>
-                        <div class="option l2" option="two-channels-agilent" on-click="{{handleMenu}}">Agilent</div>
-                        <div class="option l2" option="two-channels-genepix" on-click="{{handleMenu}}">Genepix</div>
+                        <div class="option l2" data-option="two-channels-agilent" on-click="handleMenu">Agilent</div>
+                        <div class="option l2" data-option="two-channels-genepix" on-click="handleMenu">Genepix</div>
                     </div>
                     <div style="margin-left: 30px;">
                         <div class="title l1">Edit</div>
-                        <div class="option l2" option="edit" on-click="{{handleMenu}}">Edit your uploaded data</div>
+                        <div class="option l2" data-option="edit" on-click="handleMenu">Edit your uploaded data</div>
                         <div class="title l1">Data Matrix</div>
-                        <div class="option l2" option="preprocessing" on-click="{{handleMenu}}">Pre-processing</div>
+                        <div class="option l2" data-option="preprocessing" on-click="handleMenu">Pre-processing</div>
                     </div>
                 </div>
             </div>
@@ -119,19 +119,19 @@
                 <div tabindex="-1">
                     Expression
                 </div>
-                <div horizontal layout>
+                <div class="horizontal layout">
                     <div>
                         <div class="title">Unsupervised analysis</div>
-                        <div class="option l2" option="clustering" on-click="{{handleMenu}}">Clustering</div>
+                        <div class="option l2" data-option="clustering" on-click="handleMenu">Clustering</div>
                         <div class="title">Supervised analysis</div>
-                        <div class="option l2" option="class-prediction" on-click="{{handleMenu}}">Class prediction</div>
+                        <div class="option l2" data-option="class-prediction" on-click="handleMenu">Class prediction</div>
                         <div class="title">Differential expression</div>
                         <div class="title l2">Microarray</div>
-                        <div class="option l2" option="class-comparison" on-click="{{handleMenu}}">Class comparison</div>
-                        <div class="option l2" option="correlation" on-click="{{handleMenu}}">Correlation</div>
-                        <div class="option l2" option="survival" on-click="{{handleMenu}}">Survival</div>
+                        <div class="option l2" data-option="class-comparison" on-click="handleMenu">Class comparison</div>
+                        <div class="option l2" data-option="correlation" on-click="handleMenu">Correlation</div>
+                        <div class="option l2" data-option="survival" on-click="handleMenu">Survival</div>
                         <div class="title l2">RNA-seq</div>
-                        <div class="option l2" option="rnaseq-diffexpr" on-click="{{handleMenu}}">Class comparison</div>
+                        <div class="option l2" data-option="rnaseq-diffexpr" on-click="handleMenu">Class comparison</div>
 
                     </div>
                 </div>
@@ -141,10 +141,10 @@
                 <div tabindex="-1">
                     Genomics
                 </div>
-                <div horizontal layout>
+                <div class="horizontal layout">
                     <div>
-                        <div class="option" option="association" on-click="{{handleMenu}}">Association analysis</div>
-                        <div class="option" option="burden" on-click="{{handleMenu}}">Burden analysis</div>
+                        <div class="option" data-option="association" on-click="handleMenu">Association analysis</div>
+                        <div class="option" data-option="burden" on-click="handleMenu">Burden analysis</div>
                     </div>
                 </div>
             </div>
@@ -153,10 +153,10 @@
                 <div tabindex="-1">
                     Cancer
                 </div>
-                <div horizontal layout>
+                <div class="horizontal layout">
                     <div>
-                        <div class="option" option="oncodrivefm" on-click="{{handleMenu}}">OncodriveFM</div>
-                        <div class="option" option="oncodriveclust" on-click="{{handleMenu}}">OncodriveClust</div>
+                        <div class="option" data-option="oncodrivefm" on-click="handleMenu">OncodriveFM</div>
+                        <div class="option" data-option="oncodriveclust" on-click="handleMenu">OncodriveClust</div>
                     </div>
                 </div>
             </div>
@@ -166,16 +166,16 @@
                 <div tabindex="-1">
                     Functional
                 </div>
-                <div horizontal layout>
+                <div class="horizontal layout">
                     <div>
                         <div class="title">Single enrichment</div>
-                        <div class="option" option="fatigo" on-click="{{handleMenu}}">Fatigo</div>
+                        <div class="option" data-option="fatigo" on-click="handleMenu">Fatigo</div>
                         <div class="title">Gene set enrichment</div>
-                        <div class="option" option="fatiscan" on-click="{{handleMenu}}">Logistic model</div>
+                        <div class="option" data-option="fatiscan" on-click="handleMenu">Logistic model</div>
                         <div class="title">Network enrichment</div>
-                        <div class="option" option="snow" on-click="{{handleMenu}}">Snow</div>
+                        <div class="option" data-option="snow" on-click="handleMenu">Snow</div>
                         <div class="title">Gene set network enrichment</div>
-                        <div class="option" option="network-miner" on-click="{{handleMenu}}">Network Miner</div>
+                        <div class="option" data-option="network-miner" on-click="handleMenu">Network Miner</div>
                     </div>
                 </div>
             </div>
@@ -185,17 +185,18 @@
     </template>
     <script>
         Polymer({
-            created: function () {
-            },
+            is: "babelomics-menu",
+
             handleMenu: function (e) {
                 var me = this;
-                var option = e.target.getAttribute("option");
-                this.selectedOption = "loading";
-                setTimeout(function () {
-                    me.selectedOption = option;
-                }, 0);
+                me.fire("optionchanged", {option: e.currentTarget.dataset.option});
+//                var option = e.target.getAttribute("option");
+//                this.selectedOption = "loading";
+//                setTimeout(function () {
+//                    me.selectedOption = option;
+//                }, 0);
 
             }
         })
     </script>
-</polymer-element>
+</dom-module>
