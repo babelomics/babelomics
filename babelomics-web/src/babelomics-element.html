@@ -26,6 +26,9 @@
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-affy.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-association.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-class-comparison.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-clustering.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-fatigo.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-fatigo-options.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-class-viewer.html">
 
 <link rel="import" href="babelomics-home.html">
@@ -47,7 +50,6 @@
 
 <link rel="import" href="../lib/jsorolla/src/lib/components/variant/jso-variant-index-view.html">
 -->
-
 
 <dom-module id="babelomics-element">
     <style>
@@ -72,22 +74,23 @@
         }
 
         jso-opencga-footer {
-            bottom: 0;
+            position: relative;
+            top: 46px;
+            /*bottom: 0;*/
         }
 
         #content {
-            /*position: absolute;*/
+            background-color: #435f7a;
+            position: relative;
             top: 60px;
-            width: 100%;
+            /*min-height: calc(100vh - 160px);*/
         }
 
-        jso-dashboard {
-            height: calc(100vh - 60px);
+        #content > * {
+            min-height: calc(100vh - 146px);
         }
 
-        jso-variant-browser {
-            height: calc(100vh - 60px);
-        }
+
 
         #jobBrowserPanel {
             position: absolute;
@@ -141,16 +144,16 @@
             </jso-panel>
 
             <jso-job-launched hidden data-option="joblaunched"></jso-job-launched>
-            <jso-affy hidden data-option="affymetrix" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-affy>
+            <jso-affy class="babelomics-form" hidden data-option="affymetrix" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-affy>
             <!--<jso-network-miner hidden data-option="network-miner" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-network-miner>-->
             <!--<jso-snow hidden data-option="snow" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-snow>-->
-            <!--<jso-fatigo hidden data-option="fatigo" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-fatigo>-->
+            <jso-fatigo class="babelomics-form"  hidden data-option="fatigo" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-fatigo>
             <!--<jso-fatiscan hidden data-option="fatiscan" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-fatiscan>-->
             <!--<jso-one-channel-agilent hidden data-option="one-channel-agilent" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-one-channel-agilent>-->
             <!--<jso-one-channel-genepix hidden data-option="one-channel-genepix" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-one-channel-genepix>-->
             <!--<jso-two-channels-agilent hidden data-option="two-channels-agilent" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-two-channels-agilent>-->
             <!--<jso-two-channels-genepix hidden data-option="two-channels-genepix" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-two-channels-genepix>-->
-            <!--<jso-clustering hidden data-option="clustering" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-clustering>-->
+            <jso-clustering class="babelomics-form" hidden data-option="clustering" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-clustering>
             <!--<jso-prediction hidden data-option="class-prediction" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-prediction>-->
             <jso-class-comparison class="babelomics-form" hidden data-option="class-comparison" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-class-comparison>
             <!--<jso-correlation hidden data-option="correlation" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-correlation>-->
@@ -159,11 +162,17 @@
             <!--<jso-rnaseq-norm hidden data-option="rnaseq-norm" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-rnaseq-norm>-->
             <!--<jso-preprocessing-matrix hidden data-option="preprocessing" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-preprocessing-matrix>-->
             <!--<jso-edit hidden data-option="edit" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-edit>-->
-            <jso-association hidden data-option="association" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-association>
+            <jso-association class="babelomics-form"  hidden data-option="association" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-association>
             <!--<jso-oncodrivefm hidden data-option="oncodrivefm" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-oncodrivefm>-->
             <!--<jso-oncodriveclust hidden data-option="oncodriveclust" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-oncodriveclust>-->
         </div>
-
+        <jso-opencga-footer hidden$="{{computeFooter(selectedOption)}}">
+            babelomics: created by Computational Genomics Department
+            <br>
+            Principe Felipe Research Center
+            <br>
+            2015
+        </jso-opencga-footer>
 
         <jso-opencga-header id="jsoHeader"
                             selected-option="{{selectedOption}}"
@@ -205,13 +214,6 @@
             </jso-help-menu>
         </jso-opencga-header>
 
-        <jso-opencga-footer hidden$="{{computeFooter(selectedOption)}}">
-            babelomics: created by Computational Genomics Department
-            <br>
-            Principe Felipe Research Center
-            <br>
-            2015
-        </jso-opencga-footer>
 
     </template>
 </dom-module>
@@ -394,4 +396,4 @@
         }
     });
 </script>
-</polymer-element>
+</dom-module>
