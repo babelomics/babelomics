@@ -380,23 +380,26 @@ public class ClassComparison extends BabelomicsTool {
                 idx++;
             }
         }
-        DoubleMatrix doubleMatrix = new DoubleMatrix(dataFrame.getRowDimension(), subDataset.getColumnDimension());
-        for (int i = 0; i < sigRowIndexes.size(); i++) {
-            doubleMatrix.setRow(i, subDataset.getDoubleMatrix().getRow(sigRowIndexes.get(i)));
-        }
-        File fileXX = new File(outdir + "/" + test + "_foldchange_significative_dataset.txt");
-        Dataset sigDataset = new Dataset(subDataset.getSampleNames(), featureNames, doubleMatrix);
-        sigDataset.save(fileXX);
+		if(dataFrame.getRowDimension() > 0){
+
+			DoubleMatrix doubleMatrix = new DoubleMatrix(dataFrame.getRowDimension(), subDataset.getColumnDimension());
+			for (int i = 0; i < sigRowIndexes.size(); i++) {
+				doubleMatrix.setRow(i, subDataset.getDoubleMatrix().getRow(sigRowIndexes.get(i)));
+			}
+			File fileXX = new File(outdir + "/" + test + "_foldchange_significative_dataset.txt");
+			Dataset sigDataset = new Dataset(subDataset.getSampleNames(), featureNames, doubleMatrix);
+			sigDataset.save(fileXX);
 
 
-		File fileAux = new File(outdir + "/" + test + "_foldchange_significative_table.txt");
-		IOUtils.write(fileAux, dataFrame.toString(true, true));
+			File fileAux = new File(outdir + "/" + test + "_foldchange_significative_table.txt");
+			IOUtils.write(fileAux, dataFrame.toString(true, true));
 
-		fileAux = new File(outdir + "/" + test + "_foldchange_significative_table_up.txt");
-		IOUtils.write(fileAux, featureNamesUp);
+			fileAux = new File(outdir + "/" + test + "_foldchange_significative_table_up.txt");
+			IOUtils.write(fileAux, featureNamesUp);
 
-		fileAux = new File(outdir + "/" + test + "_foldchange_significative_table_down.txt");
-		IOUtils.write(fileAux, featureNamesDown);
+			fileAux = new File(outdir + "/" + test + "_foldchange_significative_table_down.txt");
+			IOUtils.write(fileAux, featureNamesDown);
+		}
 
 //        fileAux = new File(outdir + "/" + test + "_foldchange_significative_dataset.txt");
 //        IOUtils.write(fileAux, featureNamesDown);

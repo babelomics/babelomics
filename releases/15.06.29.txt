@@ -1,0 +1,1 @@
+Bug fix: In class comparison fold change there was an error when no significative values. Now is solved 
