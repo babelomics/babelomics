@@ -375,7 +375,7 @@ public class ClassComparison extends BabelomicsTool {
         for(String feat: featureNames){
             int idx = 0;
             for(String featSub: subDataset.getFeatureNames()){
-                if(feat.equalsIgnoreCase(featSub))
+                if(feat.equalsIgnoreCase(featSub) && !sigRowIndexes.contains(idx))
                     sigRowIndexes.add(idx);
                 idx++;
             }

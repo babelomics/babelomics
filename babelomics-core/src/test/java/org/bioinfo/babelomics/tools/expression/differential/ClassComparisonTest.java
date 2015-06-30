@@ -53,12 +53,12 @@ public class ClassComparisonTest {
 	public void foldChangeTest2() {
 
 		String babelomicsHome = System.getenv("BABELOMICS_HOME");
-		String dataset = "/tmp/rma.summary.txt";
+		String dataset = "/tmp/normalized_dataset.txt";
 		String outdir = "/tmp/J_jGywzitvu6/";
 		new File(outdir).mkdir();
 
 		System.out.println("----- two classes - fold change ------");
-		String []args = {"--tool", "class-comparison", "--dataset", dataset, "--test","fold_change", "--class-values", "N,T", "--fold-change-value",  "2", "--class-name", "treatment", "group", "--outdir", outdir, "--home", System.getenv("BABELOMICS_HOME")};
+		String []args = {"--tool", "class-comparison", "--dataset", dataset, "--test","fold_change", "--class-values", "1,2", "--fold-change-value",  "2", "--class-name", "treatment", "--outdir", outdir, "--home", System.getenv("BABELOMICS_HOME")};
 
 		System.out.println(ArrayUtils.toString(args, " "));
 
