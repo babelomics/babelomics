@@ -30,6 +30,8 @@
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-fatigo.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-fatigo-options.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-class-viewer.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-job-result.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-job-info-widget.html">
 
 <link rel="import" href="babelomics-home.html">
 <link rel="import" href="babelomics-menu.html">
@@ -165,6 +167,8 @@
             <jso-association class="babelomics-form"  hidden data-option="association" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-association>
             <!--<jso-oncodrivefm hidden data-option="oncodrivefm" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-oncodrivefm>-->
             <!--<jso-oncodriveclust hidden data-option="oncodriveclust" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-oncodriveclust>-->
+            <jso-job-result hidden data-option="result" job-item="{{jobItem}}"></jso-job-result>
+
         </div>
         <jso-opencga-footer hidden$="{{computeFooter(selectedOption)}}">
             babelomics: created by Computational Genomics Department
@@ -227,7 +231,7 @@
                 value: "home",
                 notify: true,
                 reflectToAttribute: true,
-                observer: 'selectedOptionChanged'
+//                observer: 'selectedOptionChanged'
             },
             userData: {
                 type: Object,
@@ -276,22 +280,27 @@
                         value: "VARIANT"
                     }
                 ]
+            },
+            jobItem: {
+                type: Object,
+                notify: true
             }
         },
         ready: function () {
         },
-        selectedOptionChanged: function (neo, old) {
-            var menuItems = Polymer.dom(this.root).querySelectorAll('[menu-option]');
-            for (var i = 0; i < menuItems.length; i++) {
-                var item = menuItems[i];
-                var currentItemValue = item.getAttribute("menu-option");
-                if (neo == currentItemValue) {
-                    item.removeAttribute("hidden");
-                } else {
-                    item.setAttribute('hidden', '');
-                }
-            }
-        },
+//        selectedOptionChanged: function (neo, old) {
+//
+//            var menuItems = Polymer.dom(this.root).querySelectorAll('[menu-option]');
+//            for (var i = 0; i < menuItems.length; i++) {
+//                var item = menuItems[i];
+//                var currentItemValue = item.getAttribute("menu-option");
+//                if (neo == currentItemValue) {
+//                    item.removeAttribute("hidden");
+//                } else {
+//                    item.setAttribute('hidden', '');
+//                }
+//            }
+//        },
         handleMenu: function (e) {
             var option = e.currentTarget.dataset['option'];
             this.setMenu(option);
@@ -300,6 +309,10 @@
             if (option) {
                 this.selectedOption = option;
             }
+        },
+        handleJobSelect: function(e){
+            this.jobItem = e.detail;
+            this._handleToggleMenu("result");
         },
         handleToggleJobBrowser: function () {
             this.$.jobBrowserPanel.hidden = !this.$.jobBrowserPanel.hidden;
@@ -310,6 +323,10 @@
                 option = e.currentTarget.dataset.option;
             if (e.detail.option != null)
                 option = e.detail.option;
+            this._handleToggleMenu(option);
+
+        },
+        _handleToggleMenu: function(option){
             var children = this.$.content.children;
             for (var i = 0; i < children.length; i++) {
                 var child = children[i];
@@ -318,8 +335,6 @@
                 else
                     child.setAttribute("hidden", "");
             }
-
-
         },
 
         handleCloseBrowser: function (e) {
