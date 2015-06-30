@@ -24,9 +24,24 @@
 
 <!-- Forms -->
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-affy.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-association.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-class-comparison.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-one-channel-agilent.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-two-channels-agilent.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-one-channel-genepix.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-two-channels-genepix.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-preprocessing-matrix.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-edit.html">
+
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-clustering.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-class-comparison.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-prediction.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-correlation.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-survival.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-rnaseq-diffexpr.html">
+
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-association.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-burden.html">
+
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-rnaseq-norm.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-fatigo.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-fatigo-options.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-class-viewer.html">
@@ -151,20 +166,21 @@
             <!--<jso-snow hidden data-option="snow" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-snow>-->
             <jso-fatigo class="babelomics-form"  hidden data-option="fatigo" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-fatigo>
             <!--<jso-fatiscan hidden data-option="fatiscan" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-fatiscan>-->
-            <!--<jso-one-channel-agilent hidden data-option="one-channel-agilent" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-one-channel-agilent>-->
-            <!--<jso-one-channel-genepix hidden data-option="one-channel-genepix" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-one-channel-genepix>-->
-            <!--<jso-two-channels-agilent hidden data-option="two-channels-agilent" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-two-channels-agilent>-->
-            <!--<jso-two-channels-genepix hidden data-option="two-channels-genepix" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-two-channels-genepix>-->
+            <jso-one-channel-agilent hidden data-option="one-channel-agilent" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-one-channel-agilent>
+            <jso-one-channel-genepix hidden data-option="one-channel-genepix" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-one-channel-genepix>
+            <jso-two-channels-agilent hidden data-option="two-channels-agilent" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-two-channels-agilent>
+            <jso-two-channels-genepix hidden data-option="two-channels-genepix" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-two-channels-genepix>
             <jso-clustering class="babelomics-form" hidden data-option="clustering" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-clustering>
-            <!--<jso-prediction hidden data-option="class-prediction" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-prediction>-->
+            <jso-prediction hidden data-option="class-prediction" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-prediction>
             <jso-class-comparison class="babelomics-form" hidden data-option="class-comparison" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-class-comparison>
-            <!--<jso-correlation hidden data-option="correlation" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-correlation>-->
-            <!--<jso-survival hidden data-option="survival" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-survival>-->
-            <!--<jso-rnaseq-diffexpr hidden data-option="rnaseq-diffexpr" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-rnaseq-diffexpr>-->
-            <!--<jso-rnaseq-norm hidden data-option="rnaseq-norm" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-rnaseq-norm>-->
-            <!--<jso-preprocessing-matrix hidden data-option="preprocessing" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-preprocessing-matrix>-->
-            <!--<jso-edit hidden data-option="edit" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-edit>-->
+            <jso-correlation hidden data-option="correlation" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-correlation>
+            <jso-survival hidden data-option="survival" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-survival>
+            <jso-rnaseq-diffexpr hidden data-option="rnaseq-diffexpr" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-rnaseq-diffexpr>
+            <jso-rnaseq-norm hidden data-option="rnaseq-norm" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-rnaseq-norm>
+            <jso-preprocessing-matrix hidden data-option="preprocessing" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-preprocessing-matrix>
+            <jso-edit hidden data-option="edit" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-edit>
             <jso-association class="babelomics-form"  hidden data-option="association" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-association>
+            <jso-burden class="babelomics-form"  hidden data-option="burden" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-burden>
             <!--<jso-oncodrivefm hidden data-option="oncodrivefm" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-oncodrivefm>-->
             <!--<jso-oncodriveclust hidden data-option="oncodriveclust" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-oncodriveclust>-->
             <jso-job-result hidden data-option="result" job-item="{{jobItem}}"></jso-job-result>
