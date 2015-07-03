@@ -41,12 +41,21 @@
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-association.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-burden.html">
 
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-oncodrivefm.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-oncodriveclust.html">
+
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-rnaseq-norm.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-fatigo.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-fatiscan.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-fatigo-options.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-snow.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/forms/jso-network-miner.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-class-viewer.html">
-<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-job-result.html">
 <link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-job-info-widget.html">
+
+<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-job-result.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/results/jso-rnaseq-norm-result.html">
+<link rel="import" href="../lib/jsorolla/src/lib/components/opencga/jso-redirection.html">
 
 <link rel="import" href="babelomics-home.html">
 <link rel="import" href="babelomics-menu.html">
@@ -120,6 +129,12 @@
         }
 
         .babelomics-form {
+            display: block;
+            position: relative;
+            box-sizing: border-box;
+            padding: 15px 40px;
+
+            z-index: 1;
             margin: 0px auto 0px auto;
 
             width: 80%;
@@ -128,62 +143,41 @@
             transition: all 0.2s;
             box-shadow: 2px 6px 15px 8px rgba(0, 0, 0, 0.30);
             background-color: #FFFFFF;
-
         }
-
+        .jobBrowser{
+            z-index: 5000;
+        }
     </style>
     <template>
+
         <div id="content">
             <babelomics-home data-option="home"></babelomics-home>
 
 
-            <jso-panel id="browserPanel" hidden modal movable closable data-option="filebrowser">
-                <div class="header">Data browser</div>
-                <jso-opencga-browser
-                        id="browser"
-                        class="container"
-                        on-fileselect="handleFileSelect"
-                        bioformats="{{bioformats}}"
-                        projects="{{projects}}"
-                        on-need-refresh="handleUserNeedRefresh"></jso-opencga-browser>
-            </jso-panel>
-
-            <jso-panel hidden collapsible movable closable
-                       id="jobBrowserPanel"
-                       data-option="jobbrowser">
-                <div class="header">Job browser</div>
-                <jso-opencga-job-browser class="container"
-                                         id="jobBrowser"
-                                         on-jobselect="handleJobSelect"
-                                         projects="{{projects}}"
-                                         allowed-tools="{{allowedTools}}">
-                </jso-opencga-job-browser>
-            </jso-panel>
-
             <jso-job-launched hidden data-option="joblaunched"></jso-job-launched>
             <jso-affy class="babelomics-form" hidden data-option="affymetrix" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-affy>
-            <!--<jso-network-miner hidden data-option="network-miner" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-network-miner>-->
-            <!--<jso-snow hidden data-option="snow" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-snow>-->
+            <jso-network-miner class="babelomics-form" hidden data-option="network-miner" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-network-miner>
+            <jso-snow class="babelomics-form" hidden data-option="snow" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-snow>
             <jso-fatigo class="babelomics-form"  hidden data-option="fatigo" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-fatigo>
-            <!--<jso-fatiscan hidden data-option="fatiscan" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-fatiscan>-->
-            <jso-one-channel-agilent hidden data-option="one-channel-agilent" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-one-channel-agilent>
-            <jso-one-channel-genepix hidden data-option="one-channel-genepix" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-one-channel-genepix>
-            <jso-two-channels-agilent hidden data-option="two-channels-agilent" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-two-channels-agilent>
-            <jso-two-channels-genepix hidden data-option="two-channels-genepix" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-two-channels-genepix>
+            <jso-fatiscan class="babelomics-form"  hidden data-option="fatiscan" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-fatiscan>
+            <jso-one-channel-agilent class="babelomics-form" hidden data-option="one-channel-agilent" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-one-channel-agilent>
+            <jso-one-channel-genepix class="babelomics-form" hidden data-option="one-channel-genepix" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-one-channel-genepix>
+            <jso-two-channels-agilent class="babelomics-form" hidden data-option="two-channels-agilent" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-two-channels-agilent>
+            <jso-two-channels-genepix class="babelomics-form" hidden data-option="two-channels-genepix" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-two-channels-genepix>
             <jso-clustering class="babelomics-form" hidden data-option="clustering" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-clustering>
-            <jso-prediction hidden data-option="class-prediction" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-prediction>
+            <jso-prediction class="babelomics-form" hidden data-option="class-prediction" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-prediction>
             <jso-class-comparison class="babelomics-form" hidden data-option="class-comparison" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-class-comparison>
-            <jso-correlation hidden data-option="correlation" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-correlation>
-            <jso-survival hidden data-option="survival" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-survival>
-            <jso-rnaseq-diffexpr hidden data-option="rnaseq-diffexpr" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-rnaseq-diffexpr>
-            <jso-rnaseq-norm hidden data-option="rnaseq-norm" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-rnaseq-norm>
-            <jso-preprocessing-matrix hidden data-option="preprocessing" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-preprocessing-matrix>
-            <jso-edit hidden data-option="edit" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-edit>
-            <jso-association class="babelomics-form"  hidden data-option="association" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-association>
+            <jso-correlation class="babelomics-form" hidden data-option="correlation" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-correlation>
+            <jso-survival class="babelomics-form" hidden data-option="survival" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-survival>
+            <jso-rnaseq-diffexpr class="babelomics-form" hidden data-option="rnaseq-diffexpr" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-rnaseq-diffexpr>
+            <jso-rnaseq-norm class="babelomics-form" hidden data-option="rnaseq-norm" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-rnaseq-norm>
+            <jso-preprocessing-matrix class="babelomics-form" hidden data-option="preprocessing" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-preprocessing-matrix>
+            <jso-edit class="babelomics-form" hidden data-option="edit" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-edit>
+            <jso-association class="babelomics-form" class="babelomics-form"  hidden data-option="association" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-association>
             <jso-burden class="babelomics-form"  hidden data-option="burden" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-burden>
-            <!--<jso-oncodrivefm hidden data-option="oncodrivefm" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-oncodrivefm>-->
-            <!--<jso-oncodriveclust hidden data-option="oncodriveclust" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-oncodriveclust>-->
-            <jso-job-result hidden data-option="result" job-item="{{jobItem}}"></jso-job-result>
+            <jso-oncodrivefm class="babelomics-form" hidden data-option="oncodrivefm" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-oncodrivefm>
+            <jso-oncodriveclust class="babelomics-form" hidden data-option="oncodriveclust" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-oncodriveclust>
+            <jso-job-result class="babelomics-form" hidden data-option="result" job-item="{{jobItem}}"></jso-job-result>
 
         </div>
         <jso-opencga-footer hidden$="{{computeFooter(selectedOption)}}">
@@ -210,7 +204,7 @@
             <div class="menu horizontal layout flex">
                 <babelomics-menu class="menu flex center-justified" on-optionchanged="handleToggleMenu"></babelomics-menu>
 
-                <div on-click="handleToggleMenu" data-option="filebrowser">
+                <div on-click="handleToggleMyData" data-option="filebrowser">
                     <i class="fa fa-cloud"></i> My data
                 </div>
                 <div on-click="handleToggleJobBrowser" style="margin-right: 5vw">
@@ -234,6 +228,28 @@
             </jso-help-menu>
         </jso-opencga-header>
 
+        <jso-panel id="browserPanel" hidden modal movable closable data-option="filebrowser">
+            <div class="header">Data browser</div>
+            <jso-opencga-browser
+                    id="browser"
+                    class="container"
+                    on-fileselect="handleFileSelect"
+                    bioformats="{{bioformats}}"
+                    projects="{{projects}}"
+                    on-need-refresh="handleUserNeedRefresh"></jso-opencga-browser>
+        </jso-panel>
+
+        <jso-panel hidden collapsible movable closable class="jobBrowser"
+                   id="jobBrowserPanel"
+                   data-option="jobbrowser">
+            <div class="header">Job browser</div>
+            <jso-opencga-job-browser class="container"
+                                     id="jobBrowser"
+                                     on-jobselect="handleJobSelect"
+                                     projects="{{projects}}"
+                                     allowed-tools="{{allowedTools}}">
+            </jso-opencga-job-browser>
+        </jso-panel>
 
     </template>
 </dom-module>
@@ -332,6 +348,9 @@
         },
         handleToggleJobBrowser: function () {
             this.$.jobBrowserPanel.hidden = !this.$.jobBrowserPanel.hidden;
+        },
+        handleToggleMyData: function () {
+            this.$.browserPanel.hidden = !this.$.browserPanel.hidden;
         },
         handleToggleMenu: function (e) {
             var option = "";
