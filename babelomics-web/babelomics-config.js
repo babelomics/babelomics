@@ -2,7 +2,7 @@
 CELLBASE_HOST = "http://bioinfo.hpc.cam.ac.uk/cellbase/webservices/rest";
 CELLBASE_VERSION = "v3";
 OPENCGA_HOST = "http://ws.babelomics.org/opencga/rest";
-OPENCGA_HOST = "http://test.babelomics.org/opencga/rest";
+// OPENCGA_HOST = "http://test.babelomics.org/opencga/rest";
 
 
 OPENCGA_VERSION = "v1";
@@ -83,4 +83,3 @@ if (OPENCGA_HOST.indexOf("http://test.babelomics.org/opencga/rest") >= 0)
 var MAINTENANCE_MSG = "Babelomics 5 is currently not available due to a power outage. It will be available very soon";
 // var HOME_MSG =  "";
 var HOME_MSG =  "";
-
