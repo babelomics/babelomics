@@ -66,7 +66,7 @@ public class SnowTest {
 
     }
 
-        @Test
+     //   @Test
     public void testExample1() {
         //opt/babelomics/babelomics.sh --tool snow --outdir /httpd/bioinfo/wum_sessions_v0.7/4164/jobs/5974 --log-file /httpd/bioinfo/wum_sessions_v0.7/4164/jobs/5974/job.log --list2 none --list1 /opt/babelomics/example/brca1_overexp_up.txt --side less --images  --randoms 500 --components true --intermediate 1 --interactome hsa --group curated --type genes --o-name result
 
@@ -243,30 +243,49 @@ public class SnowTest {
         main(args);
     }
 
-    //	@Test
+    	@Test
     public void SnowExampleTwoLists() {
         ///httpd/bioinfo/babelomics/babelomics.sh --tool snow2 --outdir /httpd/bioinfo/wum_sessions_v0.7/4164/jobs/2964 --log-file /httpd/bioinfo/wum_sessions_v0.7/4164/jobs/2964/job.log --list2 none --randoms-size 2 --json 1 --list1 /httpd/bioinfo/wum_sessions_v0.7/4164/data/27302/chr_9_block6.txt --side less --images  --randoms 10 --interactome hsa --o-name result
 
         String outdir = "/tmp/snow/testTwoLists";
         new File(outdir).mkdirs();
 
-        String[] args = {
-                "--tool", "snow",
-                "-o", outdir,
-                "--o-name", "result",
-                "--components", "1",
-                "--interactome", "hsa",
-                "--type", "proteins",
-                "--list1", "/mnt/commons/babelomics/tests/snow2/listas/hsa/proteins/chr_10_block225.txt",
-                "--list2", "/mnt/commons/babelomics/tests/snow2/listas/hsa/proteins/chr_11_block80.txt",
-                "--side", "less",
-                "--intermediate", "0",
-                "--xml",
-                "--images",
-                "--json",
-                //"--sif",
-                "--home", System.getenv("BABELOMICS_HOME")};
+//        String[] args = {
+//                "--tool", "snow",
+//                "-o", outdir,
+//                "--o-name", "result",
+//                "--components", "1",
+//                "--interactome", "hsa",
+//                "--type", "proteins",
+//                "--list1", "/mnt/commons/babelomics/tests/snow2/listas/hsa/proteins/chr_10_block225.txt",
+//                "--list2", "/mnt/commons/babelomics/tests/snow2/listas/hsa/proteins/chr_11_block80.txt",
+//                "--side", "less",
+//                "--intermediate", "0",
+//                "--xml",
+//                "--images",
+//                "--json",
+//                "--sif",
+//                "--home", System.getenv("BABELOMICS_HOME")};
+
+
+            String[] args = {
+                    "--tool", "snow",
+                    "-o", outdir,
+                    "--o-name", "result",
+                    "--components", "1",
+                    "--interactome", "hsa",
+                    "--type", "proteins",
+                    "--list1", BABELOMICS_HOME +"/example/K562_symbol.txt",
+                    "--list2", BABELOMICS_HOME +"/example/brca1_overexp_up.txt",
+                    "--side", "less",
+                    "--intermediate", "0",
+ //                   "--xml",
+                    "--images",
+ //                   "--json",
+                    //"--sif",
+                    "--home", System.getenv("BABELOMICS_HOME")};
         main(args);
+        System.out.println("Terminado correctamente");
     }
 
     //	@Test

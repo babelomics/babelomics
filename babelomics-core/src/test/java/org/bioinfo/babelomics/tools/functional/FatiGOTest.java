@@ -21,6 +21,7 @@ import org.bioinfo.infrared.common.DBConnector;
 import org.bioinfo.infrared.funcannot.filter.GOFilter;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class FatiGOTest {
@@ -51,17 +52,17 @@ public class FatiGOTest {
 //        }
 //    }
 
-    @Test
+    //  @Test
     public void TestList1List2Hsa() {
         String outdir = "/tmp/fatigo";
         new File(outdir).mkdir();
 
+        String list1 = "/home/sgallego/opt/babelomics/example/example.motor";
+        String list2 = "/home/sgallego/opt/babelomics/example/example.apoptosis";
 
-        String list1 = "/home/ralonso/opt/babelomics/example/example.motor";
-        String list2 = "/home/ralonso/opt/babelomics/example/example.apoptosis";
-
-        String[] args = {"--tool", "fatigo", "--list1", list1, "--list2", list2, "--go-bp", "--go-bp-propagation","propagate","--go-bp-min-num-genes", "5", "--go-bp-max-num-genes", "1000", "-o", outdir, "--species", "hsa", "--home", System.getenv("BABELOMICS_HOME")};
+        String[] args = {"--tool", "fatigo", "--list1", list1, "--list2", list2, "--go-bp", "--go-bp-propagation", "propagate", "--go-bp-min-num-genes", "5", "--go-bp-max-num-genes", "1000", "-o", outdir, "--species", "hsa", "--home", System.getenv("BABELOMICS_HOME")};
         try {
+
             org.bioinfo.babelomics.tools.functional.FatiGOTool fatigo = (org.bioinfo.babelomics.tools.functional.FatiGOTool) BabelomicsFactory.createTool("fatigo");
             fatigo.parse(args);
             fatigo.run();
@@ -72,6 +73,33 @@ public class FatiGOTest {
         }
     }
 
+
+    @Test
+    public void TestList1List2ath() {
+        String outdir = "/tmp/fatigo";
+        new File(outdir).mkdir();
+
+        String list1 = "/home/sgallego/Documents/babelomics/arabidopsis_ID.txt";
+        String list2 = "/home/sgallego/Documents/babelomics/arabidopsis2_ID.txt";
+
+        String babelomicsHome = "/home/sgallego/opt/babelomics/";
+        //String[] args = {"--tool", "fatigo", "--list1", list1, "--list2", list2, "--go-bp", "--go-bp-propagation", "propagate", "--go-bp-min-num-genes", "5", "--go-bp-max-num-genes", "1000", "-o", outdir, "--species", "ath", "--home", System.getenv("BABELOMICS_HOME")};
+        String[] args = {"--tool", "fatigo", "--list1", list1, "--list2", list2, "--go-mf", "--duplicates", "never", "--go-bp", "--go-bp-propagation", "propagate", "--go-bp-min-num-genes", "5", "--go-mf-min-num-genes", "5", "--go-mf-max-num-genes", "500","--go-bp-max-num-genes", "500","--fisher", "two-tailed","--go-mf-propagation", "propagate", "-o", outdir, "--species", "ath", "--home", babelomicsHome};
+
+
+//        /mnt/httpd/bioinfo/opencga_0.4.0/analysis/fatigo/fatigo.sh --go-mf  --duplicates never --species ath --go-bp  --go-bp-propagation propagate --outdir /mnt/httpd/bioinfo/opencga_0.4.0/jobs/J_loULKSVwP2/ --go-bp-min-num-genes 5 --go-mf-min-num-genes 5 --list2 /mnt/httpd/bioinfo/opencga_0.4.0/users/proba/projects/559400/559401/data/arabidopsis2_ID.txt
+//                --go-mf-max-num-genes 500 --list1 /mnt/httpd/bioinfo/opencga_0.4.0/users/proba/projects/559400/559401/data/arabidopsis_ID.txt --fisher two-tailed --go-bp-max-num-genes 500 --go-mf-propagation propagate
+        try {
+
+            org.bioinfo.babelomics.tools.functional.FatiGOTool fatigo = (org.bioinfo.babelomics.tools.functional.FatiGOTool) BabelomicsFactory.createTool("fatigo");
+            fatigo.parse(args);
+            fatigo.run();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     // @Test
     public void TestList1List2Mmu() {
         String outdir = "/tmp/fatigo";
@@ -79,9 +107,9 @@ public class FatiGOTest {
 
 
 //        String list1 = "/mnt/commons/test/example.motor";
-        String list1 = "/home/ralonso/appl/babelomics-old/babelomics-old/example/mmu_list1.txt";
+        String list1 = "/home/sgallego/appl/babelomics-old/babelomics-old/example/mmu_list1.txt";
 //		String list2 = "/mnt/commons/test/example.apoptosis";
-        String list2 = "/home/ralonso/appl/babelomics-old/babelomics-old/example/mmu_list2.txt";
+        String list2 = "/home/sgallego/appl/babelomics-old/babelomics-old/example/mmu_list2.txt";
 
         String[] args = {"--tool", "fatigo", "--list1", list1, "--list2", list2, "--go-bp", "--go-mf", "--go-bp-min-num-genes", "5", "--go-bp-max-num-genes", "1000", "-o", outdir, "--species", "mmu", "--home", System.getenv("BABELOMICS_HOME")};
         try {
@@ -101,7 +129,7 @@ public class FatiGOTest {
         new File(outdir).mkdir();
 
 
-        String list1 = "/home/ralonso/appl/babelomics-old/babelomics-old/example/example.motor";
+        String list1 = "/home/sgallego/appl/babelomics-old/babelomics-old/example/example.motor";
 
         String[] args = {"--tool", "fatigo", "--list1", list1, "--genome", "--go-bp", "--go-bp-min-num-genes", "5", "--go-bp-max-num-genes", "1000", "-o", outdir, "--species", "hsa", "--home", System.getenv("BABELOMICS_HOME")};
         try {
@@ -122,9 +150,9 @@ public class FatiGOTest {
         new File(outdir).mkdir();
 
 //		String list1 = "/mnt/commons/test/example.motor";
-        String list1 = "/home/ralonso/appl/babelomics-old/babelomics-old/example/example.motor";
+        String list1 = "/home/sgallego/appl/babelomics-old/babelomics-old/example/example.motor";
 //		String list2 = "/mnt/commons/test/example.apoptosis";
-        String list2 = "/home/ralonso/appl/babelomics-old/babelomics-old/example/example.apoptosis";
+        String list2 = "/home/sgallego/appl/babelomics-old/babelomics-old/example/example.apoptosis";
 
 //		String []args = {"--tool", "fatigo" ,"--list1", list1, "--list2", list2, "-o", "/tmp/fatigo"};
         String[] args = {"--tool", "fatigo", "--list1", list1, "--list2", list2, "--go-bp", "--kegg", "-o", outdir, "--species", "hsa", "--home", System.getenv("BABELOMICS_HOME")};
