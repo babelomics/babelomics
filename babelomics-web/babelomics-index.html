@@ -28,20 +28,17 @@
     <meta name="apple-mobile-web-app-title" content="babelomics">
 
     <!-- Force Microsoft use latest web tech -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
-
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- END meta -->
-
 
     <!--Config-->
     <script src="conf/config.js"></script>
 
     <!--Fonts-->
-    <link href='src/fonts/fonts.css' rel='stylesheet' type='text/css'>
-    <link href='bower_components/fontawesome/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
-    <link href='lib/jsorolla/src/lib/components/jso-global.css' rel='stylesheet' type='text/css'>
-    <link href='lib/jsorolla/src/lib/components/jso-form.css' rel='stylesheet' type='text/css'>
+    <link href="src/fonts/fonts.css" rel="stylesheet" type="text/css">
+    <link href="bower_components/fontawesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="lib/jsorolla/src/lib/components/jso-global.css" rel="stylesheet" type="text/css">
+    <link href="lib/jsorolla/src/lib/components/jso-form.css" rel="stylesheet" type="text/css">
 
     <!--Web Components-->
     <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
@@ -73,21 +70,14 @@
     <script src="lib/jsorolla/src/lib/opencga-manager.js"></script>
     <script src="lib/jsorolla/src/lib/cellbase-manager.js"></script>
 
-
-
     <link rel="import" href="src/babelomics-element.html">
 
     <link rel="import" href="conf/theme.html">
 </head>
 
-<body unresolved class="fullbleed">
-
+<body unresolved="" class="fullbleed">
     <babelomics-element></babelomics-element>
 
     <script>
-        var babelomics = document.querySelector('babelomics-element');
+        var babelomics = Polymer.dom(document).querySelector('babelomics-element');
     </script>
-
-</body>
-
-</html>
