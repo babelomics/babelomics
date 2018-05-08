@@ -79,53 +79,48 @@
 
 <dom-module id="babelomics-element">
     <style>
+        #jobBrowserPanel,
+        jso-opencga-header {
+            position: absolute;
+            top: 0
+        }
+
         :host {
             display: block;
             position: relative;
             cursor: default;
             font-size: 13px;
-            background-color: var(--default-primary-color);
+            background-color: var(--default-primary-color)
         }
 
-        .menu > div {
+        .menu>div {
             margin-left: 10px;
             cursor: pointer;
             text-align: center;
-            padding: 0 5px;
-        }
-
-        jso-opencga-header {
-            position: absolute;
-            top: 0;
+            padding: 0 5px
         }
 
         jso-opencga-footer {
             position: relative;
-            top: 46px;
-            /*bottom: 0;*/
+            top: 46px
         }
 
         #content {
             background-color: #435f7a;
             position: relative;
-            top: 60px;
-            /*min-height: calc(100vh - 160px);*/
+            top: 60px
         }
 
-        #content > * {
-            min-height: calc(100vh - 146px);
+        #content>* {
+            min-height: calc(100vh - 146px)
         }
-
-
 
         #jobBrowserPanel {
-            position: absolute;
-            right: 0;
-            top: 0;
+            right: 0
         }
 
         #version {
-            color: var(--accent-color);
+            color: var(--accent-color)
         }
 
         .babelomics-form {
@@ -133,19 +128,18 @@
             position: relative;
             box-sizing: border-box;
             padding: 15px 40px;
-
             z-index: 1;
-            margin: 0px auto 0px auto;
-
+            margin: 0 auto;
             width: 80%;
             min-width: 800px;
             border: 1px solid #c6d0da;
-            transition: all 0.2s;
-            box-shadow: 2px 6px 15px 8px rgba(0, 0, 0, 0.30);
-            background-color: #FFFFFF;
+            transition: all .2s;
+            box-shadow: 2px 6px 15px 8px rgba(0, 0, 0, .3);
+            background-color: #FFF
         }
-        .jobBrowser{
-            z-index: 5000;
+
+        .jobBrowser {
+            z-index: 5000
         }
     </style>
     <template>
@@ -153,17 +147,20 @@
         <div id="content">
             <babelomics-home data-option="home"></babelomics-home>
 
-
             <jso-job-launched hidden data-option="joblaunched"></jso-job-launched>
             <jso-affy class="babelomics-form" hidden data-option="affymetrix" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-affy>
             <jso-network-miner class="babelomics-form" hidden data-option="network-miner" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-network-miner>
             <jso-snow class="babelomics-form" hidden data-option="snow" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-snow>
-            <jso-fatigo class="babelomics-form"  hidden data-option="fatigo" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-fatigo>
-            <jso-fatiscan class="babelomics-form"  hidden data-option="fatiscan" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-fatiscan>
-            <jso-one-channel-agilent class="babelomics-form" hidden data-option="one-channel-agilent" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-one-channel-agilent>
-            <jso-one-channel-genepix class="babelomics-form" hidden data-option="one-channel-genepix" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-one-channel-genepix>
-            <jso-two-channels-agilent class="babelomics-form" hidden data-option="two-channels-agilent" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-two-channels-agilent>
-            <jso-two-channels-genepix class="babelomics-form" hidden data-option="two-channels-genepix" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-two-channels-genepix>
+            <jso-fatigo class="babelomics-form" hidden data-option="fatigo" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-fatigo>
+            <jso-fatiscan class="babelomics-form" hidden data-option="fatiscan" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-fatiscan>
+            <jso-one-channel-agilent class="babelomics-form" hidden data-option="one-channel-agilent" on-joblaunched="handleToggleMenu"
+                projects="{{projects}}"></jso-one-channel-agilent>
+            <jso-one-channel-genepix class="babelomics-form" hidden data-option="one-channel-genepix" on-joblaunched="handleToggleMenu"
+                projects="{{projects}}"></jso-one-channel-genepix>
+            <jso-two-channels-agilent class="babelomics-form" hidden data-option="two-channels-agilent" on-joblaunched="handleToggleMenu"
+                projects="{{projects}}"></jso-two-channels-agilent>
+            <jso-two-channels-genepix class="babelomics-form" hidden data-option="two-channels-genepix" on-joblaunched="handleToggleMenu"
+                projects="{{projects}}"></jso-two-channels-genepix>
             <jso-clustering class="babelomics-form" hidden data-option="clustering" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-clustering>
             <jso-prediction class="babelomics-form" hidden data-option="class-prediction" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-prediction>
             <jso-class-comparison class="babelomics-form" hidden data-option="class-comparison" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-class-comparison>
@@ -173,31 +170,36 @@
             <jso-rnaseq-norm class="babelomics-form" hidden data-option="rnaseq-norm" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-rnaseq-norm>
             <jso-preprocessing-matrix class="babelomics-form" hidden data-option="preprocessing" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-preprocessing-matrix>
             <jso-edit class="babelomics-form" hidden data-option="edit" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-edit>
-            <jso-association class="babelomics-form" class="babelomics-form"  hidden data-option="association" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-association>
-            <jso-burden class="babelomics-form"  hidden data-option="burden" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-burden>
+            <jso-association class="babelomics-form" class="babelomics-form" hidden data-option="association" on-joblaunched="handleToggleMenu"
+                projects="{{projects}}"></jso-association>
+            <jso-burden class="babelomics-form" hidden data-option="burden" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-burden>
             <jso-oncodrivefm class="babelomics-form" hidden data-option="oncodrivefm" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-oncodrivefm>
             <jso-oncodriveclust class="babelomics-form" hidden data-option="oncodriveclust" on-joblaunched="handleToggleMenu" projects="{{projects}}"></jso-oncodriveclust>
             <jso-job-result class="babelomics-form" hidden data-option="result" job-item="{{jobItem}}"></jso-job-result>
-
         </div>
         <jso-opencga-footer hidden$="{{computeFooter(selectedOption)}}">
-            babelomics: created by Computational Genomics Department
+            Developed by the Computational Genomics Department
+
             <br>
-            Principe Felipe Research Center
+            <a href="http://www.clinbioinfosspa.es" target="_blank" class="a" style="margin-left: 10px;">Clinical Bioinformatics Area 2018</a>
+
+            <a href="https://twitter.com/babelomics" target="_blank" class="a" style="margin-left: 10px;">
+                <font-awesome icon="twitter" style="font-size:20px;"></font-awesome>
+            </a>
             <br>
-            2015
+
+            <a href="mailto:info@clinbioinfosspa.es?subject=Feeback Babelomics 5" class="a" style="margin-left: 10px;">Contact</a>
+
         </jso-opencga-footer>
 
-        <jso-opencga-header id="jsoHeader"
-                            selected-option="{{selectedOption}}"
-                            user-data="{{userData}}"
-                            on-login="handleLogin"
-                            on-logout="handleLogout"
-                            show-menu-on-login>
-             <span class="icon">
-                    <img src="images/logoBabelomics_positive_trans.svg" style="height: 50px;margin: 5px 0px 0 0;">
+        <jso-opencga-header id="jsoHeader" selected-option="{{selectedOption}}" user-data="{{userData}}" on-login="handleLogin" on-logout="handleLogout"
+            show-menu-on-login>
+            <span class="icon">
+                <img src="images/logoBabelomics_positive_trans.svg" style="height: 50px;margin: 5px 0px 0 0;">
             </span>
-            <span class="title">Babelomics <span id="version">5.1</span></span>
+            <span class="title">Babelomics
+                <span id="version">5.1</span>
+            </span>
 
             <span class="description"></span>
 
@@ -230,24 +232,13 @@
 
         <jso-panel id="browserPanel" hidden modal movable closable data-option="filebrowser">
             <div class="header">Data browser</div>
-            <jso-opencga-browser
-                    id="browser"
-                    class="container"
-                    on-fileselect="handleFileSelect"
-                    bioformats="{{bioformats}}"
-                    projects="{{projects}}"
-                    on-need-refresh="handleUserNeedRefresh"></jso-opencga-browser>
+            <jso-opencga-browser id="browser" class="container" on-fileselect="handleFileSelect" bioformats="{{bioformats}}" projects="{{projects}}"
+                on-need-refresh="handleUserNeedRefresh"></jso-opencga-browser>
         </jso-panel>
 
-        <jso-panel hidden collapsible movable closable class="jobBrowser"
-                   id="jobBrowserPanel"
-                   data-option="jobbrowser">
+        <jso-panel hidden collapsible movable closable class="jobBrowser" id="jobBrowserPanel" data-option="jobbrowser">
             <div class="header">Job browser</div>
-            <jso-opencga-job-browser class="container"
-                                     id="jobBrowser"
-                                     on-jobselect="handleJobSelect"
-                                     projects="{{projects}}"
-                                     allowed-tools="{{allowedTools}}">
+            <jso-opencga-job-browser class="container" id="jobBrowser" on-jobselect="handleJobSelect" projects="{{projects}}" allowed-tools="{{allowedTools}}">
             </jso-opencga-job-browser>
         </jso-panel>
 
@@ -263,7 +254,7 @@
                 value: "home",
                 notify: true,
                 reflectToAttribute: true,
-//                observer: 'selectedOptionChanged'
+                //                observer: 'selectedOptionChanged'
             },
             userData: {
                 type: Object,
@@ -320,19 +311,19 @@
         },
         ready: function () {
         },
-//        selectedOptionChanged: function (neo, old) {
-//
-//            var menuItems = Polymer.dom(this.root).querySelectorAll('[menu-option]');
-//            for (var i = 0; i < menuItems.length; i++) {
-//                var item = menuItems[i];
-//                var currentItemValue = item.getAttribute("menu-option");
-//                if (neo == currentItemValue) {
-//                    item.removeAttribute("hidden");
-//                } else {
-//                    item.setAttribute('hidden', '');
-//                }
-//            }
-//        },
+        //        selectedOptionChanged: function (neo, old) {
+        //
+        //            var menuItems = Polymer.dom(this.root).querySelectorAll('[menu-option]');
+        //            for (var i = 0; i < menuItems.length; i++) {
+        //                var item = menuItems[i];
+        //                var currentItemValue = item.getAttribute("menu-option");
+        //                if (neo == currentItemValue) {
+        //                    item.removeAttribute("hidden");
+        //                } else {
+        //                    item.setAttribute('hidden', '');
+        //                }
+        //            }
+        //        },
         handleMenu: function (e) {
             var option = e.currentTarget.dataset['option'];
             this.setMenu(option);
@@ -342,7 +333,7 @@
                 this.selectedOption = option;
             }
         },
-        handleJobSelect: function(e){
+        handleJobSelect: function (e) {
             this.jobItem = e.detail;
             this._handleToggleMenu("result");
         },
@@ -361,7 +352,7 @@
             this._handleToggleMenu(option);
 
         },
-        _handleToggleMenu: function(option){
+        _handleToggleMenu: function (option) {
             var children = this.$.content.children;
             for (var i = 0; i < children.length; i++) {
                 var child = children[i];
@@ -381,18 +372,18 @@
             return selectedOption == 'dashboard' || selectedOption == 'variantbrowser';
         },
         handleFileSelect: function (e) {
-//            console.log("file");
-//            console.log(e.detail);
-//            var file = e.detail;
-//            if (file.index && file.index.status == 'READY') {
-//                this.$.variantBrowser.file = file;
-//                this.setMenu('variantbrowser');
-//                this.handleCloseBrowser();
-//
-//            }
+            //            console.log("file");
+            //            console.log(e.detail);
+            //            var file = e.detail;
+            //            if (file.index && file.index.status == 'READY') {
+            //                this.$.variantBrowser.file = file;
+            //                this.setMenu('variantbrowser');
+            //                this.handleCloseBrowser();
+            //
+            //            }
         },
         handleLogin: function () {
-//            this.browserHidden = false;
+            //            this.browserHidden = false;
             this.selectedOption = "home";
         },
         handleLogout: function () {
