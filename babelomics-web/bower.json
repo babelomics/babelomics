@@ -1,30 +1,25 @@
 {
   "name": "babelomics",
-  "version": "5.0.0",
+  "version": "5.1.0",
   "homepage": "https://github.com/babelomics/babelomics",
   "authors": [
+    "onit4ku  <onitaku@gmail.com>",
     "frasator <frasator@gmail.com>",
     "roalva1  <roalva1@gmail.com>",
     "igmecas  <igmecas@gmail.com>"
   ],
   "license": "GPLv2",
   "private": true,
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
+  "ignore": ["**/.*", "node_modules", "bower_components", "test", "tests"],
   "dependencies": {
-  "polymer": "Polymer/polymer#1.0.0",
+    "polymer": "Polymer/polymer#1.0.0",
     "iron-flex-layout": "PolymerElements/iron-flex-layout#1.0.1",
-    "fontawesome": "*",
+    "fontawesome": "^4.7.0",
     "cookies-js": "~1.1.0",
     "crypto-js-evanvosberg": "3.1.4",
     "highcharts-release": "~4.0.4",
     "underscore": "~1.7.0",
-    "jquery": "1.11.3",
+    "jquery": "^1.11.3",
     "backbone": "~1.1.2",
     "qtip2": "~2.2.1",
     "bowser": "~0.7.2"
