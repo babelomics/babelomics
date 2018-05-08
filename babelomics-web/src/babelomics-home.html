@@ -8,47 +8,52 @@
             line-height: 25px;
             font-weight: 300;
             background-color: var(--default-primary-color);
-            color:var(--text-primary-color);
+            color: var(--text-primary-color)
+        }
+
+        .b,
+        .megabutton {
+            font-weight: 400
         }
 
         .main {
-            width: 70%;
+            width: 65%;
             max-width: 780px;
             margin-left: auto;
-            margin-right: auto;
+            margin-right: auto
         }
 
         .paragraph {
             text-align: justify;
-            padding: 10px 0;
+            padding: 10px 0
         }
 
         .paragraph2 {
             font-size: 14px;
-            padding: 0 0 10px 0;
+            padding: 0 0 10px
+        }
+
+        .title,
+        .title2 {
+            padding-bottom: 10px
         }
 
         .title {
             font-size: 40px;
-            padding-top: 30px;
-            padding-bottom: 10px;
+            padding-top: 30px
         }
 
         .title2 {
-            padding-top: 20px;
-            padding-bottom: 10px;
+            padding-top: 20px
         }
 
-        .b {
-            font-weight: 400;
-        }
-
-        a, a:visited {
+        a,
+        a:visited {
             text-decoration: none;
+            color: #ffad76
         }
 
         .megabutton {
-            font-weight: 400;
             margin: 20px;
             padding: 20px 30px;
             font-size: 26px;
@@ -56,74 +61,70 @@
             border-style: solid;
             border-radius: 5px;
             width: 200px;
-            text-align: center;
+            text-align: center
         }
 
         .megabutton:hover {
-            cursor: pointer;
+            cursor: pointer
         }
 
         .megatitle {
             font-size: 80px;
+            color: #fff;
             padding-top: 30px;
             padding-bottom: 10px;
-            text-shadow: 3px 3px 5px #444;
+            text-shadow: 3px 3px 5px #444
         }
 
         .megadescription {
-            font-size: 30px;
+            font-size: 24px;
             line-height: 40px;
-            padding-top: 30px;
-            padding-bottom: 10px;
+            padding-top: 39px;
+            padding-bottom: 20px;
             text-transform: uppercase;
-            text-align: center;
+            text-align: center
         }
     </style>
     <template>
         <div class="main">
-
             <br>
-
             <div class="horizontal layout">
                 <div style="text-align: right; width: 300px;">
-                    <img src="images/bier-text.svg" style="width:220px;">
-                    <!--<img src="logo_2.svg" style="width:300px;">-->
+                    <img src="images/logoBabelomics_positive_trans.svg" style="width:200px; margin-top: 30px;">
                 </div>
                 <div class="vertical layout center" style="text-align: left; margin-left: 30px;">
                     <br>
                     <br>
 
-                    <div class="megatitle">babelomics</div>
-                    <!--<div class="megadescription">-->
-                    <!--GENE EXPRESSION, GENOME VARIATION AND FUNCTIONAL PROFILING ANALYSIS SUITE-->
-                    <!--</div>-->
+                    <div class="megatitle">Babelomics</div>
+                    <div class="megadescription">
+                        GENE EXPRESSION, GENOME VARIATION AND FUNCTIONAL PROFILING ANALYSIS SUITE
+                    </div>
                     <br>
 
-                    <!--<div class="megabutton" on-click="annonymousLogin">-->
-                    <!--&lt;!&ndash;<font-awesome icon="hand-o-left"></font-awesome>&ndash;&gt;-->
-                    <!--<font-awesome icon="sign-in"></font-awesome>-->
-                    <!--&nbsp;&nbsp;&nbsp; Try it now-->
-                    <!--</div>-->
+                    <!-- <div class="megabutton" on-click="annonymousLogin">
+                        <font-awesome icon="hand-o-left"></font-awesome>
+                        <i class="font-awesome" icon="sign-in"></i> Try it now
+                    </div> -->
 
                 </div>
             </div>
 
-
-            <div class="title">Overview</div>
-            <div class="paragraph">
+            <!-- <div class="title">Overview</div> -->
+            <!-- <div class="paragraph">
                 Welcome to the gene/variant prioritization tool of the BIER (the Team of BioInformatic for Rare
                 Diseases).
                 This interactive tool allows finding genes affected by deleterious variants that segregate along family
                 pedigrees,
                 case-controls or sporadic samples.
-            </div>
+            </div> -->
 
 
             <!--<div class="title">Try an Example</div>-->
             <!--<div class="paragraph">-->
             <!--Here you can try all the filtering options and discover the gene affected in a test family.-->
             <!--</div>-->
-
+            <!-- 
             <div class="title2">Supported by</div>
             <div class="paragraph">
                 <img style="margin:3px;height:67px;"
@@ -135,20 +136,17 @@
                 <img style="margin:3px;height:67px;" src="images/logoBabelomics_positive_trans.svg"/>
                 <img style="margin:3px;height:67px;"
                      src="http://img2.mailchimp.com/2009/03/25/1efbf9c6a8/LOGO_Micinn_Isciii.jpg"/>
-            </div>
+            </div> -->
 
             <div class="title2">Note:</div>
             <div class="paragraph2">
-                babelomics web application makes an intensive use of the HTML5 standard and other cutting-edge web
-                technologies such as
-                Web Components, so only modern web browsers are fully supported, these include Chrome 36+, Firefox 32+,
-                IE
-                10+, Safari 7+
-                and Opera 24+.
+                For best compatibility use Chrome Version:62.0.3202.75, for more details with different browsers see this link:
+                <a href="https://github.com/babelomics/babelomics/wiki/wiki-Requirements" target="_blank">Babelomics Wiki</a>
             </div>
-
+            <div style="border: 1px  #000000; text-align: center">For teaching activities with Babelomics we recommend you to use:
+                <a href="http://courses.babelomics.org/">courses.babelomics.org</a>
+            </div>
         </div>
-
     </template>
 </dom-module>
 <script>
