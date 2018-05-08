@@ -4,87 +4,77 @@
             display: block;
             position: relative;
             box-sizing: border-box;
-            white-space: nowrap;
+            white-space: nowrap
         }
 
         .l1 {
-            margin-left: 10px;
-
+            margin-left: 10px
         }
 
         .l2 {
-            margin-left: 20px;
-
+            margin-left: 20px
         }
 
         .l3 {
-            margin-left: 30px;
-
+            margin-left: 30px
         }
 
         div.dropdown {
             position: relative;
-            color: #CCCCCC !important;
-            margin: 0 10px;
+            color: #CCC !important;
+            margin: 0 10px
         }
 
-        div.dropdown > div {
-        }
-
-        div.dropdown > div:first-of-type {
+        div.dropdown>div:first-of-type {
             outline: 0;
             height: 100%;
-            cursor: pointer;
+            cursor: pointer
         }
 
-        div.dropdown > div:first-of-type:hover {
-            color: white;
+        div.dropdown>div:first-of-type:hover {
+            color: #fff
         }
 
-        div.dropdown > div:first-of-type:after {
-            font-family: 'FontAwesome';
+        div.dropdown>div:first-of-type:after {
+            font-family: FontAwesome;
             margin-left: 2px;
-            /*content: '\f0d7';*/
-            content: '\f107';
+            content: '\f107'
         }
 
-        div.dropdown > div:first-of-type + div {
+        div.dropdown>div:first-of-type+div {
             position: absolute;
             z-index: 1;
             visibility: hidden;
             opacity: 0;
-            transition: all 0.25s;
-
+            transition: all .25s;
             margin: 0;
-            padding: 10px 10px 10px 10px;
+            padding: 10px;
             background-color: #314559;
             text-transform: none;
             line-height: 25px;
-            box-shadow: 0px 0px 3px 2px rgba(0, 0, 0, 0.3);
-            width: 250px;
+            box-shadow: 0 0 3px 2px rgba(0, 0, 0, .3);
+            width: 250px
         }
 
-        div.dropdown > div:first-of-type:focus + div {
+        div.dropdown>div:first-of-type:focus+div {
             visibility: visible;
-            opacity: 1;
+            opacity: 1
         }
 
         .title {
-            /*text-transform: uppercase;*/
             color: #ffad76;
-            /*margin-top: 10px;*/
-            font-size: 18px !important;
+            font-size: 18px !important
         }
 
         .option:hover {
-            color: #ffffff;
-            cursor: pointer;
+            color: #fff;
+            cursor: pointer
         }
 
         .option:before {
-            font-family: 'FontAwesome';
+            font-family: FontAwesome;
             content: '\f0da';
-            margin-right: 5px;
+            margin-right: 5px
         }
     </style>
     <template>
@@ -161,7 +151,6 @@
                 </div>
             </div>
 
-
             <div class="dropdown">
                 <div tabindex="-1">
                     Functional
@@ -183,20 +172,21 @@
         </div>
 
     </template>
-    <script>
-        Polymer({
-            is: "babelomics-menu",
-
-            handleMenu: function (e) {
-                var me = this;
-                me.fire("optionchanged", {option: e.currentTarget.dataset.option});
-//                var option = e.target.getAttribute("option");
-//                this.selectedOption = "loading";
-//                setTimeout(function () {
-//                    me.selectedOption = option;
-//                }, 0);
-
-            }
-        })
-    </script>
 </dom-module>
+
+<script>
+    Polymer({
+        is: "babelomics-menu",
+
+        handleMenu: function (e) {
+            var me = this;
+            me.fire("optionchanged", { option: e.currentTarget.dataset.option });
+            //                var option = e.target.getAttribute("option");
+            //                this.selectedOption = "loading";
+            //                setTimeout(function () {
+            //                    me.selectedOption = option;
+            //                }, 0);
+
+        }
+    })
+</script>
