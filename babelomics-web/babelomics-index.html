@@ -1,15 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
+<!DOCTYPE html><html lang="en"><head>
     <meta charset="utf-8">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>babelomics</title>
-
+  <title>babelomics</title>
+  
     <!-- favicon -->
     <link rel="shortcut icon" href="favicon.ico">
+
 
     <!-- Chrome for Android theme color -->
     <meta name="theme-color" content="#303F9F">
@@ -45,6 +42,8 @@
     <link rel="import" href="bower_components/polymer/polymer.html">
     <link rel="import" href="bower_components/iron-flex-layout/classes/iron-flex-layout.html">
     <script src="bower_components/bowser/bowser.min.js"></script>
+
+
     <!--Libraries-->
 
     <!-- Javascript -->
@@ -58,6 +57,7 @@
     <script src="bower_components/highcharts-release/highcharts.js"></script>
 
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
+
     <script src="bower_components/underscore/underscore-min.js"></script>
     <script src="bower_components/backbone/backbone.js"></script>
     <script src="bower_components/qtip2/jquery.qtip.min.js"></script>
@@ -66,6 +66,7 @@
 
 
     <!--Internal-->
+
     <script src="lib/jsorolla/src/lib/utils.js"></script>
     <script src="lib/jsorolla/src/lib/opencga-manager.js"></script>
     <script src="lib/jsorolla/src/lib/cellbase-manager.js"></script>
@@ -79,5 +80,8 @@
     <babelomics-element></babelomics-element>
 
     <script>
-        var babelomics = Polymer.dom(document).querySelector('babelomics-element');
+
+      var babelomics = Polymer.dom(Polymer.dom(document)).querySelector('babelomics-element');
+
+        
     </script>
