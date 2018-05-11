@@ -6,82 +6,85 @@
                 position: relative;
                 box-sizing: border-box;
                 z-index: 50000;
-
-                margin: 0px auto 0px auto;
-
+                margin: 0 auto;
                 width: 70%;
                 max-width: 780px;
                 color: #FFF;
                 font-size: 22px;
                 line-height: 25px;
-                font-weight: 300;
+                font-weight: 300
+            }
+
+            .b,
+            .infobox,
+            .megabutton {
+                font-weight: 400
             }
 
             .paragraph {
                 text-align: justify;
-                padding: 10px 0;
+                padding: 10px 0
             }
 
             .paragraph2 {
                 font-size: 14px;
-                padding: 0 0 10px 0;
+                padding: 0 0 10px
+            }
+
+            .title,
+            .title2 {
+                color: #fff;
+                padding-bottom: 10px
             }
 
             .title {
                 font-size: 40px;
-                padding-top: 30px;
-                padding-bottom: 10px;
-                color: white;
+                padding-top: 30px
             }
 
             .title2 {
-                color: white;
-                padding-top: 20px;
-                padding-bottom: 10px;
+                padding-top: 20px
             }
 
-            .b {
-                font-weight: 400;
-            }
-
-            a, a:visited {
+            a,
+            a:visited {
                 text-decoration: none;
-                color: #ffad76;
+                color: #ffad76
             }
 
             .megabutton {
-                font-weight: 400;
                 margin: 20px;
                 padding: 20px 30px;
                 font-size: 26px;
-                border: 1px solid white;
+                border: 1px solid #fff;
                 border-radius: 5px;
                 width: 200px;
-                text-align: center;
+                text-align: center
             }
 
             .megabutton:hover {
-                background-color: white;
+                background-color: #fff;
                 color: #435f7a;
-                cursor: pointer;
+                cursor: pointer
+            }
+
+            .megadescription,
+            .megatitle {
+                padding-top: 30px;
+                padding-bottom: 10px;
+                color: #fff
             }
 
             .megatitle {
                 font-size: 80px;
-                padding-top: 30px;
-                padding-bottom: 10px;
-                color: white;
-                text-shadow: 3px 3px 5px #314559;
+                text-shadow: 3px 3px 5px #314559
             }
 
             .megadescription {
                 font-size: 30px;
                 line-height: 40px;
-                padding-top: 30px;
-                padding-bottom: 10px;
-                color: white;
                 text-transform: uppercase;
-                text-align: center;
+                text-align: center
             }
 
             .infobox {
@@ -90,12 +93,11 @@
                 border-left: 5px solid #e9d295;
                 background-color: #faf3d7;
                 color: #585858;
-                font-size:16px;
-                font-weight: normal;
+                font-size: 16px;
                 text-align: center;
-                width:500px;
-                margin:10px auto;
-                box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.5);
+                width: 500px;
+                margin: 10px auto;
+                box-shadow: 0 0 15px 0 rgba(0, 0, 0, .5)
             }
 
             .infobox:after {
@@ -106,10 +108,8 @@
                 font-family: FontAwesome;
                 content: '\f071';
                 color: #bf9947;
-                font-size: 16px;
+                font-size: 16px
             }
-
-
         </style>
         <br>
         <br>
@@ -142,20 +142,15 @@
             </div>
         </div>
 
-        <!--<div class="paragraph2" style="background: lightcoral">-->
-        <!--</div>-->
         <div class="title2">Note</div>
         <div class="paragraph2">
-
-            Web optimized for Chrome. Only modern web browsers are fully supported, these include Chrome 36+, Firefox 36+, Safari 8+ and Opera 24+.
-
+            For best compatibility use Chrome Version:62.0.3202.75, for more details with different browsers see this link:
+            <a href="https://github.com/babelomics/babelomics/wiki/wiki-Requirements" target="_blank">Babelomics Wiki</a>
         </div>
-        <br>
-        <br>
+        <div style="border: 1px  #000000; text-align: center">For teaching activities with Babelomics we recommend you to use:
+            <a href="http://courses.babelomics.org/">courses.babelomics.org</a>
+        </div>
 
-        <div style="border: 1px  #000000; text-align: center">Babelomics 4 is accessible at <a href="http://v4.babelomics.org/">v4.babelomics.org</a></div>
-
-        <!--<div class="button action" on-click="{{annonymousLogin}}">Try it now!!</div>-->
     </template>
     <script>
         Polymer({
